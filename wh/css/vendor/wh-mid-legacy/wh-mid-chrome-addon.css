@@ -1,0 +1,156 @@
+/* 仓储中台 chrome：fixed 顶栏 + 二级菜单留白 */
+body {
+  padding-top: 107px;
+}
+
+.wh-mid-chrome-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  min-width: 1200px;
+}
+
+.wh-mid-header {
+  background-color: #0092dc;
+  border-bottom: 1px #98c802 solid;
+  height: 75px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.wh-mid-header-inner {
+  display: flex;
+  align-items: flex-end;
+  padding: 0 16px;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: 8px;
+}
+
+.wh-mid-brand {
+  font-size: 22px;
+  color: #fff;
+  font-weight: normal;
+  line-height: 1;
+  margin-right: 32px;
+  padding-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.wh-mid-onevar {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  align-items: flex-end;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wh-mid-onevar > li {
+  list-style: none;
+}
+
+.wh-mid-onevar > li > a {
+  display: block;
+  padding: 8px 14px 6px;
+  color: #fff;
+  min-width: 72px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.wh-mid-onevar > li > a:hover {
+  background-color: #0078b5;
+}
+
+.wh-mid-onevar > li > a.wh-mid-nav-active {
+  background-color: #0078b5;
+}
+
+.wh-mid-user {
+  margin-left: auto;
+  padding-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.wh-mid-user-legacy {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 6px;
+}
+
+.wh-mid-user-legacy .wh-mid-user-link {
+  padding-left: 0;
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.wh-mid-user-legacy .wh-mid-user-link:hover {
+  text-decoration: underline;
+}
+
+.wh-mid-user-legacy .wh-mid-user-name {
+  color: #fff;
+  font-size: 12px;
+}
+
+.wh-mid-twovar {
+  background-color: #4a4a4a;
+  height: 32px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-sizing: border-box;
+}
+
+.wh-mid-twovar ul {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wh-mid-twovar li {
+  list-style: none;
+}
+
+.wh-mid-twovar li a {
+  min-width: 67px;
+  text-align: center;
+  display: block;
+  color: #fff;
+  padding: 7px 12px;
+  text-decoration: none;
+  font-size: 12px;
+  border-right: 1px solid #666;
+  box-sizing: border-box;
+}
+
+.wh-mid-twovar li a:hover {
+  background-color: #0092dc;
+}
+
+.wh-mid-twovar li a.wh-mid-sub-active {
+  background-color: #0092dc;
+}
+
+.wh-mid-footer {
+  margin-top: 24px;
+  padding: 12px 0;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  background-color: #4a4a4a;
+}
+
+.wh-mid-footer a {
+  color: #9cf;
+}

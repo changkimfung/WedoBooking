@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预约送仓管理 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/delivery-appointment-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="fourvar order-fourvar" style="height:auto;">
+  <table class="table-h25">
+    <tr>
+      <td style="padding-left:17px;">客户编号：</td>
+      <td>
+        <input id="q_customer_code" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">预约单号：</td>
+      <td>
+        <input id="q_appointment_no" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">预约仓库：</td>
+      <td>
+        <select id="q_warehouse" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">送仓类型：</td>
+      <td>
+        <select id="q_delivery_type" style="width:157px">
+          <option value="">全部</option>
+          <option value="整柜">整柜</option>
+          <option value="散货">散货</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">状态：</td>
+      <td>
+        <select id="q_status" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">
+        <button type="button" id="btn_appt_query" class="order-fourvar-submit" style="margin:5px;">查询</button>
+      </td>
+      <td colspan="5">
+        <button type="button" id="btn_appt_reset">重置查询</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="main inorder-main">
+  <div class="wh-create-toolbar">
+    <a href="deliveryAppointmentCreate.html" class="order-fourvar-submit wh-create-link">新建入库单预约</a>
+  </div>
+  <p id="appt-result-hint" style="margin:8px 0 0;font-size:12px;color:#878787;"></p>
+  <table cellspacing="0" width="100%">
+    <thead>
+      <tr class="title">
+        <td>预约方</td>
+        <td>预约仓库</td>
+        <td>预约单号</td>
+        <td>送仓码</td>
+        <td>状态</td>
+        <td>送仓类型</td>
+        <td>送仓总箱数</td>
+        <td>收货总箱数</td>
+        <td>是否打托</td>
+        <td>送仓总托数</td>
+        <td>期望送仓日期</td>
+        <td>仓库确认时段</td>
+        <td>实际送仓时间</td>
+        <td>提交时间</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody id="appt-list-tbody"></tbody>
+  </table>
+  <div class="pagination pagination-prototype-nav" id="appt-pagination"></div>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德仓储中台原型
+  <a href="#" onclick="return false;">演示页</a>
+</footer>
+
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'documents',
+    activeSecondMenu: 'deliveryAppointment',
+    userName: '演示用户'
+  });
+</script>
+<script src="../mock_data/deliveryAppointment.js"></script>
+<script src="../mock_data/inOrder.js"></script>
+<script src="../customer/js/deliveryAppointment-common.js"></script>
+<script src="js/deliveryAppointmentList.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>预约详情 - 运德供应链 WEDO SCM</title>
+  <link rel="stylesheet" href="css/official-reservation.css" />
+</head>
+<body class="official-page">
+  <header class="official-header">
+    <div class="official-logo">
+      <div class="official-logo-icon"></div>
+      <div class="official-logo-text">
+        <strong>运德供应链</strong>
+        <span>WEDO SCM</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="official-main" id="detailMain" style="max-width:1100px;">
+    <nav class="official-stepper" aria-label="预约流程">
+      <div class="official-step done" data-step="1">
+        <span class="official-step-num">1</span>
+        <span class="official-step-label">输入预约码<br /><small>Enter Reservation Code</small></span>
+      </div>
+      <div class="official-step active" data-step="2">
+        <span class="official-step-num">2</span>
+        <span class="official-step-label">预约送仓<br /><small>Schedule Delivery</small></span>
+      </div>
+      <div class="official-step" data-step="3">
+        <span class="official-step-num">3</span>
+        <span class="official-step-label">送仓完成<br /><small>Delivery Completed</small></span>
+      </div>
+    </nav>
+
+    <div class="official-alert">
+      预约送仓时间为海外仓当日，海外仓当地人员操作预约审核，为避免时差影响送仓，请您提前2个工作日提交预约单。
+    </div>
+
+    <section class="official-section">
+      <h2 class="official-section-title">
+        预约单信息
+        <a href="javascript:void(0)" id="btnOpenHistory" class="official-history-link" role="button" aria-label="查看协商历史">协商历史</a>
+      </h2>
+      <table class="official-info-table" id="appointmentInfoTable">
+        <thead>
+          <tr>
+            <th>预约单号</th>
+            <th>预约码</th>
+            <th>目的仓</th>
+            <th>预约状态</th>
+            <th>送仓类型</th>
+            <th>送仓总箱数</th>
+            <th class="appt-info-fcl-only">集装箱号</th>
+            <th class="appt-info-fcl-only">柜型</th>
+            <th>是否打托</th>
+            <th>送仓总托数</th>
+          </tr>
+        </thead>
+        <tbody><tr id="appointmentInfoRow"></tr></tbody>
+      </table>
+    </section>
+
+    <section class="official-section">
+      <h2 class="official-section-title">发货信息</h2>
+      <table class="official-info-table official-cargo-table" id="cargoTable">
+        <thead>
+          <tr>
+            <th>入库单/票号</th>
+            <th>运输方式</th>
+            <th>下单时间</th>
+            <th>送仓箱数</th>
+          </tr>
+        </thead>
+        <tbody id="cargoBody"></tbody>
+      </table>
+    </section>
+
+    <section class="official-section">
+      <h2 class="official-section-title">送仓信息</h2>
+      <div class="official-form-block">
+        <div class="official-form-row">
+          <label><span class="req">*</span>期望送仓日期（当地）</label>
+          <div class="official-form-control">
+            <input type="date" id="expectedDate" aria-label="期望送仓日期" />
+            <p class="official-form-hint">请选择期望送仓日期（仓库当地日期），<strong>周末（周六、周日）不收货</strong>。多个候选日期或特殊时段请在备注中说明。</p>
+          </div>
+        </div>
+        <div class="official-form-row">
+          <label>备注</label>
+          <div class="official-form-control">
+            <textarea id="remark" rows="3" maxlength="500" placeholder="如有多个候选日期或特殊时段要求请在此说明（例：6/2 或 6/3，上午到货最佳）"></textarea>
+          </div>
+        </div>
+        <div class="official-form-row">
+          <label>仓库确认送仓时段（当地）</label>
+          <div class="official-form-control">
+            <p class="official-placeholder" id="whConfirmedTime">— 待仓库确认后展示 —</p>
+            <p class="official-form-hint" id="whAuditRemark" style="display:none;"></p>
+          </div>
+        </div>
+        <div class="official-form-row">
+          <label>仓库确认地址（当地）</label>
+          <div class="official-form-control">
+            <p class="official-placeholder" id="whConfirmedAddress">— 待仓库确认后展示 —</p>
+          </div>
+        </div>
+        <div class="official-form-row">
+          <label>W.BOL 下载</label>
+          <div class="official-form-control">
+            <p class="official-placeholder" id="wPodDownload">— 待送仓后可下载 W.BOL —</p>
+          </div>
+        </div>
+        <div class="official-form-row">
+          <label>实际送仓时段（当地）</label>
+          <div class="official-form-control">
+            <p class="official-placeholder" id="actualDeliveryTime">— 送仓完成后展示 —</p>
+          </div>
+        </div>
+        <div class="official-form-row">
+          <label><span class="req">*</span>通知邮箱</label>
+          <div class="official-form-control official-email-list" id="emailList"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="official-footer-btns" id="actionBar">
+      <button type="button" class="official-btn official-btn-primary" id="btnSubmit" style="display:none;">提交预约</button>
+      <button type="button" class="official-btn official-btn-primary" id="btnAccept" style="display:none;">确认接受</button>
+      <button type="button" class="official-btn official-btn-outline" id="btnCustomerRebook" style="display:none;">重新预约</button>
+      <button type="button" class="official-btn official-btn-danger" id="btnCancel" style="display:none;">取消预约</button>
+      <button type="button" class="official-btn official-btn-outline" id="btnRebook" style="display:none;">重新预约</button>
+      <button type="button" class="official-btn official-btn-default" id="btnBack">返回</button>
+    </div>
+  </main>
+
+  <div class="official-modal-overlay" id="modalWithdraw" aria-hidden="true" style="display:none;">
+    <div class="official-modal" role="dialog" aria-labelledby="modalWithdrawTitle">
+      <h3 class="official-modal-title" id="modalWithdrawTitle">确认撤回</h3>
+      <p class="official-modal-body" id="modalWithdrawText">是否需要撤回本次预约？撤回后预约单将恢复为「待预约」状态。</p>
+      <div class="official-modal-actions">
+        <button type="button" class="official-btn official-btn-default" id="modalWithdrawNo">否</button>
+        <button type="button" class="official-btn official-btn-primary" id="modalWithdrawYes">是</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="official-modal-overlay" id="modalAccept" aria-hidden="true" style="display:none;">
+    <div class="official-modal" role="dialog" aria-labelledby="modalAcceptTitle">
+      <h3 class="official-modal-title" id="modalAcceptTitle">确认接受</h3>
+      <p class="official-modal-body">请确认是否接受以下仓库安排：</p>
+      <dl class="official-modal-dl">
+        <dt>仓库确认地址</dt>
+        <dd id="acceptModalAddress">—</dd>
+        <dt>仓库确认送仓时段</dt>
+        <dd id="acceptModalTime">—</dd>
+      </dl>
+      <div class="official-modal-actions">
+        <button type="button" class="official-btn official-btn-default" id="modalAcceptNo">取消</button>
+        <button type="button" class="official-btn official-btn-primary" id="modalAcceptYes">确认接受</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="official-modal-overlay" id="modalCustomerRebook" aria-hidden="true" style="display:none;">
+    <div class="official-modal" role="dialog" aria-labelledby="modalCustomerRebookTitle">
+      <h3 class="official-modal-title" id="modalCustomerRebookTitle">重新预约</h3>
+      <p class="official-modal-body">不接受当前仓库时段？预约将回到「待预约」，可在协商历史中查看完整记录。</p>
+      <div class="official-modal-actions">
+        <button type="button" class="official-btn official-btn-default" id="modalCustomerRebookNo">取消</button>
+        <button type="button" class="official-btn official-btn-primary" id="modalCustomerRebookYes">确认重新预约</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="official-modal-overlay" id="modalHistory" aria-hidden="true" style="display:none;">
+    <div class="official-modal official-modal-history" role="dialog" aria-labelledby="modalHistoryTitle">
+      <h3 class="official-modal-title" id="modalHistoryTitle">协商历史</h3>
+      <p class="official-modal-body" style="margin-bottom:8px;color:#8c8c8c;">本预约单从首次提交到当前的全部协商动作。</p>
+      <div class="official-modal-history-body">
+        <ul class="official-log-list" id="historyLogList"></ul>
+      </div>
+      <div class="official-modal-actions">
+        <button type="button" class="official-btn official-btn-primary" id="modalHistoryClose">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="official-modal-overlay" id="modalCustomerCancel" aria-hidden="true" style="display:none;">
+    <div class="official-modal" role="dialog" aria-labelledby="modalCustomerCancelTitle">
+      <h3 class="official-modal-title" id="modalCustomerCancelTitle">取消预约</h3>
+      <p class="official-modal-body">确定要取消本次预约？取消后预约单将回到「待预约」状态，可在协商历史中查看完整记录。</p>
+      <div class="official-modal-actions">
+        <button type="button" class="official-btn official-btn-default" id="modalCustomerCancelNo">放弃</button>
+        <button type="button" class="official-btn official-btn-danger" id="modalCustomerCancelYes">确认取消</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="official-main official-empty" id="emptyMain" style="display:none;">
+    <p>未找到该预约码对应的预约单</p>
+    <p style="margin-top:16px;"><a href="index.html">返回输入预约码</a></p>
+  </main>
+
+  <script src="../mock_data/inOrder.js"></script>
+  <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="../customer/js/deliveryAppointment-common.js"></script>
+  <script src="js/wpod-render.js"></script>
+  <script src="js/official-reservation.js"></script>
+  <script src="js/reservationDetail.js"></script>
+</body>
+</html>

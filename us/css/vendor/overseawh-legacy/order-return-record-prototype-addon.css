@@ -1,0 +1,292 @@
+/* 原型页补充：fixed 顶栏留白、主从表与状态 Tab 排版（main.css / bootstrap 已覆盖全局与 .mywell / .menu_two 等） */
+body {
+  padding-top: 40px;
+  background: #fff;
+}
+.order-return-prototype-subnav .nav-pills li {
+  line-height: 1.6;
+}
+.order-return-prototype-subnav .nav-pills > li > a {
+  padding: 8px 12px;
+}
+.order-return-prototype-table .nested-detail-table {
+  margin: 8px 0;
+  max-width: 100%;
+}
+.order-return-prototype-table .detail-caption {
+  text-align: left;
+  vertical-align: top;
+  font-weight: bold;
+  background: #f9f9f9;
+}
+.pagination-prototype {
+  margin: 12px 0 24px;
+  text-align: center;
+}
+/* 订单详情子表：入库数量（良品上架数）（数值标红） */
+.order-return-prototype-table .detail-good-in-qty {
+  color: #c00;
+  font-weight: bold;
+}
+/* PDA 不良品暂存写入的子表明细：整行文字红色 */
+.order-return-prototype-table .nested-detail-table tbody tr.detail-row-bad-stash td {
+  color: #c00;
+  font-weight: 600;
+}
+.order-return-prototype-table .nested-detail-table tbody tr.detail-row-bad-stash td .detail-good-in-qty {
+  color: #c00;
+}
+/* 子表：不良品暂存附图缩略图（已下线 — 改由「暂存数量」弹窗承载，仅保留 class 兼容旧渲染） */
+.order-return-prototype-table .nested-detail-table .detail-bad-stash-img-wrap {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  max-width: 200px;
+  vertical-align: middle;
+}
+.order-return-prototype-table .nested-detail-table .detail-bad-stash-img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.order-return-prototype-table .nested-detail-table tbody tr.detail-row-bad-stash td .detail-bad-stash-img {
+  border-color: #c00;
+}
+
+/* 子表「暂存数量」可点击链接：> 0 时蓝色加粗带下划线，鼠标手型；点开弹窗看暂存明细 */
+.order-return-prototype-table .nested-detail-table .detail-stash-qty-link {
+  color: #04c;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.order-return-prototype-table .nested-detail-table .detail-stash-qty-link:hover {
+  color: #039;
+}
+
+/* 暂存详情弹窗：自实现轻量 modal（不依赖 bootstrap modal） */
+.orr-stash-modal-mask {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orr-stash-modal-card {
+  background: #fff;
+  border-radius: 4px;
+  width: min(900px, 92vw);
+  max-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+.orr-stash-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #f7f7f7;
+}
+.orr-stash-modal-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1d2129;
+}
+.orr-stash-modal-close {
+  border: 0;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  color: #888;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.orr-stash-modal-close:hover {
+  color: #333;
+}
+.orr-stash-modal-body {
+  padding: 14px 16px;
+  overflow: auto;
+  flex: 1;
+}
+.orr-stash-modal-footer {
+  padding: 10px 16px;
+  border-top: 1px solid #e5e5e5;
+  background: #fafafa;
+  text-align: right;
+}
+.orr-stash-modal-table {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+.orr-stash-modal-table th {
+  background: #f5f5f5;
+  white-space: nowrap;
+}
+.orr-stash-modal-table td {
+  vertical-align: middle;
+}
+.orr-stash-modal-img-wrap {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.orr-stash-modal-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  cursor: zoom-in;
+}
+.orr-stash-modal-img-link:hover .orr-stash-modal-img {
+  border-color: #04c;
+}
+/* 弹窗：已操作数量（PDA 暂存货物处理累计） */
+.orr-stash-modal-table .orr-stash-done-qty {
+  color: #00b42a;
+  font-weight: bold;
+}
+/* 弹窗：客户前台不良品确认提交的处理方式 */
+.orr-stash-modal-table .orr-stash-handle-method {
+  color: #1d2129;
+  font-weight: bold;
+}
+/* 无主列表：认领单号 → 退货记录 */
+a.ucl-link-return {
+  color: #04c;
+  font-weight: bold;
+}
+a.ucl-link-return:hover {
+  color: #039;
+  text-decoration: underline;
+}
+/* 待认领：由暂存编号匹配得到的客户退货单号链接 */
+a.ucl-link-inferred {
+  font-weight: normal;
+  border-bottom: 1px dotted #04c;
+}
+a.ucl-link-inferred:hover {
+  border-bottom-color: #039;
+}
+.ucl-related-hint {
+  font-size: 11px;
+  font-weight: normal;
+  color: #888;
+}
+/* 无主列表：关联料号（纯展示，不跳转） */
+.ucl-related-sku {
+  color: #c00;
+  font-weight: bold;
+}
+
+/* 无主待认领列表：状态文本颜色（与业务排序一致见 JS STATUS_SORT_ORDER） */
+.ucl-status-text {
+  font-weight: 600;
+}
+.ucl-status-text.ucl-status-await_cs_verify {
+  color: #722ed1;
+}
+.ucl-status-text.ucl-status-await_customer_claim {
+  color: #1677ff;
+}
+.ucl-status-text.ucl-status-claim_unconfirmed {
+  color: #f77234;
+}
+.ucl-status-text.ucl-status-confirmed {
+  color: #00b42a;
+}
+.ucl-status-text.ucl-status-timeout_no_order {
+  color: #d46b08;
+}
+.ucl-status-text.ucl-status-timeout_unclaimed {
+  color: #8c8c8c;
+}
+.ucl-status-text.ucl-status-finished {
+  color: #0e7b3c;
+  font-weight: 600;
+}
+.ucl-status-text.ucl-status-discard_processed {
+  color: #1d2129;
+  font-weight: 600;
+}
+.ucl-status-text.ucl-status-destroyed {
+  color: #f53f3f;
+  font-weight: 600;
+}
+.ucl-status-text.ucl-status-unknown {
+  color: #86909c;
+}
+
+/* 无主列表·仓库处理时间单元格（独立列，已完结 / 已销毁 两种终态展示） */
+.ucl-finish-time {
+  font-weight: 500;
+}
+.ucl-finish-time.ucl-finish-time-finished {
+  color: #0e7b3c;
+}
+.ucl-finish-time.ucl-finish-time-destroyed {
+  color: #f53f3f;
+}
+
+/* 无主列表·图片弹窗：工具栏与条目 */
+.ucl-img-modal-toolbar {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+.ucl-img-modal-item {
+  margin-bottom: 14px;
+  padding: 10px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+}
+.ucl-img-modal-item:last-child {
+  margin-bottom: 0;
+}
+.ucl-img-modal-preview img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 280px;
+  border: 1px solid #ddd;
+}
+.ucl-img-modal-actions {
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* 无主列表·操作记录弹窗 */
+.ucl-op-log-caption {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #666;
+}
+.ucl-op-log-table-wrap {
+  overflow-x: auto;
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+}
+.ucl-op-log-table {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+.ucl-op-log-table th {
+  white-space: nowrap;
+  background: #f5f5f5;
+}
+.ucl-op-log-table td.ucl-op-log-action {
+  word-break: break-word;
+  max-width: 360px;
+}

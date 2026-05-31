@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鍏ュ簱鍗曠鐞?/title>
+  <link rel="stylesheet" href="css/customer-common.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo">
+        <div class="logo-icon">浠?/div>
+        <span>杩愬痉浠撳偍绯荤粺</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="top-icon">馃敂 娑堟伅</span>
+      <span class="top-icon">鈿?璁剧疆</span>
+      <span class="top-icon">Hello锛侀儜涔斾繆</span>
+      <span class="top-icon">閫€鍑?/span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="menu-section">
+        <div class="menu-section-title">涓昏彍鍗?/div>
+        <div class="menu-item">
+          <div class="menu-label">馃彔 棣栭〉</div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-label">馃摝 浜у搧绠＄悊</div>
+        </div>
+
+        <div class="menu-item" id="docManageBtn">
+          <div class="menu-label">馃搼 鍗曟嵁绠＄悊</div>
+          <span>鈻?/span>
+        </div>
+        <div class="submenu show" id="docManageSubmenu">
+          <div class="menu-item active">鍏ュ簱鍗?/div>
+          <div class="menu-item">鍑哄簱鍗?/div>
+          <div class="menu-item">璋冩嫧鍗?/div>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-label">馃洜 鏈嶅姟宸ュ崟</div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-label">馃搳 鏁版嵁缁熻</div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-label">馃懁 鐢ㄦ埛涓績</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="breadcrumb">鍗曟嵁绠＄悊 &gt;&gt; 鍏ュ簱鍗?/div>
+
+      <div class="panel filter-panel">
+        <div class="filter-row">
+          <div class="form-item">
+            <label>鍏ュ簱鍗曞彿锛?/label>
+            <input class="input" id="orderNo" type="text" placeholder="璇疯緭鍏ュ叆搴撳崟鍙? />
+          </div>
+          <div class="form-item">
+            <label>娴峰浠撹揣浠擄細</label>
+            <select class="select" id="warehouse">
+              <option value="">鍏ㄩ儴</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>鍙戣揣鏂瑰紡锛?/label>
+            <select class="select" id="shippingType">
+              <option value="">鍏ㄩ儴</option>
+            </select>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-search" id="searchBtn">鏌ヨ</button>
+            <button class="btn btn-reset" id="resetBtn">閲嶇疆</button>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div class="form-item">
+            <label>蹇€掑崟鍙凤細</label>
+            <input class="input" id="expressNo" type="text" placeholder="璇疯緭鍏ュ揩閫掑崟鍙? />
+          </div>
+          <div class="form-item">
+            <label>鐘舵€侊細</label>
+            <select class="select" id="status">
+              <option value="">鍏ㄩ儴</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel tab-panel">
+        <div class="tabs" id="tabs"></div>
+      </div>
+
+      <div class="panel">
+        <div class="table-header">
+          <div class="table-title">鍏ュ簱鍗曞垪琛?/div>
+          <button class="btn btn-primary">鏂板鍏ュ簱鍗?/button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:50px;"><input class="checkbox" id="checkAll" type="checkbox" /></th>
+                <th>鍏ュ簱鍗曞彿</th>
+                <th>鏀惰揣浠?/th>
+                <th>鍙戣揣鏂瑰紡</th>
+                <th>蹇€掑崟鍙?/th>
+                <th>绠辨暟</th>
+                <th>浠舵暟</th>
+                <th>閲嶉噺(KG)</th>
+                <th>浣撶Н(CBM)</th>
+                <th>鍒涘缓鏃堕棿</th>
+                <th>鐘舵€?/th>
+                <th>鎿嶄綔</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../mock_data/inOrder.js"></script>
+  <script src="inOrder.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>入库预约详情 - 海外仓</title>
+  <link href="css/vendor/overseawh-legacy/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/overseawh-legacy/main.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/overseawh-legacy/order-return-record-prototype-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/receiving-appointment-detail.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-overseas-chrome-header"></div>
+
+<div class="container-fluid recv-detail-wrap" id="detailMain">
+  <p class="recv-detail-back"><a href="receiving-appointment.html">&lt; 返回列表</a></p>
+
+  <div class="recv-detail-header">
+    <div class="recv-detail-header-left">
+      <h1 id="hdrAppointmentNo">#-</h1>
+      <div class="recv-detail-status" id="hdrStatus">-</div>
+    </div>
+    <div class="recv-detail-header-actions">
+      <a href="pda-receiving-scan.html" class="btn">PDA收货扫描</a>
+      <button type="button" class="btn btn-primary" id="btnAudit" style="display:none;">审核</button>
+    </div>
+  </div>
+
+  <section class="recv-detail-section">
+    <h2 class="recv-detail-section-title">预约申请信息</h2>
+    <div class="recv-detail-grid" id="applyGrid"></div>
+  </section>
+
+  <section class="recv-detail-section">
+    <h2 class="recv-detail-section-title">仓库确认信息</h2>
+    <div class="recv-detail-grid" id="whConfirmGrid"></div>
+  </section>
+
+  <section class="recv-detail-section">
+    <h2 class="recv-detail-section-title">到仓收货信息</h2>
+    <div class="recv-detail-grid" id="arrivalUnloadGrid"></div>
+  </section>
+
+  <div class="recv-detail-tabs">
+    <ul class="recv-detail-tab-nav" id="detailTabs">
+      <li class="active"><a href="#" data-tab="inbound">入库信息</a></li>
+      <li><a href="#" data-tab="logs">日志信息</a></li>
+    </ul>
+    <div class="recv-detail-tab-pane active" id="paneInbound">
+      <table class="table table-bordered table-hover recv-detail-table">
+        <thead>
+          <tr class="info">
+            <th>单据号</th>
+            <th>发货方式</th>
+            <th>状态</th>
+            <th>目的仓</th>
+            <th>订单箱数</th>
+            <th>送仓箱数</th>
+            <th>收货箱数</th>
+            <th>下单日期</th>
+            <th>处理方式</th>
+          </tr>
+        </thead>
+        <tbody id="inboundBody"></tbody>
+      </table>
+    </div>
+    <div class="recv-detail-tab-pane" id="paneLogs">
+      <ul class="recv-detail-log-list" id="logList"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid recv-detail-wrap" id="detailEmpty" style="display:none;">
+  <p class="recv-detail-empty">预约单不存在</p>
+  <p style="text-align:center;"><a href="receiving-appointment.html">返回列表</a></p>
+</div>
+
+<div class="recv-audit-modal-backdrop" id="auditModalBackdrop" style="display:none;">
+  <div class="recv-audit-modal" role="dialog" aria-labelledby="auditModalTitle">
+    <div class="recv-audit-modal-header">
+      <h3 id="auditModalTitle">预约确认</h3>
+      <button type="button" class="close" id="auditModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="recv-audit-modal-body">
+      <p class="recv-audit-tip" style="background:#fffbe6;border:1px solid #ffe58f;color:#874d00;padding:8px 12px;border-radius:4px;margin-bottom:12px;">
+        无论确认时段是否与客户期望日期一致，提交后预约单都会回到「客户待确认」由客户最终拍板。
+      </p>
+      <div class="recv-audit-field">
+        <label>客户期望日期</label>
+        <p class="recv-audit-readonly" id="auditExpectedTime">-</p>
+      </div>
+      <div class="recv-audit-field">
+        <label>客户备注</label>
+        <p class="recv-audit-readonly" id="auditCustomerRemark" style="white-space:pre-wrap;">-</p>
+      </div>
+      <div class="recv-audit-field">
+        <label>审核结论</label>
+        <div class="recv-audit-radio-group">
+          <label class="radio inline"><input type="radio" name="auditDecision" value="confirm" checked> 确认时段</label>
+          <label class="radio inline"><input type="radio" name="auditDecision" value="reject"> 拒收</label>
+        </div>
+      </div>
+      <div id="auditPanelWh" class="recv-audit-panel">
+        <div class="recv-audit-field recv-audit-wh-row">
+          <label><span class="req">*</span>仓库</label>
+          <select id="auditWarehouse" class="span3"></select>
+          <span class="recv-audit-wh-addr" id="auditWhAddress"></span>
+        </div>
+        <div class="recv-audit-field">
+          <label><span class="req">*</span>仓库确认时段</label>
+          <div class="recv-audit-slot-row">
+            <input type="date" id="auditSlotDate">
+            <input type="time" id="auditSlotStart" step="60">
+            <span class="recv-audit-slot-sep">至</span>
+            <input type="time" id="auditSlotEnd" step="60">
+          </div>
+          <p class="recv-audit-hint">默认日期=客户期望日期，可调整；起止须同一天，结束时间晚于开始时间</p>
+        </div>
+        <div class="recv-audit-field" id="auditRemarkOptionalWrap">
+          <label>审核备注</label>
+          <textarea id="auditRemarkOptional" rows="2" maxlength="200" placeholder="选填，将同步给客户"></textarea>
+        </div>
+      </div>
+      <div id="auditPanelReject" class="recv-audit-panel" style="display:none;">
+        <div class="recv-audit-field">
+          <label><span class="req">*</span>拒收原因</label>
+          <textarea id="auditRemarkReject" rows="3" maxlength="200" placeholder="请说明拒收原因（至少 5 字符）"></textarea>
+          <p class="recv-audit-hint">拒收后状态变更为「预约失败」，请明确告知原因</p>
+        </div>
+      </div>
+      <p class="recv-audit-error" id="auditFormError" style="display:none;"></p>
+    </div>
+    <div class="recv-audit-modal-footer">
+      <button type="button" class="btn" id="auditModalCancel">取消</button>
+      <button type="button" class="btn btn-primary" id="auditModalSubmit">提交</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    Copyright &copy; 运德供应链 &middot; 入库预约管理
+  </div>
+</footer>
+
+<script src="js/vendor/overseawh-legacy/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/vendor/overseawh-legacy/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/overseawh-chrome.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoOverseasChrome.mountHeader('#wedo-overseas-chrome-header', {
+    activeSecondMenu: 'receivingAppointmentMgmt',
+    activeWarehouseIndex: 0,
+    userName: '演示用户',
+    assetsRoot: 'css/vendor/'
+  });
+</script>
+<script src="../mock_data/inOrder.js"></script>
+<script src="../mock_data/deliveryAppointment.js"></script>
+<script src="../customer/js/deliveryAppointment-common.js"></script>
+<script src="js/receiving-appointment-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+.recv-detail-wrap {
+  margin-top: 10px;
+}
+
+.recv-detail-back {
+  margin: 8px 18px;
+}
+
+.recv-detail-header {
+  margin: 0 18px 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.recv-detail-header-left h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.recv-detail-status {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.recv-detail-status.wh-pending {
+  color: #c00;
+}
+
+.recv-detail-status.customer-pending {
+  color: #e68000;
+}
+
+.recv-detail-status.delivered {
+  color: #0e7b3c;
+}
+
+.recv-detail-section {
+  margin: 0 18px 16px;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.recv-detail-section-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.recv-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 24px;
+}
+
+@media (max-width: 900px) {
+  .recv-detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.recv-detail-item label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.recv-detail-item span,
+.recv-detail-item a {
+  font-size: 13px;
+  color: #333;
+  word-break: break-all;
+}
+
+.recv-detail-item-full {
+  grid-column: 1 / -1;
+}
+
+.recv-detail-photo-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recv-detail-photo-thumb {
+  display: block;
+  width: 88px;
+  height: 88px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.recv-detail-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recv-detail-tabs {
+  margin: 0 18px 16px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.recv-detail-tab-nav {
+  margin: 0;
+  padding: 0 12px;
+  list-style: none;
+  border-bottom: 1px solid #ddd;
+  background: #f5f5f5;
+}
+
+.recv-detail-tab-nav li {
+  display: inline-block;
+  margin-bottom: -1px;
+}
+
+.recv-detail-tab-nav a {
+  display: block;
+  padding: 10px 18px;
+  color: #555;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-bottom: none;
+}
+
+.recv-detail-tab-nav li.active a {
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+  border-color: #ddd;
+  border-bottom-color: #fff;
+}
+
+.recv-detail-tab-pane {
+  display: none;
+  padding: 14px 18px;
+}
+
+.recv-detail-tab-pane.active {
+  display: block;
+}
+
+.recv-detail-table {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.recv-detail-table th {
+  background: #f0f0f0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.recv-detail-table td {
+  font-size: 12px;
+}
+
+.recv-detail-total-row td {
+  font-weight: bold;
+  background: #fafafa;
+}
+
+.recv-detail-log-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recv-detail-log-list li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 13px;
+}
+
+.recv-detail-log-list li:last-child {
+  border-bottom: none;
+}
+
+.recv-detail-log-time {
+  color: #888;
+  margin-right: 12px;
+}
+
+.recv-detail-empty {
+  text-align: center;
+  color: #999;
+  padding: 24px;
+}
+
+.recv-detail-status.failed {
+  color: #999;
+}
+
+.recv-audit-modal-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.recv-audit-modal {
+  width: 100%;
+  max-width: 640px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.recv-audit-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid #eee;
+}
+
+.recv-audit-modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.recv-audit-modal-header .close {
+  border: none;
+  background: none;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #999;
+}
+
+.recv-audit-modal-body {
+  padding: 16px 18px;
+}
+
+.recv-audit-modal-footer {
+  padding: 12px 18px;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.recv-audit-modal-footer .btn {
+  margin-left: 8px;
+}
+
+.recv-audit-field {
+  margin-bottom: 14px;
+}
+
+.recv-audit-field > label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.recv-audit-field .req {
+  color: #c00;
+  margin-right: 2px;
+}
+
+.recv-audit-readonly {
+  margin: 0;
+  padding: 8px 10px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+.recv-audit-radio-group label.radio {
+  margin-right: 16px;
+  font-weight: normal;
+}
+
+.recv-audit-wh-row select {
+  width: 140px;
+  margin-right: 10px;
+}
+
+.recv-audit-wh-addr {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 360px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.recv-audit-slot-row input[type="datetime-local"] {
+  width: 200px;
+}
+
+.recv-audit-slot-row input[type="date"] {
+  width: 150px;
+  margin-right: 8px;
+}
+
+.recv-audit-slot-row input[type="time"] {
+  width: 110px;
+}
+
+.recv-audit-slot-sep {
+  margin: 0 8px;
+  color: #888;
+}
+
+.recv-audit-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.recv-audit-hint {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #888;
+}
+
+.recv-audit-error {
+  color: #c00;
+  font-size: 12px;
+  margin: 0;
+}

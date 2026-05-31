@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>装柜清单管理 - 运德物流系统</title>
+  <link href="../wh/css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="../wh/css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="../wh/css/delivery-appointment-list.css" rel="stylesheet" type="text/css">
+  <link href="css/container-loading-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="fourvar order-fourvar" style="height:auto;">
+  <table class="table-h25">
+    <tr>
+      <td style="padding-left:17px;">实装箱号：</td>
+      <td>
+        <input id="q_container_no" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">起运港：</td>
+      <td>
+        <select id="q_port_of_loading" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">目的港：</td>
+      <td>
+        <select id="q_destination_port" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">状态：</td>
+      <td>
+        <select id="q_status" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">预计开船开始：</td>
+      <td><input id="q_etd_start" class="text-input w150" type="text" placeholder="YYYY-MM-DD" /></td>
+      <td style="padding-left:17px;">预计开船结束：</td>
+      <td><input id="q_etd_end" class="text-input w150" type="text" placeholder="YYYY-MM-DD" /></td>
+      <td style="padding-left:17px;">关键字：</td>
+      <td><input id="q_keyword" class="text-input w150" type="text" placeholder="提单号/船名/操作人" /></td>
+      <td style="padding-left:17px;">
+        <button type="button" id="btn_container_query" class="order-fourvar-submit" style="margin:5px;">查询</button>
+      </td>
+      <td>
+        <button type="button" id="btn_container_reset">重置</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="main inorder-main">
+  <p id="container-result-hint" class="container-result-hint"></p>
+  <table cellspacing="0" width="100%">
+    <thead>
+      <tr class="title">
+        <td><input type="checkbox" disabled></td>
+        <td>实装箱号</td>
+        <td>柜型</td>
+        <td>提单号</td>
+        <td>船名航次</td>
+        <td>起运港</td>
+        <td>预计开船时间</td>
+        <td>封条号</td>
+        <td>目的港</td>
+        <td>状态</td>
+        <td>装柜时间</td>
+        <td>创建时间</td>
+        <td>预装箱数</td>
+        <td>实装箱数</td>
+        <td>重量(KG)</td>
+        <td>体积(CBM)</td>
+        <td>操作人</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody id="container-list-tbody"></tbody>
+  </table>
+  <div class="pagination pagination-prototype-nav" id="container-pagination"></div>
+</div>
+
+<div id="container-ticket-modal" class="container-modal-mask" aria-hidden="true">
+  <div class="container-modal" role="dialog" aria-modal="true" aria-labelledby="container-ticket-title">
+    <div class="container-modal-header">
+      <span id="container-ticket-title">票号详情</span>
+      <button type="button" class="container-modal-close" id="btn_container_modal_close" aria-label="关闭">×</button>
+    </div>
+    <div class="container-modal-summary" id="container-ticket-summary"></div>
+    <div class="container-modal-body">
+      <table cellspacing="0" width="100%" class="container-ticket-table">
+        <thead>
+          <tr class="title">
+            <td>票号</td>
+            <td>客户编号</td>
+            <td>客户单号</td>
+            <td>上传日期</td>
+            <td>运输方式</td>
+            <td>跟踪号</td>
+            <td>目的港</td>
+            <td>目的仓</td>
+            <td>箱数</td>
+            <td>毛重</td>
+            <td>体积</td>
+          </tr>
+        </thead>
+        <tbody id="container-ticket-tbody"></tbody>
+      </table>
+    </div>
+    <div class="container-modal-footer">
+      <button type="button" id="btn_container_modal_ok">确定</button>
+    </div>
+  </div>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德物流系统原型
+  <a href="#" onclick="return false;">演示页</a>
+</footer>
+
+<script src="../wh/js/vendor/wh-mid-legacy/wh-mid-chrome.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'documents',
+    activeSecondMenu: 'containerLoading',
+    brandTitle: '运德物流系统',
+    userName: '演示用户'
+  });
+</script>
+<script src="../mock_data/containerLoading.js"></script>
+<script src="js/containerLoadingList.js"></script>
+</body>
+</html>

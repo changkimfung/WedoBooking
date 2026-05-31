@@ -1,0 +1,137 @@
+/* 运德物流系统 · 装柜清单管理 */
+.container-result-hint {
+  margin: 8px 0 0;
+  color: #878787;
+  font-size: 12px;
+}
+
+.container-no-link {
+  color: #0023a8;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.container-tag {
+  display: inline-block;
+  min-width: 28px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+}
+
+.container-tag-normal {
+  background: #21a366;
+}
+
+.container-tag-info {
+  background: #1f8dd6;
+}
+
+.container-tag-muted {
+  background: #8c8c8c;
+}
+
+.container-op-stack {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.container-op-link {
+  color: #0023a8;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.container-modal-mask {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: none;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.container-modal-mask.show {
+  display: block;
+}
+
+.container-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(1180px, calc(100vw - 56px));
+  max-height: calc(100vh - 80px);
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.container-modal-header {
+  height: 44px;
+  padding: 0 14px;
+  background: #2f9cf4;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 18px;
+}
+
+.container-modal-close {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+}
+
+.container-modal-close:hover {
+  background: transparent;
+}
+
+.container-modal-summary {
+  padding: 10px 16px;
+  background: #f7fbff;
+  border-bottom: 1px solid #e3e3e3;
+  color: #555;
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.container-modal-body {
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+  padding: 12px 16px 4px;
+}
+
+.container-ticket-table {
+  min-width: 1050px;
+}
+
+.container-modal-footer {
+  padding: 10px 16px 14px;
+  text-align: right;
+  border-top: 1px solid #e6e6e6;
+  background: #fff;
+}
+
+.container-modal-footer button,
+.container-modal-footer a {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.container-empty {
+  color: #999;
+  text-align: center;
+  padding: 18px 0;
+}

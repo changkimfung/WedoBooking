@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>入库单管理 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/in-order-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="fourvar order-fourvar" style="height:auto;">
+  <table class="table-h25">
+    <tr>
+      <td style="padding-left:17px;">入库单号：</td>
+      <td>
+        <input id="q_order_no" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">收货仓：</td>
+      <td>
+        <select id="q_warehouse" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">发货方式：</td>
+      <td>
+        <select id="q_shipping_method" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">快递单号：</td>
+      <td>
+        <input id="q_tracking_no" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">状态：</td>
+      <td>
+        <select id="q_status" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">
+        <button type="button" id="btn_inorder_query" class="order-fourvar-submit" style="margin:5px;">查询</button>
+      </td>
+      <td colspan="9">
+        <button type="button" id="btn_inorder_reset">重置查询</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="main inorder-main">
+  <p id="inorder-result-hint" style="margin:8px 0 0;font-size:12px;color:#878787;"></p>
+  <table cellspacing="0" width="100%">
+    <thead>
+      <tr class="title">
+        <td>入库单号</td>
+        <td>用户编号</td>
+        <td>收货仓</td>
+        <td>发货方式</td>
+        <td>快递单号</td>
+        <td>物流报价单号</td>
+        <td>毛重(KG)</td>
+        <td>计费重(KG)</td>
+        <td>体积(CBM)</td>
+        <td>件数</td>
+        <td>已收</td>
+        <td>创建时间</td>
+        <td>状态</td>
+        <td>备注</td>
+        <td>操作</td>
+      </tr>
+    </thead>
+    <tbody id="inorder-list-tbody"></tbody>
+  </table>
+  <div class="pagination pagination-prototype-nav" id="inorder-pagination"></div>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德仓储中台原型
+  <a href="#" onclick="return false;">演示页</a>
+</footer>
+
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'documents',
+    activeSecondMenu: 'inboundMgmt',
+    userName: '演示用户'
+  });
+</script>
+<script src="../mock_data/inOrder.js"></script>
+<script src="js/inOrder.js"></script>
+</body>
+</html>

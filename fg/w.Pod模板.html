@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=w.pod整柜模板.html">
+    <title>跳转整柜 W.BOL</title>
+</head>
+<body>
+    <p>正在打开整柜模板…若未跳转请 <a id="link">点击这里</a>。</p>
+    <script>
+        var q = window.location.search || '';
+        var target = 'w.pod整柜模板.html' + q;
+        document.getElementById('link').href = target;
+        window.location.replace(target);
+    </script>
+</body>
+</html>

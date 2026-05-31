@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>PDA 收货确认 - 海外仓</title>
+  <link rel="stylesheet" href="css/pda.css">
+</head>
+<body class="pda-body pda-theme-scan">
+  <div class="pda-view">
+    <header class="pda-bar">
+      <div class="pda-bar-inner">
+        <span class="pda-bar-user">操作人:演示用户<strong class="pda-bar-site">US</strong></span>
+        <div class="pda-bar-menu">
+          <button type="button" class="pda-bar-menu-btn" id="pda-menu-btn">菜单</button>
+          <ul class="pda-bar-dd" id="pda-menu-list" hidden>
+            <li><a href="receiving-appointment.html">入库预约管理</a></li>
+            <li><a href="receiving-appointment-detail.html?id=appt-003">预约详情示例</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="pda-main">
+      <!-- 第一页：扫描校验 -->
+      <section id="pageScan" class="pda-page">
+        <h1 class="pda-page-title">收货确认</h1>
+        <p class="pda-muted">扫描或输入预约码 / 入库单号，按 Enter 识别；核对信息后点击下一步</p>
+
+        <table class="pda-ris-table">
+          <tr>
+            <td class="pda-ris-label"><span class="pda-ris-req">*</span>单号:</td>
+            <td>
+              <input type="text" id="scanInput" class="pda-ris-input" autocomplete="off"
+                enterkeyhint="search" placeholder="预约码 / 入库单号" autofocus>
+            </td>
+          </tr>
+        </table>
+
+        <div class="pda-ris-mstatus" id="scanStatus"></div>
+
+        <div id="scanResultPanel" class="pda-scan-result pda-hidden">
+          <dl class="pda-confirm-meta">
+            <dt>预约单</dt>
+            <dd id="scanAppointmentNo">-</dd>
+            <dt>预约码</dt>
+            <dd id="scanDeliveryCode">-</dd>
+            <dt>预约方</dt>
+            <dd id="scanBookerParty">-</dd>
+          </dl>
+          <div class="pda-scan-next-wrap">
+            <button type="button" class="pda-ris-btn-footer pda-ris-btn-primary" id="btnNext">下一步</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 第二页：收货数量登记 -->
+      <section id="pageConfirm" class="pda-page pda-hidden">
+        <h1 class="pda-page-title" id="confirmPageTitle">预约单号：-</h1>
+
+        <div class="pda-photo-section">
+          <div class="pda-photo-section-title">到仓拍照</div>
+          <button type="button" class="pda-upload-btn" id="btnUploadPhoto">到仓拍照（支持多张）</button>
+          <input type="file" id="photoFile" class="pda-photo-input" accept="image/*" capture="environment" multiple>
+          <div class="pda-photo-list" id="photoList"><span class="pda-photo-empty">未上传</span></div>
+        </div>
+
+        <div class="pda-register-panel">
+          <table class="pda-ris-table pda-register-table">
+            <tr>
+              <td class="pda-ris-label">收货总箱数</td>
+              <td class="pda-field-with-ref">
+                <input type="number" id="receivedCartons" class="pda-ris-input" min="0" step="1" inputmode="numeric" placeholder="非必填">
+                <span class="pda-ref-green" id="refDeliveryCartons">-</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="pda-ris-label">收货总托数</td>
+              <td class="pda-field-with-ref">
+                <input type="number" id="receivedPallets" class="pda-ris-input" min="0" step="1" inputmode="numeric" placeholder="非必填">
+                <span class="pda-ref-green" id="refDeliveryPallets">-</span>
+              </td>
+            </tr>
+          </table>
+          <div class="pda-inbound-preview" id="inboundDetailPreview"></div>
+          <p class="pda-register-hint">到仓文件与收货总箱数至少填写一项；收货总托数非必填。</p>
+        </div>
+
+        <div class="pda-ris-mstatus" id="confirmStatus"></div>
+
+        <div class="pda-actions">
+          <button type="button" class="pda-ris-btn-footer pda-ris-btn-primary" id="btnSubmit">提交</button>
+          <button type="button" class="pda-ris-btn-footer" id="btnBack">返回上一页</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="pda-alert-modal-backdrop pda-hidden" id="pdaAlertModal" aria-hidden="true">
+    <div class="pda-alert-modal" role="alertdialog" aria-labelledby="pdaAlertModalText">
+      <p class="pda-alert-modal-body" id="pdaAlertModalText"></p>
+      <button type="button" class="pda-ris-btn-footer pda-ris-btn-primary" id="pdaAlertModalOk">确定</button>
+    </div>
+  </div>
+
+  <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="../customer/js/deliveryAppointment-common.js"></script>
+  <script src="js/pda-core.js"></script>
+  <script src="js/pda-receiving-scan.js"></script>
+</body>
+</html>

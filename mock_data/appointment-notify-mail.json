@@ -1,0 +1,1085 @@
+[
+  {
+    "id": "mail-1780023276549-307",
+    "sentAt": "2026-05-29T02:54:36.549Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "您的入仓预约已审核通过，请点击确认最终时段 - 单号：YY20260525101",
+    "body": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260525101）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：\n\n预约单号：YY20260525101\n预约仓库：美西4仓 (US West Warehouse)\n仓库确认地址：14500 Nelson Ave, City of Industry, CA 91744, USA\n核定入仓时段：2026-06-18 09:00--12:00（当地时间）\n\n【必须操作】\n请点击下方链接进入系统，确认上述分配的时段。逾期未确认，该时段可能会重新释放给其他预约。\n\n[点击此处：确认是否接受预约]\n\n温馨提示：\n\n确认后，系统将生成最终的“入仓二维码/凭证”，请交由司机随货携带。\n请确保司机在核定时间内到达，如需取消或变更，请至少提前12小时在系统处理。\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "warehouse_slot_pending_customer_confirm",
+    "recipientRole": "货代",
+    "title": "入仓预约已审核通过",
+    "intro": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260525101）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：",
+    "actionUrl": "http://localhost:3847/fg/reservationDetail.html?code=SC6TPW",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "点击此处：确认是否接受预约",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西4仓 (US West Warehouse)"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "14500 Nelson Ave, City of Industry, CA 91744, USA"
+      },
+      {
+        "label": "核定入仓时段",
+        "value": "2026-06-18 09:00--12:00（当地时间）"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "仓库待确认",
+    "newStatus": "客户待确认",
+    "messageId": "<59468533-0a68-47ef-c288-a2eaa03097d2@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780023236213-917",
+    "sentAt": "2026-05-29T02:53:56.213Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260525101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260525101\n目的地：美东仓 (US West Warehouse)\n预约仓库地址：1000 High Street, Perth Amboy, NJ 08861\n预计派送日期：2026-06-18\n当前状态：待仓库审核（Pending Review）\n备注：222222\n货量：2 cartons / 2 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "目的地",
+        "value": "美东仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "1000 High Street, Perth Amboy, NJ 08861"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-18"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "222222"
+      },
+      {
+        "label": "货量",
+        "value": "2 cartons / 2 pallets"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<c9d51531-db83-e18e-a74b-4c2ddafb1862@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780022482509-892",
+    "sentAt": "2026-05-29T02:41:22.509Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约失败】申请被驳回 - 单号：YY20260525101 - 目的地：美东仓",
+    "body": "您好！\n\n很抱歉地通知您，您提交的入仓预约申请（单号：YY20260525101）未通过审核。\n\n【驳回原因】\n213123123123\n\n【后续操作建议】\n\n请登录预约后台，根据上述原因修改相关信息。\n重新选择可用的派送时段。\n注意：在申请重新获得“审核通过”前，请务必不要安排司机前往仓库，否则将无法入仓卸货。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "appointment_rejected_forwarder",
+    "recipientRole": "货代",
+    "title": "申请被驳回",
+    "intro": "您好！\n\n很抱歉地通知您，您提交的入仓预约申请（单号：YY20260525101）未通过审核。",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SC6TPW",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "登录预约后台",
+    "fields": [
+      {
+        "label": "驳回原因",
+        "value": "213123123123"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "仓库待确认",
+    "newStatus": "预约失败",
+    "messageId": "<5bde6d8f-8033-53f3-d84a-45946ba55c92@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780022472125-268",
+    "sentAt": "2026-05-29T02:41:12.125Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260525101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260525101\n目的地：美东仓 (US West Warehouse)\n预约仓库地址：1000 High Street, Perth Amboy, NJ 08861\n预计派送日期：2026-06-18\n当前状态：待仓库审核（Pending Review）\n备注：222222\n货量：2 cartons / 2 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "目的地",
+        "value": "美东仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "1000 High Street, Perth Amboy, NJ 08861"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-18"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "222222"
+      },
+      {
+        "label": "货量",
+        "value": "2 cartons / 2 pallets"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<3e06d9ee-ec9e-1c36-baf8-82cdd16275c9@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780022302229-851",
+    "sentAt": "2026-05-29T02:38:22.229Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约失败】申请被驳回 - 单号：YY20260525101 - 目的地：美东仓",
+    "body": "您好！\n\n很抱歉地通知您，您提交的入仓预约申请（单号：YY20260525101）未通过审核。\n\n【驳回原因】\n2222222\n\n【后续操作建议】\n\n请登录预约后台，根据上述原因修改相关信息。\n重新选择可用的派送时段。\n注意：在申请重新获得“审核通过”前，请务必不要安排司机前往仓库，否则将无法入仓卸货。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "appointment_rejected_forwarder",
+    "recipientRole": "货代",
+    "title": "申请被驳回",
+    "intro": "您好！\n\n很抱歉地通知您，您提交的入仓预约申请（单号：YY20260525101）未通过审核。",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SC6TPW",
+    "actionLabel": "登录预约后台",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "fields": [
+      {
+        "label": "驳回原因",
+        "value": "2222222"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "仓库待确认",
+    "newStatus": "预约失败",
+    "messageId": "<b284a2a2-0f66-ccdb-4af5-50981e8c318a@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780021983967-266",
+    "sentAt": "2026-05-29T02:33:03.967Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260528102",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260528102\n目的地：深圳A仓 (US West Warehouse)\n预约仓库地址：18501 Arenth Ave, City of Industry, CA 91748\n预计派送日期：2026-06-26\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：1 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "目的地",
+        "value": "深圳A仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "18501 Arenth Ave, City of Industry, CA 91748"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "1 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<82c5d102-f38c-a81d-d672-870dc004b4bf@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780021952353-571",
+    "sentAt": "2026-05-29T02:32:32.353Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260528102",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260528102\n目的地：深圳A仓 (US West Warehouse)\n预约仓库地址：18501 Arenth Ave, City of Industry, CA 91748\n预计派送日期：2026-06-26\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：1 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n如有任何疑问，请提供预约单号并回复本邮件咨询。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SCVLKD",
+    "actionLabel": "查看预约详情",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "目的地",
+        "value": "深圳A仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "18501 Arenth Ave, City of Industry, CA 91748"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "1 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<ad5d157e-3227-87d1-b931-588a963f282b@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780021584738-421",
+    "sentAt": "2026-05-29T02:26:24.738Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260528102",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260528102\n目的地：深圳A仓 (US West Warehouse)\n预约仓库地址：18501 Arenth Ave, City of Industry, CA 91748\n预计派送日期：2026-06-26\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：1 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n如有任何疑问，请提供预约单号并回复本邮件咨询。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SCVLKD",
+    "actionLabel": "查看预约详情",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "目的地",
+        "value": "深圳A仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "18501 Arenth Ave, City of Industry, CA 91748"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "1 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<c28dbd6f-62c9-86e2-0362-124b25b40559@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780021522378-907",
+    "sentAt": "2026-05-29T02:25:22.378Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【待审核】CN0000438提交送仓预约 YY20260528102",
+    "body": "CN0000438已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-29 10:25:21\n\n请确认可接收时段；如无法接收，请在审核页填写明确拒收原因。",
+    "templateKey": "submit_pending_warehouse",
+    "recipientRole": "仓库",
+    "title": "CN0000438已提交送仓预约",
+    "intro": "CN0000438已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。",
+    "actionUrl": "http://localhost:3847/us/receiving-appointment-detail.html?id=appt-1779959448524-765",
+    "actionLabel": "前往审核预约",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCVLKD"
+      },
+      {
+        "label": "客户编号",
+        "value": "CN0000438"
+      },
+      {
+        "label": "预约仓库",
+        "value": "深圳A仓"
+      },
+      {
+        "label": "原状态",
+        "value": "待预约"
+      },
+      {
+        "label": "新状态",
+        "value": "仓库待确认"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "期望送仓日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "送仓总箱数",
+        "value": 1
+      },
+      {
+        "label": "送仓总托数",
+        "value": "-"
+      },
+      {
+        "label": "是否打托",
+        "value": "否"
+      },
+      {
+        "label": "集装箱号",
+        "value": "-"
+      },
+      {
+        "label": "柜型",
+        "value": "-"
+      },
+      {
+        "label": "货代备注",
+        "value": "-"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<e548da04-88f8-7437-7980-70db80369206@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780021522371-819",
+    "sentAt": "2026-05-29T02:25:22.371Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功】送仓预约已提交 YY20260528102",
+    "body": "您的送仓预约已提交成功，当前等待仓库审核确认。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-29 10:25:21\n\n仓库审核后会反馈确认地址和送仓时段，请留意待确认通知。",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "送仓预约已提交成功",
+    "intro": "您的送仓预约已提交成功，当前等待仓库审核确认。",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SCVLKD",
+    "actionLabel": "查看预约详情",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCVLKD"
+      },
+      {
+        "label": "客户编号",
+        "value": "CN0000438"
+      },
+      {
+        "label": "预约仓库",
+        "value": "深圳A仓"
+      },
+      {
+        "label": "原状态",
+        "value": "待预约"
+      },
+      {
+        "label": "新状态",
+        "value": "仓库待确认"
+      },
+      {
+        "label": "目的仓",
+        "value": "深圳A仓"
+      },
+      {
+        "label": "期望送仓日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "货物概要",
+        "value": "总箱数 1，总托数 -"
+      },
+      {
+        "label": "提交时间",
+        "value": "2026-05-28 17:10:48"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<3e87c1ef-951a-2006-54e7-de7cbd341412@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779974546955-263",
+    "sentAt": "2026-05-28T13:22:26.955Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【待确认】仓库已反馈送仓安排，请确认 YY20260525101",
+    "body": "仓库已反馈本次送仓的确认地址和时段，但预约尚未最终生效。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美西4仓\n原状态：仓库待确认\n新状态：客户待确认\n变更时间：2026-05-28 21:22:26\n\n如接受该安排，请点击确认并完成预约；如不接受，请进入页面重新预约。",
+    "templateKey": "warehouse_slot_pending_customer_confirm",
+    "recipientRole": "货代",
+    "title": "仓库已反馈送仓安排",
+    "intro": "仓库已反馈本次送仓的确认地址和时段，但预约尚未最终生效。",
+    "actionUrl": "http://localhost:3847/fg/reservationDetail.html?code=SC6TPW",
+    "actionLabel": "确认预约安排",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SC6TPW"
+      },
+      {
+        "label": "客户编号",
+        "value": "运德船务"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西4仓"
+      },
+      {
+        "label": "原状态",
+        "value": "仓库待确认"
+      },
+      {
+        "label": "新状态",
+        "value": "客户待确认"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "14500 Nelson Ave, City of Industry, CA 91744, USA"
+      },
+      {
+        "label": "仓库确认送仓时段",
+        "value": "2026-06-05 09:00--12:00"
+      },
+      {
+        "label": "仓库备注",
+        "value": "-"
+      },
+      {
+        "label": "原期望送仓日期",
+        "value": "2026-06-05"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "货物概要",
+        "value": "总箱数 2，总托数 2"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "仓库待确认",
+    "newStatus": "客户待确认",
+    "messageId": "<534615d8-867c-1b3f-6cb1-efe629045035@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779974498480-720",
+    "sentAt": "2026-05-28T13:21:38.481Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【待审核】运德船务提交送仓预约 YY20260525101",
+    "body": "运德船务已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 21:21:37\n\n请确认可接收时段；如无法接收，请在审核页填写明确拒收原因。",
+    "templateKey": "submit_pending_warehouse",
+    "recipientRole": "仓库",
+    "title": "运德船务已提交送仓预约",
+    "intro": "运德船务已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。",
+    "actionUrl": "http://localhost:3847/us/receiving-appointment-detail.html?id=appt-1779700375787-845",
+    "actionLabel": "前往审核预约",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SC6TPW"
+      },
+      {
+        "label": "客户编号",
+        "value": "运德船务"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美东仓"
+      },
+      {
+        "label": "原状态",
+        "value": "待预约"
+      },
+      {
+        "label": "新状态",
+        "value": "仓库待确认"
+      },
+      {
+        "label": "预约方",
+        "value": "运德船务"
+      },
+      {
+        "label": "期望送仓日期",
+        "value": "2026-06-05"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "送仓总箱数",
+        "value": 2
+      },
+      {
+        "label": "送仓总托数",
+        "value": 2
+      },
+      {
+        "label": "是否打托",
+        "value": "是"
+      },
+      {
+        "label": "集装箱号",
+        "value": "-"
+      },
+      {
+        "label": "柜型",
+        "value": "-"
+      },
+      {
+        "label": "货代备注",
+        "value": "222222"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<634d4b8f-945f-d3ba-de98-67921e80a94b@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779974498357-834",
+    "sentAt": "2026-05-28T13:21:38.357Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功】送仓预约已提交 YY20260525101",
+    "body": "您的送仓预约已提交成功，当前等待仓库审核确认。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 21:21:37\n\n仓库审核后会反馈确认地址和送仓时段，请留意待确认通知。",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "送仓预约已提交成功",
+    "intro": "您的送仓预约已提交成功，当前等待仓库审核确认。",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SC6TPW",
+    "actionLabel": "查看预约详情",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SC6TPW"
+      },
+      {
+        "label": "客户编号",
+        "value": "运德船务"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美东仓"
+      },
+      {
+        "label": "原状态",
+        "value": "待预约"
+      },
+      {
+        "label": "新状态",
+        "value": "仓库待确认"
+      },
+      {
+        "label": "目的仓",
+        "value": "美东仓"
+      },
+      {
+        "label": "期望送仓日期",
+        "value": "2026-06-05"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "货物概要",
+        "value": "总箱数 2，总托数 2"
+      },
+      {
+        "label": "提交时间",
+        "value": "2026-05-25 17:12:55"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<1fa95131-2648-76ad-56c6-e01ce7b4fc5c@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779974451783-290",
+    "sentAt": "2026-05-28T13:20:51.783Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约未通过】送仓预约审核未通过 YY20260525101",
+    "body": "很抱歉，本次送仓预约未通过仓库审核。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：仓库待确认\n新状态：预约失败\n变更时间：2026-05-28 21:20:51\n\n请根据拒收原因修改预约信息后重新提交。",
+    "templateKey": "appointment_rejected_forwarder",
+    "recipientRole": "货代",
+    "title": "预约审核未通过",
+    "intro": "很抱歉，本次送仓预约未通过仓库审核。",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SC6TPW",
+    "actionLabel": "重新查看预约",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SC6TPW"
+      },
+      {
+        "label": "客户编号",
+        "value": "运德船务"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美东仓"
+      },
+      {
+        "label": "原状态",
+        "value": "仓库待确认"
+      },
+      {
+        "label": "新状态",
+        "value": "预约失败"
+      },
+      {
+        "label": "拒收原因",
+        "value": "1112222"
+      },
+      {
+        "label": "期望送仓日期",
+        "value": "-"
+      },
+      {
+        "label": "预约备注",
+        "value": "-"
+      }
+    ],
+    "appointmentId": "appt-1779700375787-845",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SC6TPW",
+    "oldStatus": "仓库待确认",
+    "newStatus": "预约失败",
+    "messageId": "<a887c85f-103d-c257-7205-985c0cfa5c0b@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779973884901-587",
+    "sentAt": "2026-05-28T13:11:24.901Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260528102",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 21:11:24",
+    "templateKey": "",
+    "recipientRole": "",
+    "title": "",
+    "intro": "",
+    "actionUrl": "",
+    "actionLabel": "",
+    "fields": [],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<2b78fbb0-a338-9e26-f740-12a3c5209faa@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779954847983-687",
+    "sentAt": "2026-05-28T07:54:07.984Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：预约失败\n新状态：待预约\n变更时间：2026-05-28 15:54:07",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "预约失败",
+    "newStatus": "待预约",
+    "messageId": "<ca981705-eeaa-08e1-57e0-aaaf02b62897@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779953738606-831",
+    "sentAt": "2026-05-28T07:35:38.606Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：预约失败\n新状态：待预约\n变更时间：2026-05-28 15:35:37",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "预约失败",
+    "newStatus": "待预约",
+    "messageId": "<7573651d-f98b-b79a-3bb9-c6a82a850ac4@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779953693915-682",
+    "sentAt": "2026-05-28T07:34:53.915Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：预约失败\n新状态：待预约\n变更时间：2026-05-28 15:34:53",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "预约失败",
+    "newStatus": "待预约",
+    "messageId": "<5b3bc393-18c9-f9fa-7d89-81973f74aa14@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779953648005-885",
+    "sentAt": "2026-05-28T07:34:08.005Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：预约失败\n新状态：待预约\n变更时间：2026-05-28 15:34:07",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "预约失败",
+    "newStatus": "待预约",
+    "messageId": "<20be35a4-081b-dc9d-a879-ba99c18b2794@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779953638993-325",
+    "sentAt": "2026-05-28T07:33:58.993Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：预约失败\n新状态：待预约\n变更时间：2026-05-28 15:33:58",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "预约失败",
+    "newStatus": "待预约",
+    "messageId": "<5c84db84-8d94-ad9d-80f1-b18ae369334a@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779952307675-338",
+    "sentAt": "2026-05-28T07:11:47.675Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：客户待确认\n新状态：预约失败\n变更时间：2026-05-28 15:11:46",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "客户待确认",
+    "newStatus": "预约失败",
+    "messageId": "<c552278b-10ba-2f99-3007-3cad1e6a2e0b@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779951517510-847",
+    "sentAt": "2026-05-28T06:58:37.510Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：仓库待确认\n新状态：客户待确认\n变更时间：2026-05-28 14:58:36",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "仓库待确认",
+    "newStatus": "客户待确认",
+    "messageId": "<561388e3-0f60-7c5c-32fe-7e78e5cb76d9@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779951498766-430",
+    "sentAt": "2026-05-28T06:58:18.766Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 14:58:18",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<4e4dd803-b4d1-4f5c-7a7c-ac3fdd1ee996@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779951489105-640",
+    "sentAt": "2026-05-28T06:58:09.105Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：仓库待确认\n新状态：待预约\n变更时间：2026-05-28 14:58:08",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "仓库待确认",
+    "newStatus": "待预约",
+    "messageId": "<9656e356-5f97-cbcc-0715-48419a887865@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779951096011-607",
+    "sentAt": "2026-05-28T06:51:36.011Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】状态变更通知 YY20260512002",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 14:51:35",
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<a3d54bd9-8337-8ae4-b2c4-4ed7f42f0e7d@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779278984649-800",
+    "sentAt": "2026-05-20T12:09:44.649Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】SMTP 连通性测试",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:09:43.537Z",
+    "appointmentId": "test",
+    "appointmentNo": "TEST-001",
+    "deliveryCode": "SC0000",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<0eb32db5-70c1-8dd6-2784-c629e6b2e4cc@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779278891249-287",
+    "sentAt": "2026-05-20T12:08:11.249Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "297278324@qq.com",
+    "subject": "【预约送仓】SMTP 连通性测试",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:08:10.496Z",
+    "appointmentId": "test",
+    "appointmentNo": "TEST-001",
+    "deliveryCode": "SC0000",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<e7f97405-e952-d90c-ed6d-c1401ee334cc@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1779278859555-682",
+    "sentAt": "2026-05-20T12:07:39.555Z",
+    "channel": "smtp",
+    "status": "failed",
+    "to": "297278324@qq.com",
+    "subject": "【预约送仓】SMTP 连通性测试",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:07:39.402Z",
+    "appointmentId": "test",
+    "appointmentNo": "TEST-001",
+    "deliveryCode": "SC0000",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "",
+    "error": "connect ENETUNREACH 240e:97c:2f:201d::c9:465"
+  },
+  {
+    "id": "mail-1779278851409-108",
+    "sentAt": "2026-05-20T12:07:31.409Z",
+    "channel": "smtp",
+    "status": "failed",
+    "to": "297278324@qq.com",
+    "subject": "【预约送仓】SMTP 连通性测试",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:07:30.133Z",
+    "appointmentId": "test",
+    "appointmentNo": "TEST-001",
+    "deliveryCode": "SC0000",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "",
+    "error": "connect ENETUNREACH 240e:97c:2f:4::3f:465"
+  },
+  {
+    "id": "mail-1779278681800-973",
+    "sentAt": "2026-05-20T12:04:41.800Z",
+    "channel": "log",
+    "status": "skipped",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约送仓】SMTP 连通性测试",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:04:41.792Z",
+    "appointmentId": "test",
+    "appointmentNo": "TEST-001",
+    "deliveryCode": "SC0000",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "",
+    "error": "未配置 SMTP（请在 .env 中设置 SMTP_HOST / SMTP_USER / SMTP_PASS）"
+  }
+]

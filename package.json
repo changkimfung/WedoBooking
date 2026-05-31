@@ -1,0 +1,12 @@
+{
+  "name": "pm-demo",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "test:email": "node scripts/test-notify-email.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "nodemailer": "^8.0.7"
+  }
+}

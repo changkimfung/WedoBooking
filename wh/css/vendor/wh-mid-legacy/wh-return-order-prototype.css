@@ -1,0 +1,162 @@
+@charset "utf-8";
+/* 仓储中台列表页基础样式（摘录 WH 筛选/表格要点） */
+
+html {
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  margin: auto;
+  padding: 0;
+  min-width: 1200px;
+  font-size: 12px;
+  background: #fff;
+}
+
+ul, li, p {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  outline: none;
+}
+
+button {
+  background-color: #0092dc;
+  color: #fff;
+  border: 1px #00689d solid;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+button:hover {
+  background-color: #007fbf;
+}
+
+.fourvar {
+  border-bottom: #ccc solid 1px;
+  height: 35px;
+}
+
+.fourvar.order-fourvar {
+  padding: 10px;
+  color: #000;
+  font-size: 12px;
+  height: auto;
+  background-color: #f2f2f2;
+}
+
+.order-fourvar table.table-h25 {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-h25 tr {
+  height: 25px;
+}
+
+.order-fourvar .table-h25 td {
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.w150 {
+  width: 150px;
+}
+
+.text-input {
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+.order-fourvar input[type="text"],
+.order-fourvar textarea,
+.order-fourvar select {
+  box-sizing: border-box;
+}
+
+.order-fourvar-submit {
+  background-color: #0092dc;
+  color: #fff;
+  border: 1px #00689d solid;
+  margin-left: 8px;
+  margin-right: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.main {
+  font-size: 12px;
+  padding: 0 10px 24px;
+  box-sizing: border-box;
+}
+
+.main table {
+  border: 1px #e1e1e1 solid;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.main table td {
+  padding: 7px 4px;
+  border-bottom: 1px #fff solid;
+}
+
+.main .title,
+.main tr.title td,
+.main thead tr.title td {
+  background-color: #f2f2f2;
+  font-weight: normal;
+}
+
+.main tbody tr:hover {
+  background-color: #f2f2f2;
+}
+
+.main thead tr.title:hover td {
+  background-color: #f2f2f2;
+}
+
+.main .button {
+  text-align: left;
+}
+
+.main .button:hover {
+  background: none;
+}
+
+.main tbody td a.inorder-op-link {
+  color: #0023a8;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.main tbody td a.inorder-op-link:hover {
+  color: #001880;
+}
+
+.main .pagination {
+  float: none;
+  padding: 12px 0;
+  margin-top: 8px;
+  color: #333;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}

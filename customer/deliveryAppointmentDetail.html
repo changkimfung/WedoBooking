@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>预约送仓详情</title>
+  <link rel="stylesheet" href="css/customer-common.css" />
+  <link rel="stylesheet" href="css/delivery-appointment.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo"><div class="logo-icon">仓</div><span>运德仓储系统</span></div>
+    </div>
+    <div class="topbar-right">
+      <span class="top-icon">🔔 消息</span>
+      <span class="top-icon">⚙ 设置</span>
+      <span class="top-icon">Hello！郑乔俊</span>
+      <span class="top-icon">退出</span>
+    </div>
+  </header>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="menu-section">
+        <div class="menu-section-title">主菜单</div>
+        <div class="menu-item"><div class="menu-label">🏠 首页</div></div>
+        <div class="menu-item"><div class="menu-label">📦 产品管理</div></div>
+        <div class="menu-item" id="docManageBtn">
+          <div class="menu-label">📑 单据管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu show" id="docManageSubmenu">
+          <div class="menu-item"><a href="inOrder.html">入库单</a></div>
+          <div class="menu-item"><a href="deliveryAppointment.html">预约送仓</a></div>
+          <div class="menu-item">出库单</div>
+          <div class="menu-item">调拨单</div>
+        </div>
+        <div class="menu-item"><div class="menu-label">🛠 服务工单</div></div>
+        <div class="menu-item"><div class="menu-label">📊 数据统计</div></div>
+        <div class="menu-item"><div class="menu-label">👤 用户中心</div></div>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="breadcrumb">单据管理 &gt;&gt; 预约送仓 &gt;&gt; 详情</div>
+
+      <div class="panel" id="detailPanel">
+        <div class="form-section-title">预约信息</div>
+        <div class="detail-grid" id="detailInfo"></div>
+        <div class="detail-tabs">
+          <ul class="detail-tab-nav" id="detailTabs">
+            <li class="active"><a href="#" data-tab="inbound">货物明细</a></li>
+            <li><a href="#" data-tab="logs">日志明细</a></li>
+          </ul>
+          <div class="detail-tab-pane active" id="paneInbound">
+            <div class="form-section-body sub-table-wrap">
+              <table class="sub-table">
+                <thead><tr>
+                  <th>入库单号</th><th>订单状态</th><th>收货仓</th><th>发货方式</th><th>订单箱数</th><th>送仓箱数</th><th>提交时间</th>
+                </tr></thead>
+                <tbody id="detailInOrders"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="detail-tab-pane" id="paneLogs">
+            <ul class="detail-log-list" id="logList"></ul>
+          </div>
+        </div>
+        <div class="detail-actions" id="detailActions"></div>
+        <div class="form-footer">
+          <a href="deliveryAppointment.html" class="btn btn-reset">返回列表</a>
+        </div>
+      </div>
+      <div class="panel" id="emptyPanel" style="display:none;">
+        <p style="padding:40px;text-align:center;color:#9aacbf;">预约单不存在</p>
+      </div>
+    </main>
+  </div>
+  
+  <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="js/deliveryAppointment-common.js"></script>
+  <script src="js/deliveryAppointmentDetail.js"></script>
+</body>
+</html>

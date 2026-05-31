@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新建入库单预约 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/delivery-appointment-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="main inorder-main" style="margin-top:10px;">
+  <p class="wh-create-back"><a href="deliveryAppointment.html" class="inorder-op-link">&lt; 返回预约送仓列表</a></p>
+  <div class="wh-create-panel">
+    <div class="wh-create-titlebar">
+      <div class="wh-create-title">新建入库单预约</div>
+      <p>用于仓储中台代客户或运德船务创建送仓预约，提交后进入仓库待确认。</p>
+    </div>
+    <table class="table-h25 wh-create-form">
+      <tr class="wh-create-section-row"><td colspan="6">预约基础信息</td></tr>
+      <tr>
+        <td>目的仓：</td>
+        <td><select id="create_warehouse" style="width:157px"><option value="">请选择</option></select></td>
+        <td>预约方：</td>
+        <td>
+          <select id="create_booker_type" style="width:157px">
+            <option value="customer">用户编号</option>
+            <option value="shipping">运德船务</option>
+          </select>
+        </td>
+        <td>用户编号：</td>
+        <td><input id="create_customer_code" class="text-input w150" type="text" value="CN0000438" /></td>
+      </tr>
+      <tr>
+        <td>送仓类型：</td>
+        <td>
+          <select id="create_delivery_type" style="width:157px">
+            <option value="散货">散货</option>
+            <option value="整柜">整柜</option>
+          </select>
+        </td>
+        <td>送仓总箱数：</td>
+        <td><input id="create_total_cartons" class="text-input w150" type="number" min="1" step="1" /></td>
+        <td>是否打托：</td>
+        <td>
+          <select id="create_is_palletized" style="width:157px">
+            <option value="no">否</option>
+            <option value="yes">是</option>
+          </select>
+        </td>
+      </tr>
+      <tr id="create_pallet_row" style="display:none;">
+        <td>送仓总托数：</td>
+        <td><input id="create_total_pallets" class="text-input w150" type="number" min="1" step="1" /></td>
+        <td colspan="4"></td>
+      </tr>
+      <tr id="create_fcl_row" style="display:none;">
+        <td>集装箱号：</td>
+        <td><input id="create_container_no" class="text-input w150" type="text" /></td>
+        <td>柜型：</td>
+        <td><input id="create_container_type" class="text-input w150" type="text" placeholder="如 40HQ" /></td>
+        <td colspan="2"></td>
+      </tr>
+      <tr class="wh-create-section-row"><td colspan="6">联系与协作信息</td></tr>
+      <tr>
+        <td>联系邮箱：</td>
+        <td><input id="create_email" class="text-input w150" type="text" placeholder="选填" /></td>
+        <td>货代公司：</td>
+        <td><input id="create_forwarder" class="text-input w150" type="text" placeholder="选填" /></td>
+        <td colspan="2"></td>
+      </tr>
+    </table>
+    <div class="wh-create-list-head">
+      <div>
+        <strong>货物明细</strong>
+        <p class="wh-create-hint" id="create_inorder_hint">仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=目的仓</p>
+      </div>
+      <button type="button" id="btn_create_add_inorder" class="order-fourvar-submit">添加入库单</button>
+    </div>
+    <table cellspacing="0" width="100%" class="wh-create-inbound-table">
+      <thead>
+        <tr class="title">
+          <td>入库单号</td>
+          <td>订单状态</td>
+          <td>收货仓</td>
+          <td>发货方式</td>
+          <td>订单箱数</td>
+          <td>送仓箱数</td>
+          <td>提交时间</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody id="create_selected_inorders"></tbody>
+    </table>
+    <div class="wh-create-actions">
+      <button type="button" id="btn_create_submit" class="order-fourvar-submit">提交预约</button>
+      <button type="button" id="btn_create_cancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<div id="inorder_picker_modal" class="wh-picker-mask" aria-hidden="true">
+  <div class="wh-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="inorder_picker_title">
+    <div class="wh-picker-header">
+      <span id="inorder_picker_title">选择入库单</span>
+      <button type="button" id="btn_picker_close" class="wh-picker-close" aria-label="关闭">×</button>
+    </div>
+    <div class="wh-picker-search">
+      <table class="table-h25 wh-create-form">
+        <tr>
+          <td>入库单号：</td>
+          <td><input id="picker_order_no" class="text-input w150" type="text" placeholder="支持模糊" /></td>
+          <td>集装箱号：</td>
+          <td><input id="picker_container_no" class="text-input w150" type="text" placeholder="按集装箱号查询" /></td>
+          <td>目的仓：</td>
+          <td>
+            <select id="picker_warehouse" style="width:157px">
+              <option value="">全部</option>
+            </select>
+          </td>
+          <td>
+            <button type="button" id="btn_picker_query" class="order-fourvar-submit">查询</button>
+            <button type="button" id="btn_picker_reset">重置</button>
+          </td>
+        </tr>
+      </table>
+      <p class="wh-create-hint">支持按集装箱号从装柜清单查询票号；目的仓为 cn 开头时统一展示为 FBA。</p>
+    </div>
+    <div class="wh-picker-body">
+      <table cellspacing="0" width="100%" class="wh-picker-table">
+        <thead>
+          <tr class="title">
+            <td>勾选</td>
+            <td>入库单</td>
+            <td>目的仓</td>
+            <td>箱数</td>
+          </tr>
+        </thead>
+        <tbody id="picker_inorder_tbody"></tbody>
+      </table>
+    </div>
+    <div class="wh-picker-footer">
+      <span id="picker_selected_hint"></span>
+      <button type="button" id="btn_picker_submit" class="order-fourvar-submit">提交</button>
+      <button type="button" id="btn_picker_cancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<div id="wh_cartons_mismatch_modal" aria-hidden="true" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1050;align-items:center;justify-content:center;">
+  <div role="dialog" style="background:#fff;border-radius:8px;width:480px;max-width:calc(100% - 40px);box-shadow:0 8px 32px rgba(0,0,0,.18);padding:24px;">
+    <h3 style="margin:0 0 12px;font-size:16px;font-weight:600;color:#faad14;">当前送仓总箱数 与 明细不一致请确认</h3>
+    <div id="wh_cartons_mismatch_body" style="font-size:14px;line-height:1.6;color:#333;margin-bottom:20px;white-space:pre-wrap;"></div>
+    <div style="text-align:right;">
+      <button type="button" id="btn_wh_cartons_mismatch_ok" class="order-fourvar-submit">我知道了</button>
+    </div>
+  </div>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德仓储中台原型
+</footer>
+
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js"></script>
+<script>
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'documents',
+    activeSecondMenu: 'deliveryAppointment',
+    userName: '演示用户'
+  });
+</script>
+<script src="../mock_data/deliveryAppointment.js"></script>
+<script src="../mock_data/inOrder.js"></script>
+<script src="../mock_data/containerLoading.js"></script>
+<script src="../customer/js/deliveryAppointment-common.js"></script>
+<script src="js/deliveryAppointmentCreate.js"></script>
+</body>
+</html>

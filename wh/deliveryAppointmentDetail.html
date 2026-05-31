@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>预约送仓详情 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/delivery-appointment-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="main inorder-main" id="detailMain" style="margin-top:10px;">
+  <p style="margin:8px 18px;"><a href="deliveryAppointment.html" class="inorder-op-link">&lt; 返回列表</a></p>
+  <div class="wh-detail-customer" id="detailCustomer"></div>
+  <div class="wh-detail-section-title">预约信息</div>
+  <div class="wh-detail-grid" id="detailGrid"></div>
+  <div class="wh-detail-section-title">仓库确认信息</div>
+  <div class="wh-detail-grid" id="whConfirmGrid"></div>
+  <div class="wh-detail-section-title">到仓收货信息</div>
+  <div class="wh-detail-grid wh-detail-arrival-grid" id="arrivalUnloadGrid"></div>
+  <div class="wh-detail-tabs">
+    <ul class="wh-detail-tab-nav" id="detailTabs">
+      <li class="active"><a href="#" data-tab="inbound">货物明细</a></li>
+      <li><a href="#" data-tab="logs">日志明细</a></li>
+    </ul>
+    <div class="wh-detail-tab-pane active" id="paneInbound">
+      <table cellspacing="0" width="100%" class="wh-detail-inbound-table">
+        <thead>
+          <tr class="title">
+            <td>入库单号</td>
+            <td>订单状态</td>
+            <td>收货仓</td>
+            <td>发货方式</td>
+            <td>订单箱数</td>
+            <td>送仓箱数</td>
+            <td>收货箱数</td>
+            <td>提交时间</td>
+          </tr>
+        </thead>
+        <tbody id="detailInOrders"></tbody>
+      </table>
+    </div>
+    <div class="wh-detail-tab-pane" id="paneLogs">
+      <ul class="wh-detail-log-list" id="logList"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="main" id="detailEmpty" style="display:none;margin-top:10px;">
+  <p style="padding:40px;text-align:center;color:#999;">预约单不存在</p>
+  <p style="text-align:center;"><a href="deliveryAppointment.html" class="inorder-op-link">返回列表</a></p>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德仓储中台原型
+</footer>
+
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js"></script>
+<script>
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'documents',
+    activeSecondMenu: 'deliveryAppointment',
+    userName: '演示用户'
+  });
+</script>
+<script src="../mock_data/deliveryAppointment.js"></script>
+<script src="../customer/js/deliveryAppointment-common.js"></script>
+<script src="js/deliveryAppointmentDetail.js"></script>
+</body>
+</html>

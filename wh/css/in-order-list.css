@@ -1,0 +1,37 @@
+/* 入库单管理 · 页面扩展 */
+.main.inorder-main thead tr.title td {
+  white-space: nowrap;
+}
+
+.main.inorder-main tbody td.td-left {
+  text-align: left;
+  max-width: 200px;
+}
+
+.inorder-status {
+  font-weight: bold;
+}
+
+.inorder-status-pending {
+  color: #d9822b;
+}
+
+.inorder-status-transit {
+  color: #0066cc;
+}
+
+.inorder-status-received {
+  color: #1a7f37;
+}
+
+.inorder-status-cancelled {
+  color: #888;
+}
+
+.inorder-status-error {
+  color: #c00;
+}
+
+.inorder-status-default {
+  color: #333;
+}

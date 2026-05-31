@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>预约送仓 - 运德供应链 WEDO SCM</title>
+  <link rel="stylesheet" href="css/official-reservation.css" />
+</head>
+<body class="official-page">
+  <header class="official-header">
+    <div class="official-logo">
+      <div class="official-logo-icon"></div>
+      <div class="official-logo-text">
+        <strong>运德供应链</strong>
+        <span>WEDO SCM</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="official-main">
+    <div class="official-brand-center">
+      <div class="official-logo">
+        <div class="official-logo-icon"></div>
+        <div class="official-logo-text">
+          <strong>运德供应链</strong>
+          <span>WEDO SCM</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="official-stepper" aria-label="预约流程">
+      <div class="official-step active" data-step="1">
+        <span class="official-step-num">1</span>
+        <span class="official-step-label">输入预约码<br /><small>Enter Reservation Code</small></span>
+      </div>
+      <div class="official-step" data-step="2">
+        <span class="official-step-num">2</span>
+        <span class="official-step-label">预约送仓<br /><small>Schedule Delivery</small></span>
+      </div>
+      <div class="official-step" data-step="3">
+        <span class="official-step-num">3</span>
+        <span class="official-step-label">送仓完成<br /><small>Delivery Completed</small></span>
+      </div>
+    </nav>
+
+    <form class="official-search-row" id="searchForm" autocomplete="off">
+      <input type="text" id="deliveryCodeInput" placeholder="请输入预约码" maxlength="32" />
+      <button type="submit">确定</button>
+    </form>
+    <p class="official-error-tip" id="searchError" style="display:none;"></p>
+  </main>
+
+  <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="../customer/js/deliveryAppointment-common.js"></script>
+  <script src="js/official-reservation.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

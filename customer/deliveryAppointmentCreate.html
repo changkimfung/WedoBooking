@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新建预约送仓</title>
+  <link rel="stylesheet" href="css/customer-common.css" />
+  <link rel="stylesheet" href="css/delivery-appointment.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo"><div class="logo-icon">仓</div><span>运德仓储系统</span></div>
+    </div>
+    <div class="topbar-right">
+      <span class="top-icon">🔔 消息</span>
+      <span class="top-icon">⚙ 设置</span>
+      <span class="top-icon">Hello！郑乔俊</span>
+      <span class="top-icon">退出</span>
+    </div>
+  </header>
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="menu-section">
+        <div class="menu-section-title">主菜单</div>
+        <div class="menu-item"><div class="menu-label">🏠 首页</div></div>
+        <div class="menu-item"><div class="menu-label">📦 产品管理</div></div>
+        <div class="menu-item" id="docManageBtn">
+          <div class="menu-label">📑 单据管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu show" id="docManageSubmenu">
+          <div class="menu-item"><a href="inOrder.html">入库单</a></div>
+          <div class="menu-item"><a href="deliveryAppointment.html">预约送仓</a></div>
+          <div class="menu-item">出库单</div>
+          <div class="menu-item">调拨单</div>
+        </div>
+        <div class="menu-item"><div class="menu-label">🛠 服务工单</div></div>
+        <div class="menu-item"><div class="menu-label">📊 数据统计</div></div>
+        <div class="menu-item"><div class="menu-label">👤 用户中心</div></div>
+      </div>
+    </aside>
+    <main class="content">
+      <div class="breadcrumb">单据管理 &gt;&gt; 预约送仓 &gt;&gt; 新建</div>
+
+      <div class="panel">
+        <div class="form-section-title">预约信息</div>
+        <div class="form-section-body form-grid">
+          <div class="form-item"><label class="field-required">目的仓</label>
+            <select class="select" id="warehouse"><option value="">请选择</option></select></div>
+          <div class="form-item full-width"><label class="field-required">送仓类型</label>
+            <div class="radio-group">
+              <label><input type="radio" name="deliveryType" value="整柜" /> 整柜</label>
+              <label><input type="radio" name="deliveryType" value="散货" checked /> 散货</label>
+            </div></div>
+          <div id="fclFields" class="fcl-fields">
+            <div class="form-item"><label class="field-required">集装箱号</label>
+              <input class="input" id="containerNo" type="text" /></div>
+            <div class="form-item"><label class="field-required">柜型</label>
+              <input class="input" id="containerType" type="text" placeholder="如 40HQ" /></div>
+          </div>
+          <div class="form-item"><label class="field-required">送仓总箱数</label>
+            <input class="input" id="estimatedCartons" type="number" min="1" step="1" placeholder="请输入送仓总箱数" /></div>
+          <div class="form-item"><label class="field-required">是否打托</label>
+            <div class="radio-group">
+              <label><input type="radio" name="isPalletized" value="yes" /> 是</label>
+              <label><input type="radio" name="isPalletized" value="no" checked /> 否</label>
+            </div></div>
+          <div id="palletFields" class="pallet-fields">
+            <div class="form-item"><label class="field-required">送仓总托数</label>
+              <input class="input" id="totalPallets" type="number" min="1" step="1" placeholder="请输入送仓总托数" /></div>
+          </div>
+          <div class="form-item"><label>货代公司</label>
+            <input class="input" id="forwarder" type="text" placeholder="选填" /></div>
+          <div class="form-item full-width"><label class="field-required">联系邮箱（主邮箱）</label>
+            <input class="input" id="primaryEmail" type="email" placeholder="请输入主邮箱" />
+            <p class="email-primary-hint">该邮箱将作为货代端主邮箱，生成预约链接后不可由货代修改；货代可追加备用邮箱接收通知。</p></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="form-section-title">货物明细</div>
+        <div class="form-section-body">
+          <p class="search-hint">仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=目的仓</p>
+          <div class="inorder-search-bar">
+            <input class="input" id="inOrderSearch" type="text" placeholder="输入入库单号搜索添加" />
+            <button type="button" class="btn btn-primary" id="btnAddInOrder">添加</button>
+          </div>
+          <div class="sub-table-wrap">
+            <table class="sub-table">
+              <thead><tr>
+                <th>入库单号</th><th>订单状态</th><th>收货仓</th><th>发货方式</th><th>订单箱数</th><th>送仓箱数</th><th>提交时间</th><th>操作</th>
+              </tr></thead>
+              <tbody id="selectedInOrders"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button type="button" class="btn btn-reset" id="btnCancel">返回</button>
+          <button type="button" class="btn btn-link" id="btnSaveDraft">保存草稿</button>
+          <button type="button" class="btn btn-primary" id="btnSubmit">提交</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="cust-modal-overlay" id="modalCartonsMismatch" style="display:none;" aria-hidden="true">
+    <div class="cust-modal" role="dialog" aria-labelledby="modalCartonsMismatchTitle">
+      <h3 class="cust-modal-title" id="modalCartonsMismatchTitle">当前送仓总箱数 与 明细不一致请确认</h3>
+      <div class="cust-modal-body" id="modalCartonsMismatchBody"></div>
+      <div class="cust-modal-footer">
+        <button type="button" class="btn btn-primary" id="modalCartonsMismatchOk">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../mock_data/inOrder.js"></script>
+  <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="js/deliveryAppointment-common.js"></script>
+  <script src="js/deliveryAppointmentCreate.js"></script>
+</body>
+</html>

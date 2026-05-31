@@ -1,0 +1,358 @@
+/* 仓储中台 · 预约送仓详情 */
+.wh-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(200px, 1fr));
+  gap: 12px 20px;
+  padding: 16px 18px;
+  font-size: 12px;
+}
+
+.wh-detail-item label {
+  display: block;
+  color: #878787;
+  margin-bottom: 4px;
+}
+
+.wh-detail-item .detail-booking-link {
+  color: #007fbf;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.wh-detail-item .detail-booking-link:hover {
+  text-decoration: underline;
+}
+
+.wh-detail-item span {
+  color: #333;
+}
+
+.wh-detail-section-title {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 12px 18px;
+  background: #f2f2f2;
+  border-top: 1px solid #e1e1e1;
+}
+
+.wh-detail-customer {
+  padding: 14px 18px;
+  background: #f9fcff;
+  border-bottom: 1px solid #e1e1e1;
+  font-size: 13px;
+}
+
+.wh-detail-customer strong {
+  color: #0092dc;
+  margin-left: 8px;
+}
+
+.wh-detail-tabs {
+  margin: 0 0 20px;
+  background: #fff;
+  border-top: 1px solid #e1e1e1;
+}
+
+.wh-detail-tab-nav {
+  margin: 0;
+  padding: 0 12px;
+  list-style: none;
+  border-bottom: 1px solid #e1e1e1;
+  background: #f2f2f2;
+}
+
+.wh-detail-tab-nav li {
+  display: inline-block;
+  margin-bottom: -1px;
+}
+
+.wh-detail-tab-nav a {
+  display: block;
+  padding: 10px 18px;
+  font-size: 13px;
+  color: #555;
+  text-decoration: none;
+  border: 1px solid transparent;
+  border-bottom: none;
+}
+
+.wh-detail-tab-nav li.active a {
+  background: #fff;
+  color: #333;
+  font-weight: bold;
+  border-color: #e1e1e1;
+  border-bottom-color: #fff;
+}
+
+.wh-detail-tab-pane {
+  display: none;
+  padding: 14px 18px;
+}
+
+.wh-detail-tab-pane.active {
+  display: block;
+}
+
+.wh-detail-inbound-table {
+  margin-bottom: 0;
+}
+
+.wh-detail-log-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wh-detail-log-list li {
+  padding: 8px 0;
+  border-bottom: 1px dashed #e1e1e1;
+  font-size: 12px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.wh-detail-log-list li:last-child {
+  border-bottom: none;
+}
+
+.wh-detail-log-time {
+  color: #878787;
+  margin-right: 12px;
+}
+
+.wh-detail-log-list strong {
+  color: #0092dc;
+  margin-right: 6px;
+}
+
+.wh-detail-log-empty,
+.wh-detail-log-list .detail-log-empty {
+  text-align: center;
+  color: #999;
+  padding: 24px;
+}
+
+.wh-detail-item-full {
+  grid-column: 1 / -1;
+}
+
+.wh-detail-photo-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wh-detail-photo-thumb {
+  display: block;
+  width: 88px;
+  height: 88px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.wh-detail-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wh-create-toolbar {
+  margin: 0 0 10px;
+}
+
+.wh-create-back {
+  margin: 8px 0 10px;
+  padding: 0 8px;
+}
+
+.wh-create-panel {
+  margin: 0 0 14px;
+  padding: 0;
+  border: 1px solid #d7e4ef;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 70, 120, 0.06);
+}
+
+.wh-create-titlebar {
+  padding: 14px 18px 12px;
+  background: linear-gradient(180deg, #f8fcff 0%, #eef7ff 100%);
+  border-bottom: 1px solid #d7e4ef;
+}
+
+.wh-create-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.wh-create-titlebar p {
+  margin: 0;
+  color: #6f7f8d;
+  font-size: 12px;
+}
+
+.wh-create-form {
+  margin: 0;
+  border: none;
+  text-align: left;
+}
+
+.wh-create-form td {
+  padding: 8px 8px;
+  border-bottom: 1px solid #edf2f7;
+  text-align: left;
+}
+
+.wh-create-form tr:not(.wh-create-section-row) td:nth-child(odd) {
+  width: 92px;
+  text-align: right;
+  color: #526b82;
+  background: #fbfdff;
+}
+
+.wh-create-form tr:not(.wh-create-section-row) td:nth-child(even) {
+  min-width: 180px;
+}
+
+.wh-create-form input,
+.wh-create-form select {
+  min-height: 24px;
+}
+
+.wh-create-section-row td {
+  padding: 8px 18px;
+  color: #007fbf;
+  font-weight: bold;
+  background: #f5f9fc;
+  border-top: 1px solid #e1eaf2;
+  border-bottom: 1px solid #e1eaf2;
+}
+
+.wh-create-hint {
+  margin: 4px 0 0;
+  color: #878787;
+  font-size: 12px;
+}
+
+.wh-create-list-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-top: 1px solid #e1eaf2;
+  border-bottom: 1px solid #e1eaf2;
+  background: #fbfdff;
+}
+
+.wh-create-list-head strong {
+  color: #333;
+  font-size: 14px;
+}
+
+.wh-create-inbound-table {
+  margin-top: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.wh-create-actions {
+  margin-top: 0;
+  padding: 12px 18px;
+  text-align: right;
+  border-top: 1px solid #e1eaf2;
+  background: #fbfdff;
+}
+
+.wh-create-actions button {
+  margin-left: 8px;
+}
+
+.wh-picker-mask {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: none;
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.wh-picker-mask.show {
+  display: block;
+}
+
+.wh-picker-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(920px, calc(100vw - 56px));
+  max-height: calc(100vh - 80px);
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 1px solid #007fbf;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.wh-picker-header {
+  height: 40px;
+  padding: 0 12px;
+  background: #0092dc;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.wh-picker-close {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  padding: 0;
+}
+
+.wh-picker-close:hover {
+  background: transparent;
+}
+
+.wh-picker-search {
+  padding: 10px 12px 6px;
+  background: #f7fbff;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.wh-picker-body {
+  max-height: calc(100vh - 260px);
+  overflow: auto;
+  padding: 0 12px 10px;
+}
+
+.wh-picker-table {
+  min-width: 760px;
+}
+
+.wh-picker-table input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.wh-picker-footer {
+  padding: 10px 12px 12px;
+  text-align: right;
+  border-top: 1px solid #e1e1e1;
+  background: #fff;
+}
+
+.wh-picker-footer span {
+  float: left;
+  color: #878787;
+  line-height: 28px;
+}

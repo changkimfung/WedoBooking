@@ -1,0 +1,7 @@
+仓储中台：http://localhost:3847/wh/deliveryAppointment.html
+装柜清单管理：http://localhost:3847/erp/containerLoading.html
+客户前台：http://localhost:3847/customer/deliveryAppointment.html
+官网预约：http://localhost:3847/fg/index.html
+收货预约管理(海外仓/us)：http://localhost:3847/us/receiving-appointment.html
+入库预约详情(海外仓/us)：http://localhost:3847/us/receiving-appointment-detail.html?id=appt-003
+PDA收货扫描(海外仓/us)：http://localhost:3847/us/pda-receiving-scan.html
