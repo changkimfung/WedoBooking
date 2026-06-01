@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>项目经验 · 产品经理作品集</title>
+  <link rel="stylesheet" href="css/portfolio-docs.css" />
+</head>
+<body>
+
+  <!-- Arco Layout.Header -->
+  <header class="global-header">
+    <div class="header-brand">
+      <div class="brand-icon">PM</div>
+      <span class="brand-title">
+        项目作品集 · 产品经理
+        <span class="arrow">
+          <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+        </span>
+      </span>
+    </div>
+    <nav class="header-nav">
+      <a href="#" class="active" data-nav="projects">项目经验</a>
+      <a href="#" data-nav="skills">技能图谱</a>
+      <a href="#" data-nav="about">关于我</a>
+      <a href="#" data-nav="method">方法论</a>
+      <a href="#" data-nav="contact">联系方式</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+      <button class="icon-btn" title="搜索" aria-label="搜索">
+        <svg width="16" height="16" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M33.072 33.071c6.248-6.248 6.248-16.379 0-22.627-6.249-6.248-16.38-6.248-22.628 0-6.248 6.248-6.248 16.379 0 22.627 6.248 6.248 16.38 6.248 22.628 0z"/><path d="M35.002 35.002L41 41"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Arco Tabs (capsule) -->
+  <div class="sub-header" id="subHeader">
+    <button class="sub-tab active" data-category="supply-chain">供应链系统</button>
+    <button class="sub-tab" data-category="crm">B2B CRM</button>
+    <button class="sub-tab" data-category="data">数据分析</button>
+    <button class="sub-tab" data-category="mobile">移动端 / PDA</button>
+    <button class="sub-tab" data-category="platform">平台化建设</button>
+  </div>
+
+  <!-- Arco Layout: Sider + Content -->
+  <div class="page-body">
+
+    <!-- Arco Menu -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-group" data-category="supply-chain">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>一、预约送仓系统</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item active" href="#project-delivery" data-panel="project-delivery">1.1 项目概述</a>
+          <a class="sidebar-item" href="#delivery-background" data-panel="delivery-background">1.2 需求背景</a>
+          <a class="sidebar-item" href="#delivery-design" data-panel="delivery-design">1.3 核心功能设计</a>
+          <a class="sidebar-item" href="#delivery-result" data-panel="delivery-result">1.4 项目成果</a>
+        </div>
+      </div>
+      <div class="sidebar-group" data-category="supply-chain">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>二、入库管理模块</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item" href="#project-inbound" data-panel="project-inbound">2.1 项目概述</a>
+          <a class="sidebar-item" href="#inbound-flow" data-panel="inbound-flow">2.2 业务流程</a>
+          <a class="sidebar-item" href="#inbound-challenge" data-panel="inbound-challenge">2.3 难点与解法</a>
+        </div>
+      </div>
+      <div class="sidebar-group" data-category="supply-chain">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>三、装柜管理</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item" href="#project-container" data-panel="project-container">3.1 项目概述</a>
+          <a class="sidebar-item" href="#container-billing" data-panel="container-billing">3.2 计费逻辑</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group collapsed" data-category="crm" style="display:none">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>一、客户生命周期管理</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item" href="#project-crm" data-panel="project-crm">1.1 项目概述</a>
+          <a class="sidebar-item" href="#crm-pipeline" data-panel="crm-pipeline">1.2 销售漏斗设计</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group collapsed" data-category="data" style="display:none">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>一、运营数据看板</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item" href="#project-dashboard" data-panel="project-dashboard">1.1 项目概述</a>
+          <a class="sidebar-item" href="#dashboard-metrics" data-panel="dashboard-metrics">1.2 核心指标定义</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group collapsed" data-category="mobile" style="display:none">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>一、PDA 收货扫描</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item" href="#project-pda" data-panel="project-pda">1.1 项目概述</a>
+          <a class="sidebar-item" href="#pda-ux" data-panel="pda-ux">1.2 现场 UX 设计</a>
+        </div>
+      </div>
+
+      <div class="sidebar-group collapsed" data-category="platform" style="display:none">
+        <div class="sidebar-group-title">
+          <span class="toggle">
+            <svg width="12" height="12" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M38.071 16.071a1 1 0 0 1 0 1.414l-16 16a1 1 0 0 1-1.414 0l-16-16a1 1 0 1 1 1.414-1.414L22 30.586V8a1 1 0 0 1 2 0v22.586l14.657-14.657a1 1 0 0 1 1.414 0z"/></svg>
+          </span>
+          <span>一、多租户权限体系</span>
+        </div>
+        <div class="sidebar-items">
+          <a class="sidebar-item" href="#project-platform" data-panel="project-platform">1.1 项目概述</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content-area" id="contentArea">
+
+      <article class="content-panel active" id="panel-project-delivery">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <a href="#">供应链系统</a><span class="sep">/</span>
+          <span>预约送仓</span>
+        </div>
+        <h1>预约送仓系统 — 产品定位及功能介绍</h1>
+        <p class="intro">
+          面向海外仓 B2B 客户的自助预约送仓平台，解决传统线下 Excel 预约、电话沟通效率低的问题。
+          客户通过预约码即可在线完成送仓时间选择、货物信息填报及状态跟踪，仓库端同步接收预约并进行排期管理。
+        </p>
+
+        <div class="info-grid">
+          <div class="info-card"><div class="label">项目角色</div><div class="value">产品经理（Owner）</div></div>
+          <div class="info-card"><div class="label">项目周期</div><div class="value">2024.06 — 2024.12</div></div>
+          <div class="info-card"><div class="label">团队规模</div><div class="value">PM × 1 · 前端 × 2 · 后端 × 2</div></div>
+        </div>
+
+        <ul class="tag-list">
+          <li>需求分析</li><li>PRD 撰写</li><li>原型设计</li><li>Axure/Figma</li><li>供应链</li><li>海外仓</li>
+        </ul>
+
+        <hr class="content-divider" />
+
+        <h2 id="delivery-background">一、需求背景</h2>
+        <h3>1.1 业务痛点</h3>
+        <p>
+          在项目实施前，客户预约送仓完全依赖线下流程：销售/客服通过微信或邮件收集信息，仓库手工录入 WMS，
+          信息传递链路长、易出错，且无法实时查看预约状态。高峰期（如黑五前）预约冲突率高达 <strong>23%</strong>。
+        </p>
+
+        <div class="highlight-box">
+          <span class="alert-icon">
+            <svg width="16" height="16" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm0 9a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm2 25a1 1 0 0 1-2 0V22a1 1 0 1 1 2 0v16z"/></svg>
+          </span>
+          <span>核心目标：将预约送仓从「人工协调」升级为「客户自助 + 系统排期」，目标是将预约冲突率降至 5% 以下。</span>
+        </div>
+
+        <h3>1.2 干系人分析</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>角色</th><th>核心诉求</th><th>系统触点</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>客户（货主）</td><td>快速预约、修改/取消、状态可查</td><td>客户端 Web 页面</td></tr>
+              <tr><td>仓库操作员</td><td>预约列表、到仓确认、异常处理</td><td>仓库端管理后台</td></tr>
+              <tr><td>销售/客服</td><td>代客预约、纠纷处理</td><td>ERP 内嵌模块</td></tr>
+              <tr><td>船务/调度</td><td>送仓与头程到港时间联动</td><td>ASN 预报关联</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="delivery-design">二、核心功能设计</h2>
+        <h3>2.1 三步预约流程</h3>
+        <p>参考分步引导模式，设计了清晰的三步流程：</p>
+        <ol>
+          <li><strong>输入预约码</strong> — 客户凭销售提供的唯一预约码进入系统</li>
+          <li><strong>填写送仓信息</strong> — 选择仓库、预约日期/时段、填写 SKU 及箱数</li>
+          <li><strong>确认提交</strong> — 系统校验库容后生成预约单，发送确认邮件</li>
+        </ol>
+
+        <div class="screenshot">
+          <div class="screenshot-placeholder">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="36" height="32" rx="2"/><circle cx="18" cy="20" r="4"/><path d="M10 36l10-10 8 8 6-6 8 8"/></svg>
+            预约送仓流程原型截图（可替换为实际图片）
+          </div>
+          <div class="screenshot-caption">图 2-1：客户侧三步预约流程界面</div>
+        </div>
+
+        <h3>2.2 关键逻辑规则</h3>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>规则项</th><th>逻辑说明</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>预约码有效期</td><td>生成后 30 天内有效，过期需销售重新生成</td></tr>
+              <tr><td>时段容量</td><td>每个时段上限 20 单，超出则置灰不可选</td></tr>
+              <tr><td>修改限制</td><td>预约日前 24h 内不可修改，仅可取消后重新预约</td></tr>
+              <tr><td>幂等提交</td><td>同一预约码 5 分钟内重复提交，返回已有预约单</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="delivery-result">三、项目成果</h2>
+        <ul class="timeline">
+          <li><div class="time">2024 Q3</div><div class="event">MVP 上线，覆盖 3 个海外仓，日均预约量 45 单</div></li>
+          <li><div class="time">2024 Q4</div><div class="event">全仓推广，预约冲突率从 23% 降至 4.2%</div></li>
+          <li><div class="time">2025 Q1</div><div class="event">接入 ASN 头程联动，客服工单量下降 38%</div></li>
+        </ul>
+      </article>
+
+      <article class="content-panel" id="panel-project-inbound">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <a href="#">供应链系统</a><span class="sep">/</span>
+          <span>入库管理</span>
+        </div>
+        <h1>入库管理模块 — 从预报到上架的全链路设计</h1>
+        <p class="intro">
+          负责海外仓入库全流程产品设计，涵盖 ASN 预报、收货扫描、质检、上架分配等环节，
+          打通客户预报数据与仓库实操系统之间的信息壁垒。
+        </p>
+        <div class="info-grid">
+          <div class="info-card"><div class="label">项目角色</div><div class="value">产品经理</div></div>
+          <div class="info-card"><div class="label">项目周期</div><div class="value">2023.09 — 2024.03</div></div>
+          <div class="info-card"><div class="label">覆盖仓库</div><div class="value">美国 × 3 · 德国 × 1</div></div>
+        </div>
+
+        <h2 id="inbound-flow">一、业务流程</h2>
+        <p>入库流程涉及多角色协作，核心状态流转如下：</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>状态</th><th>触发条件</th><th>操作角色</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>已预报</td><td>客户提交 ASN</td><td>客户 / 销售</td></tr>
+              <tr><td>已到仓</td><td>PDA 扫描确认收货</td><td>仓库操作员</td></tr>
+              <tr><td>质检中</td><td>存在待检 SKU</td><td>质检员</td></tr>
+              <tr><td>已上架</td><td>库位分配完成</td><td>系统自动</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="inbound-challenge">二、难点与解法</h2>
+        <h3>2.1 预报与实际差异处理</h3>
+        <p>
+          实际收货数量与 ASN 预报不一致是最高频异常（占比约 35%）。
+          设计了「差异确认」子流程：操作员标记差异 → 系统自动通知客户 → 客户确认处理方式（接受/退回/补发）。
+        </p>
+      </article>
+
+      <article class="content-panel" id="panel-project-container">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <a href="#">供应链系统</a><span class="sep">/</span>
+          <span>装柜管理</span>
+        </div>
+        <h1>装柜管理系统 — 头程拼柜与计费一体化</h1>
+        <p class="intro">
+          针对头程海运拼柜业务，设计装柜计划、货物装载、费用分摊的完整产品方案，
+          解决多客户混装场景下的计费争议问题。
+        </p>
+
+        <h2 id="container-billing">一、计费逻辑</h2>
+        <p>装柜费用按体积分摊至各客户订单，核心公式：</p>
+        <div class="highlight-box">
+          <span class="alert-icon">
+            <svg width="16" height="16" viewBox="0 0 48 48" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm0 9a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm2 25a1 1 0 0 1-2 0V22a1 1 0 1 1 2 0v16z"/></svg>
+          </span>
+          <span>客户分摊费用 = 总装柜费用 × (该客户货物体积 / 柜内总体积)</span>
+        </div>
+        <p>附加费（如超重费、查验费）按约定规则单独计算，并在对账单中分项展示。</p>
+      </article>
+
+      <article class="content-panel" id="panel-project-crm">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <span>B2B CRM</span>
+        </div>
+        <h1>客户生命周期管理系统</h1>
+        <p class="intro">覆盖线索获取 → 商机跟进 → 签约 → 续约 → 流失预警的全生命周期 CRM 产品设计。</p>
+
+        <h2 id="crm-pipeline">一、销售漏斗设计</h2>
+        <p>定义 6 阶段销售漏斗，每阶段设置准入/准出标准及 SLA 考核指标，帮助销售主管实时掌握团队 pipeline 健康度。</p>
+      </article>
+
+      <article class="content-panel" id="panel-project-dashboard">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <span>数据分析</span>
+        </div>
+        <h1>运营数据看板 — 指标体系建设</h1>
+        <p class="intro">为管理层和销售团队搭建多维度运营看板，实现业务数据的可视化与自助分析。</p>
+
+        <h2 id="dashboard-metrics">一、核心指标定义</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>指标</th><th>计算公式</th><th>更新频率</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>入库上架率</td><td>24h 内上架 SKU 数 / 到仓 SKU 总数 × 100%</td><td>每日</td></tr>
+              <tr><td>出库准时率</td><td>承诺时效内出库订单数 / 总出库订单数 × 100%</td><td>每日</td></tr>
+              <tr><td>客户 NPS</td><td>推荐者占比 - 贬损者占比</td><td>每月</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="content-panel" id="panel-project-pda">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <span>移动端 / PDA 收货</span>
+        </div>
+        <h1>PDA 收货扫描 — 仓库现场 UX 设计</h1>
+        <p class="intro">
+          为仓库一线操作员设计 PDA 端收货扫描应用，针对手套操作、弱网环境、高频扫描等场景进行专项 UX 优化。
+        </p>
+
+        <h2 id="pda-ux">一、现场 UX 设计原则</h2>
+        <ul>
+          <li>按钮最小点击区域 48×48px，适配手套操作</li>
+          <li>关键操作（确认收货）需二次确认，防误触</li>
+          <li>离线模式：断网时本地缓存，恢复后自动同步</li>
+          <li>扫描反馈：成功/失败用不同颜色 + 震动反馈</li>
+        </ul>
+      </article>
+
+      <article class="content-panel" id="panel-project-platform">
+        <div class="breadcrumb">
+          <a href="#">项目作品集</a><span class="sep">/</span>
+          <span>平台化建设</span>
+        </div>
+        <h1>多租户权限体系 — RBAC 产品设计</h1>
+        <p class="intro">
+          设计支持多客户、多仓库、多角色的统一权限体系，实现数据隔离与功能按需授权，
+          为 SaaS 化转型奠定产品基础。
+        </p>
+      </article>
+
+    </main>
+  </div>
+
+  <!-- Arco FloatButton -->
+  <button class="fab" title="联系我">
+    <svg width="18" height="18" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l20 14 20-14"/><rect x="4" y="8" width="40" height="32" rx="2"/></svg>
+  </button>
+
+  <script src="js/portfolio-docs.js"></script>
+</body>
+</html>

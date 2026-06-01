@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>预约详情 - 运德供应链 WEDO SCM</title>
   <link rel="stylesheet" href="css/official-reservation.css" />
+  <script>
+    (function () {
+      var mq = window.matchMedia('(max-width: 768px)');
+      var uaMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (!uaMobile && !mq.matches) return;
+      var code = new URLSearchParams(window.location.search).get('code');
+      if (!code) return;
+      window.location.replace('m/reservationDetail.html?code=' + encodeURIComponent(code));
+    })();
+  </script>
 </head>
 <body class="official-page">
   <header class="official-header">
@@ -80,10 +90,10 @@
       <h2 class="official-section-title">送仓信息</h2>
       <div class="official-form-block">
         <div class="official-form-row">
-          <label><span class="req">*</span>期望送仓日期（当地）</label>
+          <label><span class="req">*</span><span id="labelExpectedDate">期望送仓日期（当地时间）</span></label>
           <div class="official-form-control">
             <input type="date" id="expectedDate" aria-label="期望送仓日期" />
-            <p class="official-form-hint">请选择期望送仓日期（仓库当地日期），<strong>周末（周六、周日）不收货</strong>。多个候选日期或特殊时段请在备注中说明。</p>
+            <p class="official-form-hint" id="hintExpectedDate">请选择期望送仓日期（当地时间），<strong>周末（周六、周日）不收货</strong>。多个候选日期或特殊时段请在备注中说明。</p>
           </div>
         </div>
         <div class="official-form-row">
@@ -93,16 +103,27 @@
           </div>
         </div>
         <div class="official-form-row">
-          <label>仓库确认送仓时段（当地）</label>
+          <label><span id="labelWhConfirmedTime">仓库确认送仓时段（当地时间）</span></label>
           <div class="official-form-control">
             <p class="official-placeholder" id="whConfirmedTime">— 待仓库确认后展示 —</p>
-            <p class="official-form-hint" id="whAuditRemark" style="display:none;"></p>
           </div>
         </div>
         <div class="official-form-row">
           <label>仓库确认地址（当地）</label>
           <div class="official-form-control">
             <p class="official-placeholder" id="whConfirmedAddress">— 待仓库确认后展示 —</p>
+          </div>
+        </div>
+        <div class="official-form-row" id="whAuditRemarkRow" style="display:none;">
+          <label>仓库审核备注</label>
+          <div class="official-form-control">
+            <p class="official-wh-feedback official-wh-feedback--audit" id="whAuditRemark">—</p>
+          </div>
+        </div>
+        <div class="official-form-row" id="whRejectRemarkRow" style="display:none;">
+          <label>驳回原因</label>
+          <div class="official-form-control">
+            <p class="official-wh-feedback official-wh-feedback--reject" id="whRejectRemark">—</p>
           </div>
         </div>
         <div class="official-form-row">
@@ -112,7 +133,7 @@
           </div>
         </div>
         <div class="official-form-row">
-          <label>实际送仓时段（当地）</label>
+          <label><span id="labelActualDeliveryTime">实际送仓时段（当地时间）</span></label>
           <div class="official-form-control">
             <p class="official-placeholder" id="actualDeliveryTime">— 送仓完成后展示 —</p>
           </div>
@@ -154,6 +175,8 @@
         <dd id="acceptModalAddress">—</dd>
         <dt>仓库确认送仓时段</dt>
         <dd id="acceptModalTime">—</dd>
+        <dt id="acceptModalAuditRow" style="display:none;">仓库审核备注</dt>
+        <dd id="acceptModalAuditRemark" class="official-wh-feedback--audit" style="display:none;">—</dd>
       </dl>
       <div class="official-modal-actions">
         <button type="button" class="official-btn official-btn-default" id="modalAcceptNo">取消</button>

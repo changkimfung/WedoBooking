@@ -17,6 +17,7 @@
     document.getElementById('detailCustomer').innerHTML =
       '客户编号：<strong>' + escapeHtml(item.customerCode) + '</strong>';
 
+    var wh = item.warehouse || '';
     var fields = [
       ['预约仓库', item.warehouse],
       ['预约单号', item.appointmentNo || '-'],
@@ -30,7 +31,7 @@
       ['柜型', item.containerType || item.containerSeq || '-'],
       ['货代公司', item.forwarder || '-'],
       ['联系邮箱', (item.emails || []).join('、') || '-'],
-      ['期望送仓日期', item.expectedInboundTime || '-'],
+      [C.localTimeFieldLabel('期望送仓日期', wh), C.formatUsWarehouseTime(item.expectedInboundTime, wh)],
       ['货代备注', String(item.remark || '').trim() || '-'],
       ['提交时间', item.submitTime || '-'],
       ['预约链接', C.buildBookingLinkHtml(item), true]
@@ -43,9 +44,12 @@
   }
 
   function renderWhConfirmGrid(item) {
+    var wh = item.warehouse || item.confirmedWarehouse || '';
     var fields = [
       ['仓库确认地址', item.warehouseConfirmedAddress || '待确认'],
-      ['仓库确认时段', item.warehouseConfirmedInboundTime || '待确认'],
+      [C.localTimeFieldLabel('仓库确认时段', wh),
+        C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) !== '-' ?
+          C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) : '待确认'],
       ['仓库审核备注', String(item.auditRemark || '').trim() || '-']
     ];
     document.getElementById('whConfirmGrid').innerHTML = fields.map(function (f) {
@@ -57,10 +61,10 @@
   function renderArrivalUnloadGrid(item) {
     var wh = item.warehouse || item.confirmedWarehouse || '';
     var actualTime = item.actualDeliveryTime
-      ? (wh.indexOf('\u7f8e') >= 0 ? C.formatUsWarehouseTime(item.actualDeliveryTime, wh) : item.actualDeliveryTime)
+      ? C.formatUsWarehouseTime(item.actualDeliveryTime, wh)
       : '-';
     var fields = [
-      ['实际到仓时间', actualTime],
+      [C.localTimeFieldLabel('实际到仓时间', wh), actualTime],
       ['收货总箱数', C.formatCell(item.receivedCartons)],
       ['收货总托数', C.formatCell(item.receivedPallets)],
       ['到仓拍照', C.buildArrivalPhotosHtml(item, {

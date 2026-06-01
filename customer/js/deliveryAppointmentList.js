@@ -126,9 +126,9 @@
         '<td>' + C.formatCell(item.receivedCartons) + '</td>' +
         '<td>' + C.formatPalletized(item) + '</td>' +
         '<td>' + C.formatTotalPallets(item) + '</td>' +
-        '<td>' + C.formatCell(item.expectedInboundTime) + '</td>' +
-        '<td>' + C.formatCell(item.warehouseConfirmedInboundTime) + '</td>' +
-        '<td>' + C.formatCell(item.actualDeliveryTime) + '</td>' +
+        '<td>' + C.formatUsWarehouseTime(item.expectedInboundTime, item.warehouse) + '</td>' +
+        '<td>' + C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, item.warehouse) + '</td>' +
+        '<td>' + C.formatUsWarehouseTime(item.actualDeliveryTime, item.warehouse) + '</td>' +
         '<td>' + C.formatCell(item.submitTime) + '</td>' +
         '<td>' + buildOps(item) + '</td></tr>';
     }).join('');

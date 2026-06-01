@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   var OR = OfficialReservation;
   var C = DeliveryAppointmentCommon;
   var currentItem = null;
@@ -25,43 +25,47 @@
     return '';
   }
 
-  function renderAppointmentInfo(item, cargoRows) {
+  function kvItem(label, value, valueClass) {
+    return '<li><span class="kv-label">' + escapeHtml(label) + '</span>' +
+      '<span class="kv-value' + (valueClass ? ' ' + valueClass : '') + '">' + value + '</span></li>';
+  }
+
+  function renderAppointmentInfo(item) {
     var totalPallets = C.formatTotalPallets(item);
     var statusText = OR.displayStatus(item.status);
-    $('appointmentInfoRow').innerHTML =
-      '<td>' + escapeHtml(item.appointmentNo || '-') + '</td>' +
-      '<td>' + escapeHtml(item.deliveryCode || '-') + '</td>' +
-      '<td>' + escapeHtml(item.warehouse || '-') + '</td>' +
-      '<td class="' + statusCellClass(item.status) + '">' + escapeHtml(statusText) + '</td>' +
-      '<td>' + escapeHtml(item.deliveryType || '-') + '</td>' +
-      '<td>' + escapeHtml(C.formatEstimatedCartons(item)) + '</td>' +
-      '<td class="appt-info-fcl-only">' + escapeHtml(item.containerNo || '-') + '</td>' +
-      '<td class="appt-info-fcl-only">' + escapeHtml(item.containerType || '-') + '</td>' +
-      '<td>' + escapeHtml(C.formatPalletized(item)) + '</td>' +
-      '<td>' + (totalPallets === '' || totalPallets == null ? '-' : totalPallets) + '</td>';
-    toggleFclOnlyColumns(item.deliveryType === '\u6574\u67dc');
-  }
-
-  function toggleFclOnlyColumns(showFcl) {
-    var els = document.querySelectorAll('.appt-info-fcl-only');
-    for (var i = 0; i < els.length; i++) {
-      els[i].style.display = showFcl ? '' : 'none';
+    var statusClass = statusCellClass(item.status);
+    var entries = [
+      kvItem('\u9884\u7ea6\u5355\u53f7', escapeHtml(item.appointmentNo || '-')),
+      kvItem('\u9884\u7ea6\u7801', escapeHtml(item.deliveryCode || '-')),
+      kvItem('\u76ee\u7684\u4ed3', escapeHtml(item.warehouse || '-')),
+      kvItem('\u9884\u7ea6\u72b6\u6001', escapeHtml(statusText), statusClass),
+      kvItem('\u9001\u4ed3\u7c7b\u578b', escapeHtml(item.deliveryType || '-')),
+      kvItem('\u9001\u4ed3\u603b\u7bb1\u6570', escapeHtml(C.formatEstimatedCartons(item)))
+    ];
+    if (item.deliveryType === '\u6574\u67dc') {
+      entries.push(kvItem('\u96c6\u88c5\u7bb1\u53f7', escapeHtml(item.containerNo || '-')));
+      entries.push(kvItem('\u67dc\u578b', escapeHtml(item.containerType || '-')));
     }
+    entries.push(kvItem('\u662f\u5426\u6253\u6258', escapeHtml(C.formatPalletized(item))));
+    entries.push(kvItem('\u9001\u4ed3\u603b\u6258\u6570',
+      totalPallets === '' || totalPallets == null ? '-' : escapeHtml(String(totalPallets))));
+    $('appointmentInfoList').innerHTML = entries.join('');
   }
 
-  function renderCargoTable(cargoRows) {
+  function renderCargoList(cargoRows) {
+    var container = $('cargoList');
     if (!cargoRows.length) {
-      $('cargoBody').innerHTML =
-        '<tr><td colspan="4" style="color:#bfbfbf;">\u6682\u65e0\u5173\u8054\u5165\u5e93\u5355</td></tr>';
+      container.innerHTML = '<p class="m-official-cargo-empty">\u6682\u65e0\u5173\u8054\u5165\u5e93\u5355</p>';
       return;
     }
-    $('cargoBody').innerHTML = cargoRows.map(function (row) {
-      return '<tr>' +
-        '<td>' + escapeHtml(row.orderNo) + '</td>' +
-        '<td>' + escapeHtml(row.shippingMethod) + '</td>' +
-        '<td>' + escapeHtml(row.createDate != null && row.createDate !== '' ? row.createDate : '-') + '</td>' +
-        '<td>' + escapeHtml(row.deliveryCartons != null ? row.deliveryCartons : '-') + '</td>' +
-        '</tr>';
+    container.innerHTML = cargoRows.map(function (row) {
+      return '<div class="m-official-cargo-card">' +
+        '<div class="cargo-title">' + escapeHtml(row.orderNo) + '</div>' +
+        '<ul class="m-official-kv-list">' +
+        kvItem('\u8fd0\u8f93\u65b9\u5f0f', escapeHtml(row.shippingMethod)) +
+        kvItem('\u4e0b\u5355\u65f6\u95f4', escapeHtml(row.createDate != null && row.createDate !== '' ? row.createDate : '-')) +
+        kvItem('\u9001\u4ed3\u7bb1\u6570', escapeHtml(row.deliveryCartons != null ? row.deliveryCartons : '-')) +
+        '</ul></div>';
     }).join('');
   }
 
@@ -105,11 +109,11 @@
     var wPodHref = OR.getWPodDocumentUrl(item);
 
     $('whConfirmedTime').textContent = whTime || phWh;
-    $('whConfirmedTime').className = whTime ? 'official-value-confirmed' : 'official-placeholder';
+    $('whConfirmedTime').className = whTime ? 'm-official-value-confirmed' : 'm-official-placeholder';
     $('whConfirmedAddress').textContent = whAddr || phWh;
-    $('whConfirmedAddress').className = whAddr ? 'official-value-confirmed' : 'official-placeholder';
+    $('whConfirmedAddress').className = whAddr ? 'm-official-value-confirmed' : 'm-official-placeholder';
     $('actualDeliveryTime').textContent = actual || phDone;
-    $('actualDeliveryTime').className = actual ? '' : 'official-placeholder';
+    $('actualDeliveryTime').className = actual ? 'm-official-value-confirmed' : 'm-official-placeholder';
 
     renderWarehouseFeedback(item);
 
@@ -119,7 +123,7 @@
       $('wPodDownload').className = '';
     } else {
       $('wPodDownload').textContent = phDownload;
-      $('wPodDownload').className = 'official-placeholder';
+      $('wPodDownload').className = 'm-official-placeholder';
     }
   }
 
@@ -135,8 +139,8 @@
     var logList = $('historyLogList');
     if (!logList) return;
     logList.innerHTML = C.buildOperationLogListHtml(item, {
-      emptyClass: 'official-log-empty',
-      timeClass: 'official-log-time',
+      emptyClass: 'm-official-log-empty',
+      timeClass: 'm-official-log-time',
       emptyText: '\u6682\u65e0\u534f\u5546\u8bb0\u5f55'
     });
   }
@@ -156,15 +160,9 @@
     var backupEmails = getBackupEmails(item);
     var container = $('emailList');
     container.innerHTML = '';
-    container.appendChild(createEmailRow(primaryEmail, {
-      primary: true,
-      showAdd: true
-    }));
+    container.appendChild(createEmailRow(primaryEmail, { primary: true, showAdd: true }));
     backupEmails.forEach(function (email) {
-      container.appendChild(createEmailRow(email, {
-        primary: false,
-        showAdd: false
-      }));
+      container.appendChild(createEmailRow(email, { primary: false, showAdd: false }));
     });
   }
 
@@ -176,27 +174,25 @@
     input.type = 'email';
     input.placeholder = 'name@example.com';
     input.value = value || '';
+    input.className = 'md-outlined-input';
     input.setAttribute(options.primary ? 'data-primary-email' : 'data-backup-email', '1');
     if (options.primary) input.readOnly = true;
     row.appendChild(input);
     if (options.showAdd) {
       var addBtn = document.createElement('button');
       addBtn.type = 'button';
-      addBtn.className = 'official-btn-add-email';
+      addBtn.className = 'm-official-btn-add-email';
       addBtn.title = '\u6dfb\u52a0\u5907\u7528\u90ae\u7bb1';
       addBtn.textContent = '+';
       addBtn.addEventListener('click', function () {
-        $('emailList').appendChild(createEmailRow('', {
-          primary: false,
-          showAdd: false
-        }));
+        $('emailList').appendChild(createEmailRow('', { primary: false, showAdd: false }));
       });
       row.appendChild(addBtn);
     }
     if (!options.primary) {
       var removeBtn = document.createElement('button');
       removeBtn.type = 'button';
-      removeBtn.className = 'official-btn-remove-email';
+      removeBtn.className = 'm-official-btn-remove-email';
       removeBtn.title = '\u79fb\u9664\u5907\u7528\u90ae\u7bb1';
       removeBtn.textContent = '\u00d7';
       removeBtn.addEventListener('click', function () {
@@ -309,15 +305,43 @@
     }
   }
 
-  function updateStepperForStatus(status) {
-    var step3 = document.querySelector('.official-step[data-step="3"]');
-    if (!step3) return;
-    if (status === S.DELIVERED) {
-      step3.classList.add('done');
-      step3.classList.remove('active');
-    } else {
-      step3.classList.remove('done', 'active');
-    }
+  function updateTabIndicator() {
+    var indicator = $('tabIndicator');
+    var activeTab = document.querySelector('.md-tab.active');
+    if (!indicator || !activeTab) return;
+    indicator.style.width = activeTab.offsetWidth + 'px';
+    indicator.style.transform = 'translateX(' + activeTab.offsetLeft + 'px)';
+  }
+
+  function switchModule(moduleName) {
+    var tabs = document.querySelectorAll('.md-tab');
+    var panels = document.querySelectorAll('.m-module-panel');
+    tabs.forEach(function (tab) {
+      var isActive = tab.getAttribute('data-module') === moduleName;
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    panels.forEach(function (panel) {
+      var isActive = panel.getAttribute('data-module') === moduleName;
+      panel.classList.toggle('active', isActive);
+      if (isActive) {
+        panel.removeAttribute('hidden');
+      } else {
+        panel.setAttribute('hidden', '');
+      }
+    });
+    updateTabIndicator();
+  }
+
+  function bindModuleTabs() {
+    var tabs = document.querySelectorAll('.md-tab');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        switchModule(tab.getAttribute('data-module'));
+      });
+    });
+    window.addEventListener('resize', updateTabIndicator);
+    updateTabIndicator();
   }
 
   function isFormEditable(status) {
@@ -330,7 +354,7 @@
     document.querySelectorAll('[data-primary-email],[data-backup-email]').forEach(function (inp) {
       inp.disabled = !editable;
     });
-    document.querySelectorAll('.official-btn-add-email').forEach(function (btn) {
+    document.querySelectorAll('.m-official-btn-add-email').forEach(function (btn) {
       btn.style.display = editable ? '' : 'none';
     });
   }
@@ -368,10 +392,9 @@
   function refreshView(message) {
     currentItem = C.getByDeliveryCode(currentItem.deliveryCode) || currentItem;
     var cargoRows = OR.buildCargoRows(currentItem);
-    renderAppointmentInfo(currentItem, cargoRows);
-    renderCargoTable(cargoRows);
+    renderAppointmentInfo(currentItem);
+    renderCargoList(cargoRows);
     renderForm(currentItem);
-    updateStepperForStatus(currentItem.status);
     configureActionBar(currentItem.status);
     if (message) window.alert(message);
   }
@@ -400,36 +423,16 @@
   }
 
   function bindModals() {
-    $('modalWithdrawNo').addEventListener('click', function () {
-      closeModal('modalWithdraw');
-    });
-    $('modalAcceptNo').addEventListener('click', function () {
-      closeModal('modalAccept');
-    });
-    $('modalCustomerRebookNo').addEventListener('click', function () {
-      closeModal('modalCustomerRebook');
-    });
-    $('modalCustomerCancelNo').addEventListener('click', function () {
-      closeModal('modalCustomerCancel');
-    });
-    $('modalHistoryClose').addEventListener('click', function () {
-      closeModal('modalHistory');
-    });
+    $('modalWithdrawNo').addEventListener('click', function () { closeModal('modalWithdraw'); });
+    $('modalAcceptNo').addEventListener('click', function () { closeModal('modalAccept'); });
+    $('modalCustomerRebookNo').addEventListener('click', function () { closeModal('modalCustomerRebook'); });
+    $('modalCustomerCancelNo').addEventListener('click', function () { closeModal('modalCustomerCancel'); });
+    $('modalHistoryClose').addEventListener('click', function () { closeModal('modalHistory'); });
 
-    $('modalWithdraw').addEventListener('click', function (e) {
-      if (e.target === $('modalWithdraw')) closeModal('modalWithdraw');
-    });
-    $('modalAccept').addEventListener('click', function (e) {
-      if (e.target === $('modalAccept')) closeModal('modalAccept');
-    });
-    $('modalCustomerRebook').addEventListener('click', function (e) {
-      if (e.target === $('modalCustomerRebook')) closeModal('modalCustomerRebook');
-    });
-    $('modalCustomerCancel').addEventListener('click', function (e) {
-      if (e.target === $('modalCustomerCancel')) closeModal('modalCustomerCancel');
-    });
-    $('modalHistory').addEventListener('click', function (e) {
-      if (e.target === $('modalHistory')) closeModal('modalHistory');
+    ['modalWithdraw', 'modalAccept', 'modalCustomerRebook', 'modalCustomerCancel', 'modalHistory'].forEach(function (id) {
+      $(id).addEventListener('click', function (e) {
+        if (e.target === $(id)) closeModal(id);
+      });
     });
   }
 
@@ -459,8 +462,8 @@
     }
     $('acceptModalAddress').textContent = addr;
     $('acceptModalTime').textContent = time;
-    var acceptAuditRow = document.getElementById('acceptModalAuditRow');
-    var acceptAuditRemark = document.getElementById('acceptModalAuditRemark');
+    var acceptAuditRow = $('acceptModalAuditRow');
+    var acceptAuditRemark = $('acceptModalAuditRemark');
     var auditRemark = String(currentItem.auditRemark || '').trim();
     if (acceptAuditRow && acceptAuditRemark) {
       if (auditRemark) {
@@ -523,7 +526,7 @@
 
   function bindActions() {
     $('btnBack').addEventListener('click', function () {
-      window.location.href = 'index.html?code=' + encodeURIComponent(currentItem.deliveryCode);
+      window.location.href = '../index.html?code=' + encodeURIComponent(currentItem.deliveryCode);
     });
 
     $('btnSubmit').addEventListener('click', function () {
@@ -545,21 +548,12 @@
       }
     });
 
-    $('btnCustomerRebook').addEventListener('click', function () {
-      openCustomerRebookModal();
-    });
-
+    $('btnCustomerRebook').addEventListener('click', openCustomerRebookModal);
     $('btnRebook').addEventListener('click', function () {
       openWithdrawModal('\u5b98\u7f51\u91cd\u65b0\u9884\u7ea6\uff0c\u72b6\u6001\u53d8\u66f4\u4e3a\u5f85\u9884\u7ea6');
     });
-
-    $('btnAccept').addEventListener('click', function () {
-      openAcceptModal();
-    });
-
-    $('btnOpenHistory').addEventListener('click', function () {
-      openHistoryModal();
-    });
+    $('btnAccept').addEventListener('click', openAcceptModal);
+    $('btnOpenHistory').addEventListener('click', openHistoryModal);
 
     $('expectedDate').addEventListener('change', function () {
       var v = $('expectedDate').value;
@@ -575,22 +569,24 @@
     var code = OR.getQueryCode();
     if (!code) {
       $('detailMain').style.display = 'none';
+      $('actionBar').style.display = 'none';
       $('emptyMain').style.display = 'block';
       return;
     }
     currentItem = OR.getAppointment(code);
     if (!currentItem) {
       $('detailMain').style.display = 'none';
+      $('actionBar').style.display = 'none';
       $('emptyMain').style.display = 'block';
       return;
     }
 
     var cargoRows = OR.buildCargoRows(currentItem);
-    renderAppointmentInfo(currentItem, cargoRows);
-    renderCargoTable(cargoRows);
+    renderAppointmentInfo(currentItem);
+    renderCargoList(cargoRows);
     renderForm(currentItem);
-    updateStepperForStatus(currentItem.status);
     configureActionBar(currentItem.status);
+    bindModuleTabs();
     bindModals();
     bindActions();
     C.bindAppointmentStorageSync(function () {

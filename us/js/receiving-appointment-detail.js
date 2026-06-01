@@ -69,7 +69,7 @@
       ['集装箱号', escapeHtml(item.containerNo || '-')],
       ['柜型', escapeHtml(item.containerType || '-')],
       ['创建人', escapeHtml(C.getBookerParty(item))],
-      ['期望送仓日期', escapeHtml(C.formatUsWarehouseTime(item.expectedInboundTime, wh))],
+      [C.localTimeFieldLabel('期望送仓日期', wh), escapeHtml(C.formatUsWarehouseTime(item.expectedInboundTime, wh))],
       ['货代备注', remarkText ? escapeHtml(remarkText) : '-'],
       ['货代公司', escapeHtml(item.forwarder || '-')],
       ['联系邮箱', escapeHtml((item.emails || []).join('\u3001') || '-')],
@@ -94,7 +94,8 @@
     var fields = [
       ['仓库确认地址', escapeHtml(item.warehouseConfirmedAddress || '\u5f85\u786e\u8ba4')],
       ['联系电话', escapeHtml(formatWarehousePhone(item))],
-      ['仓库确认时段', escapeHtml(C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) || '\u5f85\u786e\u8ba4')],
+      [C.localTimeFieldLabel('仓库确认时段', wh),
+        escapeHtml(C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) || '\u5f85\u786e\u8ba4')],
       ['W.BOL \u4e0b\u8f7d', wPodHtml]
     ];
     $('#whConfirmGrid').html(fields.map(function (f) {
@@ -105,7 +106,7 @@
   function renderArrivalUnloadGrid(item) {
     var wh = item.warehouse || item.confirmedWarehouse || '';
     var fields = [
-      ['实际到仓时间', escapeHtml(C.formatUsWarehouseTime(item.actualDeliveryTime, wh) || '-')],
+      [C.localTimeFieldLabel('实际到仓时间', wh), escapeHtml(C.formatUsWarehouseTime(item.actualDeliveryTime, wh) || '-')],
       ['收货总箱数', escapeHtml(C.formatCell(item.receivedCartons))],
       ['收货总托数', escapeHtml(C.formatCell(item.receivedPallets))],
       ['到仓拍照', C.buildArrivalPhotosHtml(item, {

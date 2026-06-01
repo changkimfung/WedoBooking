@@ -200,16 +200,47 @@ var DeliveryAppointmentCommon = (function () {
     });
   }
 
+  function isFclDeliveryType(record) {
+    return !!(record && record.deliveryType === '\u6574\u67dc');
+  }
+
+  function getEmailPartyFieldEntries(record) {
+    var entries = [
+      { label: '\u9884\u7ea6\u65b9', value: getBookerParty(record) },
+      { label: '\u9001\u4ed3\u7c7b\u578b', value: (record && record.deliveryType) || '-' }
+    ];
+    if (isFclDeliveryType(record)) {
+      entries.push({ label: '\u96c6\u88c5\u7bb1\u53f7', value: (record && record.containerNo) || '-' });
+    }
+    return entries;
+  }
+
+  function getEmailPartyBodyLines(record) {
+    var lines = [
+      '\u9884\u7ea6\u65b9\uff1a' + getBookerParty(record),
+      '\u9001\u4ed3\u7c7b\u578b\uff1a' + ((record && record.deliveryType) || '-')
+    ];
+    if (isFclDeliveryType(record)) {
+      lines.push('\u96c6\u88c5\u7bb1\u53f7\uff1a' + ((record && record.containerNo) || '-'));
+    }
+    return lines;
+  }
+
   function commonAppointmentFields(record, oldItem) {
     var wh = record.warehouse || record.confirmedWarehouse || '-';
     var fields = [
-      { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' },
+      { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' }
+    ];
+    getEmailPartyFieldEntries(record).forEach(function (field) {
+      fields.push(field);
+    });
+    fields.push(
       { label: '\u9001\u4ed3\u7801', value: record.deliveryCode || '-' },
       { label: '\u5ba2\u6237\u7f16\u53f7', value: record.customerCode || '-' },
       { label: '\u9884\u7ea6\u4ed3\u5e93', value: wh },
       { label: '\u539f\u72b6\u6001', value: (oldItem && oldItem.status) || '-' },
       { label: '\u65b0\u72b6\u6001', value: record.status || '-' }
-    ];
+    );
     return fields;
   }
 
@@ -341,20 +372,22 @@ var DeliveryAppointmentCommon = (function () {
         footerColor: '#1f5f9f',
         hideRecipientRole: true,
         fields: [
-          { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' },
+          { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' }
+        ].concat(getEmailPartyFieldEntries(record)).concat([
           { label: '\u76ee\u7684\u5730', value: (record.warehouse || record.confirmedWarehouse || '-') + ' (US West Warehouse)' },
           { label: '\u9884\u7ea6\u4ed3\u5e93\u5730\u5740', value: getMockWarehouseAddress(record) },
           { label: '\u9884\u8ba1\u6d3e\u9001\u65e5\u671f', value: record.expectedInboundTime || '-' },
           { label: '\u5f53\u524d\u72b6\u6001', value: '\u5f85\u4ed3\u5e93\u5ba1\u6838\uff08Pending Review\uff09' },
           { label: '\u5907\u6ce8', value: record.remark || '-' },
           { label: '\u8d27\u91cf', value: submitCargoSummary }
-        ],
+        ]),
         bodyLines: [
           '\u60a8\u597d\uff01',
           '',
           '\u6211\u4eec\u5df2\u6210\u529f\u6536\u5230\u60a8\u63d0\u4ea4\u7684\u5165\u4ed3\u9884\u7ea6\u7533\u8bf7\uff0c\u76f8\u5173\u4fe1\u606f\u5982\u4e0b\uff1a',
           '',
-          '\u9884\u7ea6\u5355\u53f7\uff1a' + (record.appointmentNo || '-'),
+          '\u9884\u7ea6\u5355\u53f7\uff1a' + (record.appointmentNo || '-')
+        ].concat(getEmailPartyBodyLines(record)).concat([
           '\u76ee\u7684\u5730\uff1a' + (record.warehouse || record.confirmedWarehouse || '-') + ' (US West Warehouse)',
           '\u9884\u7ea6\u4ed3\u5e93\u5730\u5740\uff1a' + getMockWarehouseAddress(record),
           '\u9884\u8ba1\u6d3e\u9001\u65e5\u671f\uff1a' + (record.expectedInboundTime || '-'),
@@ -372,7 +405,7 @@ var DeliveryAppointmentCommon = (function () {
           '[WEDO EXPRESS]',
           '',
           '\uff08\u5f53\u524d\u4e3a\u7cfb\u7edf\u90ae\u4ef6\uff0c\u8bf7\u52ff\u56de\u590d\uff09'
-        ]
+        ])
       }));
       return messages;
     }
@@ -392,11 +425,12 @@ var DeliveryAppointmentCommon = (function () {
         footerColor: '#1f5f9f',
         hideRecipientRole: true,
         fields: [
-          { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' },
+          { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' }
+        ].concat(getEmailPartyFieldEntries(record)).concat([
           { label: '\u9884\u7ea6\u4ed3\u5e93', value: (record.warehouse || record.confirmedWarehouse || '-') + ' (US West Warehouse)' },
           { label: '\u4ed3\u5e93\u786e\u8ba4\u5730\u5740', value: record.warehouseConfirmedAddress || '-' },
           { label: '\u6838\u5b9a\u5165\u4ed3\u65f6\u6bb5', value: (record.warehouseConfirmedInboundTime || '-') + '\uff08\u5f53\u5730\u65f6\u95f4\uff09' }
-        ],
+        ]),
         bodyLines: [
           '\u60a8\u597d\uff01',
           '',
@@ -404,7 +438,8 @@ var DeliveryAppointmentCommon = (function () {
           '',
           '\u4e3a\u4e86\u786e\u4fdd\u60a8\u7684\u8d27\u7269\u80fd\u51c6\u65f6\u5165\u4ed3\uff0c\u8bf7\u60a8\u5728 48\u5c0f\u65f6\u5185 \u5b8c\u6210\u6700\u540e\u7684\u786e\u8ba4\u64cd\u4f5c\uff1a',
           '',
-          '\u9884\u7ea6\u5355\u53f7\uff1a' + (record.appointmentNo || '-'),
+          '\u9884\u7ea6\u5355\u53f7\uff1a' + (record.appointmentNo || '-')
+        ].concat(getEmailPartyBodyLines(record)).concat([
           '\u9884\u7ea6\u4ed3\u5e93\uff1a' + (record.warehouse || record.confirmedWarehouse || '-') + ' (US West Warehouse)',
           '\u4ed3\u5e93\u786e\u8ba4\u5730\u5740\uff1a' + (record.warehouseConfirmedAddress || '-'),
           '\u6838\u5b9a\u5165\u4ed3\u65f6\u6bb5\uff1a' + (record.warehouseConfirmedInboundTime || '-') + '\uff08\u5f53\u5730\u65f6\u95f4\uff09',
@@ -424,7 +459,7 @@ var DeliveryAppointmentCommon = (function () {
           '[WEDO EXPRESS]',
           '',
           '\uff08\u5f53\u524d\u4e3a\u7cfb\u7edf\u90ae\u4ef6\uff0c\u8bf7\u52ff\u56de\u590d\uff09'
-        ]
+        ])
       }));
       return messages;
     }
@@ -443,13 +478,15 @@ var DeliveryAppointmentCommon = (function () {
         footerNote: '\u4ed3\u5e93\u9884\u7ea6\u7cfb\u7edf\n[WEDO EXPRESS]\n\n\uff08\u5f53\u524d\u4e3a\u7cfb\u7edf\u90ae\u4ef6\uff0c\u8bf7\u52ff\u56de\u590d\uff09',
         footerColor: '#1f5f9f',
         hideRecipientRole: true,
-        fields: [
+        fields: getEmailPartyFieldEntries(record).concat([
           { label: '\u9a73\u56de\u539f\u56e0', value: record.rejectRemark || '\u8bf7\u5728\u6b64\u5904\u8f93\u5165\u5177\u4f53\u539f\u56e0\uff0c\u4f8b\u5982\uff1a\u6240\u9009\u65f6\u6bb5\u6708\u53f0\u5df2\u6ee1 / \u9644\u4ef6\u5355\u636e\u4e0d\u6e05\u6670 / \u7f3a\u5c11\u5546\u6807\u6388\u6743\u6587\u4ef6 / \u76ee\u7684\u5730\u4ed3\u5e93\u9009\u62e9\u9519\u8bef' }
-        ],
+        ]),
         bodyLines: [
           '\u60a8\u597d\uff01',
           '',
           '\u5f88\u62b1\u6b49\u5730\u901a\u77e5\u60a8\uff0c\u60a8\u63d0\u4ea4\u7684\u5165\u4ed3\u9884\u7ea6\u7533\u8bf7\uff08\u5355\u53f7\uff1a' + no + '\uff09\u672a\u901a\u8fc7\u5ba1\u6838\u3002',
+          ''
+        ].concat(getEmailPartyBodyLines(record)).concat([
           '',
           '\u3010\u9a73\u56de\u539f\u56e0\u3011',
           record.rejectRemark || '\u8bf7\u5728\u6b64\u5904\u8f93\u5165\u5177\u4f53\u539f\u56e0\uff0c\u4f8b\u5982\uff1a\u6240\u9009\u65f6\u6bb5\u6708\u53f0\u5df2\u6ee1 / \u9644\u4ef6\u5355\u636e\u4e0d\u6e05\u6670 / \u7f3a\u5c11\u5546\u6807\u6388\u6743\u6587\u4ef6 / \u76ee\u7684\u5730\u4ed3\u5e93\u9009\u62e9\u9519\u8bef',
@@ -466,7 +503,7 @@ var DeliveryAppointmentCommon = (function () {
           '[WEDO EXPRESS]',
           '',
           '\uff08\u5f53\u524d\u4e3a\u7cfb\u7edf\u90ae\u4ef6\uff0c\u8bf7\u52ff\u56de\u590d\uff09'
-        ]
+        ])
       }));
       return messages;
     }
@@ -500,12 +537,13 @@ var DeliveryAppointmentCommon = (function () {
         footerColor: '#1f5f9f',
         hideRecipientRole: true,
         fields: [
-          { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' },
+          { label: '\u9884\u7ea6\u5355\u53f7', value: record.appointmentNo || '-' }
+        ].concat(getEmailPartyFieldEntries(record)).concat([
           { label: '\u76ee\u7684\u5730', value: (record.warehouse || record.confirmedWarehouse || '-') + ' (US West Warehouse)' },
           { label: '\u8be6\u7ec6\u5730\u5740', value: record.warehouseConfirmedAddress || '-' },
           { label: '\u5165\u4ed3\u65e5\u671f', value: inboundDate },
           { label: '\u5165\u4ed3\u65f6\u6bb5', value: inboundTimeRange + '\uff08\u5f53\u5730\u65f6\u95f4\uff09' }
-        ],
+        ]),
         bodyLines: [
           '[\u7cfb\u7edf\u81ea\u52a8\u901a\u77e5]',
           '',
@@ -515,7 +553,8 @@ var DeliveryAppointmentCommon = (function () {
           '',
           '\u3010\u9884\u7ea6\u4fe1\u606f\u3011',
           '',
-          '\u9884\u7ea6\u5355\u53f7\uff1a' + (record.appointmentNo || '-'),
+          '\u9884\u7ea6\u5355\u53f7\uff1a' + (record.appointmentNo || '-')
+        ].concat(getEmailPartyBodyLines(record)).concat([
           '\u76ee\u7684\u5730\uff1a' + (record.warehouse || record.confirmedWarehouse || '-') + ' (US West Warehouse)',
           '\u8be6\u7ec6\u5730\u5740\uff1a' + (record.warehouseConfirmedAddress || '-'),
           '\u5165\u4ed3\u65e5\u671f\uff1a' + inboundDate,
@@ -530,7 +569,7 @@ var DeliveryAppointmentCommon = (function () {
           '[WEDO EXPRESS]',
           '',
           '\uff08\u5f53\u524d\u4e3a\u7cfb\u7edf\u90ae\u4ef6\uff0c\u8bf7\u52ff\u56de\u590d\uff09'
-        ]
+        ])
       }));
     }
 
@@ -934,10 +973,28 @@ var DeliveryAppointmentCommon = (function () {
     return 'US/Pacific';
   }
 
+  /** 目的仓对应的当地时间文案：美东仓→美东时间，美西仓/美西4仓→美西时间 */
+  function getWarehouseLocalTimeLabel(warehouse) {
+    var wh = String(warehouse || '').trim();
+    if (!wh) return '\u5f53\u5730\u65f6\u95f4';
+    if (wh.indexOf('\u7f8e\u4e1c') >= 0) return '\u7f8e\u4e1c\u65f6\u95f4';
+    if (wh.indexOf('\u7f8e\u897f') >= 0) return '\u7f8e\u897f\u65f6\u95f4';
+    if (wh.indexOf('\u7f8e\u4e2d') >= 0) return '\u7f8e\u4e2d\u65f6\u95f4';
+    return '\u5f53\u5730\u65f6\u95f4';
+  }
+
+  function isUsWarehouseName(warehouse) {
+    return String(warehouse || '').indexOf('\u7f8e') >= 0;
+  }
+
+  function localTimeFieldLabel(baseName, warehouse) {
+    return String(baseName || '') + '\uff08' + getWarehouseLocalTimeLabel(warehouse) + '\uff09';
+  }
+
   function formatUsWarehouseTime(str, warehouse) {
     if (!str) return '-';
-    if (!warehouse || warehouse.indexOf('\u7f8e') < 0) return str;
-    return str + ' (' + getUsTimezoneLabel(warehouse) + ')';
+    if (!isUsWarehouseName(warehouse)) return str;
+    return str + '\uff08' + getWarehouseLocalTimeLabel(warehouse) + '\uff09';
   }
 
   function calcTotalCartons(item) {
@@ -1634,6 +1691,66 @@ var DeliveryAppointmentCommon = (function () {
     return addOrUpdateInMockAndPersist(updated, null, cb);
   }
 
+  function parseAppointmentDateOnly(str) {
+    if (!str) return null;
+    var m = String(str).trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return null;
+    var d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function formatDateOnlyValue(d) {
+    if (!d) return '';
+    var y = d.getFullYear();
+    var m = d.getMonth() + 1;
+    var day = d.getDate();
+    return y + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+  }
+
+  function getLocalWeekRange(refDate) {
+    var base = refDate instanceof Date && !isNaN(refDate.getTime()) ? new Date(refDate) : new Date();
+    var day = base.getDay();
+    var diffToMon = day === 0 ? -6 : 1 - day;
+    var start = new Date(base.getFullYear(), base.getMonth(), base.getDate());
+    start.setDate(start.getDate() + diffToMon);
+    start.setHours(0, 0, 0, 0);
+    var end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    end.setHours(23, 59, 59, 999);
+    return { start: start, end: end };
+  }
+
+  function getAppointmentDeliveryDate(item) {
+    if (!item) return null;
+    return parseAppointmentDateOnly(item.warehouseConfirmedInboundTime)
+      || parseAppointmentDateOnly(item.expectedInboundTime);
+  }
+
+  function isPendingDeliveryThisWeek(item, refDate) {
+    if (!item || item.status !== '\u5f85\u9001\u4ed3') return false;
+    var d = getAppointmentDeliveryDate(item);
+    if (!d) return false;
+    var range = getLocalWeekRange(refDate);
+    return d >= range.start && d <= range.end;
+  }
+
+  function getReceivingReminderStats(refDate) {
+    var list = getReceivingAppointmentList();
+    var range = getLocalWeekRange(refDate);
+    var stats = {
+      whPending: 0,
+      timeout: 0,
+      weekPendingDelivery: 0,
+      weekRangeLabel: formatDateOnlyValue(range.start) + ' ~ ' + formatDateOnlyValue(range.end)
+    };
+    list.forEach(function (item) {
+      if (item.status === '\u4ed3\u5e93\u5f85\u786e\u8ba4') stats.whPending++;
+      if (item.status === '\u5df2\u8d85\u65f6') stats.timeout++;
+      if (isPendingDeliveryThisWeek(item, refDate)) stats.weekPendingDelivery++;
+    });
+    return stats;
+  }
+
   return {
     STORAGE_KEY: STORAGE_KEY,
     bindAppointmentStorageSync: bindAppointmentStorageSync,
@@ -1670,6 +1787,8 @@ var DeliveryAppointmentCommon = (function () {
     getReceivingAppointmentList: getReceivingAppointmentList,
     getBookerParty: getBookerParty,
     getUsTimezoneLabel: getUsTimezoneLabel,
+    getWarehouseLocalTimeLabel: getWarehouseLocalTimeLabel,
+    localTimeFieldLabel: localTimeFieldLabel,
     formatUsWarehouseTime: formatUsWarehouseTime,
     calcTotalCartons: calcTotalCartons,
     formatEstimatedCartons: formatEstimatedCartons,
@@ -1710,6 +1829,9 @@ var DeliveryAppointmentCommon = (function () {
     validatePdaReceivingSubmit: validatePdaReceivingSubmit,
     submitPdaReceivingScan: submitPdaReceivingScan,
     APPOINTMENT_NOTIFY_EMAIL: APPOINTMENT_NOTIFY_EMAIL,
-    sendAppointmentStatusChangeEmail: sendAppointmentStatusChangeEmail
+    sendAppointmentStatusChangeEmail: sendAppointmentStatusChangeEmail,
+    getReceivingReminderStats: getReceivingReminderStats,
+    isPendingDeliveryThisWeek: isPendingDeliveryThisWeek,
+    getLocalWeekRange: getLocalWeekRange
   };
 })();

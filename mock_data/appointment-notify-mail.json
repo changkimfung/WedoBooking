@@ -1,5 +1,424 @@
 [
   {
+    "id": "mail-1780298389888-208",
+    "sentAt": "2026-06-01T07:19:49.888Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约已确认】客户已接受送仓安排 YY20260528102",
+    "body": "客户/货代已确认接受仓库安排，请仓库按确认时段做好收货准备。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：客户待确认\n新状态：待送仓\n变更时间：2026-06-01 15:19:49\n\n请按确认时段准备收货，并在送仓完成后按流程登记到仓信息。",
+    "templateKey": "appointment_confirmed_warehouse",
+    "recipientRole": "仓库",
+    "title": "客户已接受送仓安排",
+    "intro": "客户/货代已确认接受仓库安排，请仓库按确认时段做好收货准备。",
+    "actionUrl": "http://localhost:3847/us/receiving-appointment-detail.html?id=appt-1779959448524-765",
+    "actionLabel": "查看预约详情",
+    "footerNote": "",
+    "footerColor": "",
+    "hideRecipientRole": false,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCVLKD"
+      },
+      {
+        "label": "客户编号",
+        "value": "CN0000438"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西4仓"
+      },
+      {
+        "label": "原状态",
+        "value": "客户待确认"
+      },
+      {
+        "label": "新状态",
+        "value": "待送仓"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "14500 Nelson Ave, City of Industry, CA 91744, USA"
+      },
+      {
+        "label": "仓库确认时段",
+        "value": "2026-06-26 09:00--12:00"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCVLKD"
+      },
+      {
+        "label": "货物概要",
+        "value": "总箱数 1，总托数 -"
+      },
+      {
+        "label": "仓库备注",
+        "value": "31"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "客户待确认",
+    "newStatus": "待送仓",
+    "messageId": "<a864ac23-b7e2-1422-69b2-fb8b4d9f413b@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780298389863-299",
+    "sentAt": "2026-06-01T07:19:49.863Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约成功】恭喜，您的入仓申请已确认 - 单号：YY20260528102",
+    "body": "[系统自动通知]\n\n您好！\n\n恭喜，您的入仓预约申请已审核成功。系统已为您锁定以下入仓时段：\n\n【预约信息】\n\n预约单号：YY20260528102\n预约方：CN0000438\n送仓类型：散货\n目的地：美西4仓 (US West Warehouse)\n详细地址：14500 Nelson Ave, City of Industry, CA 91744, USA\n入仓日期：2026-06-26\n入仓时段：09:00 - 12:00（当地时间）\n\n【入仓指引】\n\n请确保所有货物满足入库标准，包括包装和贴标。详细信息请参阅《运德入库货物要求说明》。\n感谢您的配合。\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "appointment_confirmed_forwarder",
+    "recipientRole": "货代",
+    "title": "入仓申请已确认",
+    "intro": "[系统自动通知]\n\n您好！\n\n恭喜，您的入仓预约申请已审核成功。系统已为您锁定以下入仓时段：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美西4仓 (US West Warehouse)"
+      },
+      {
+        "label": "详细地址",
+        "value": "14500 Nelson Ave, City of Industry, CA 91744, USA"
+      },
+      {
+        "label": "入仓日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "入仓时段",
+        "value": "09:00 - 12:00（当地时间）"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "客户待确认",
+    "newStatus": "待送仓",
+    "messageId": "<d30ab9cd-819d-194e-0529-fbe223944f78@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780298382395-73",
+    "sentAt": "2026-06-01T07:19:42.395Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "您的入仓预约已审核通过，请点击确认最终时段 - 单号：YY20260528102",
+    "body": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260528102）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：\n\n预约单号：YY20260528102\n预约方：CN0000438\n送仓类型：散货\n预约仓库：美西4仓 (US West Warehouse)\n仓库确认地址：14500 Nelson Ave, City of Industry, CA 91744, USA\n核定入仓时段：2026-06-26 09:00--12:00（当地时间）\n\n【必须操作】\n请点击下方链接进入系统，确认上述分配的时段。逾期未确认，该时段可能会重新释放给其他预约。\n\n[点击此处：确认是否接受预约]\n\n温馨提示：\n\n确认后，系统将生成最终的“入仓二维码/凭证”，请交由司机随货携带。\n请确保司机在核定时间内到达，如需取消或变更，请至少提前12小时在系统处理。\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "warehouse_slot_pending_customer_confirm",
+    "recipientRole": "货代",
+    "title": "入仓预约已审核通过",
+    "intro": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260528102）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：",
+    "actionUrl": "http://localhost:3847/fg/reservationDetail.html?code=SCVLKD",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "点击此处：确认是否接受预约",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西4仓 (US West Warehouse)"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "14500 Nelson Ave, City of Industry, CA 91744, USA"
+      },
+      {
+        "label": "核定入仓时段",
+        "value": "2026-06-26 09:00--12:00（当地时间）"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "仓库待确认",
+    "newStatus": "客户待确认",
+    "messageId": "<db7ae40f-ab60-fc69-f422-dd487934da8e@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780298372171-513",
+    "sentAt": "2026-06-01T07:19:32.171Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260528102",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260528102\n预约方：CN0000438\n送仓类型：散货\n目的地：深圳A仓 (US West Warehouse)\n预约仓库地址：18501 Arenth Ave, City of Industry, CA 91748\n预计派送日期：2026-06-26\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：1 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "深圳A仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "18501 Arenth Ave, City of Industry, CA 91748"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "1 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<7a6c9de2-c047-ad4a-3ba5-ff1d02fe332f@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780298159508-136",
+    "sentAt": "2026-06-01T07:15:59.508Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约失败】申请被驳回 - 单号：YY20260528102 - 目的地：深圳A仓",
+    "body": "您好！\n\n很抱歉地通知您，您提交的入仓预约申请（单号：YY20260528102）未通过审核。\n\n预约方：CN0000438\n送仓类型：散货\n\n【驳回原因】\n231231\n\n【后续操作建议】\n\n请登录预约后台，根据上述原因修改相关信息。\n重新选择可用的派送时段。\n注意：在申请重新获得“审核通过”前，请务必不要安排司机前往仓库，否则将无法入仓卸货。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "appointment_rejected_forwarder",
+    "recipientRole": "货代",
+    "title": "申请被驳回",
+    "intro": "您好！\n\n很抱歉地通知您，您提交的入仓预约申请（单号：YY20260528102）未通过审核。",
+    "actionUrl": "http://localhost:3847/fg/index.html?code=SCVLKD",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "登录预约后台",
+    "fields": [
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "驳回原因",
+        "value": "231231"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "仓库待确认",
+    "newStatus": "预约失败",
+    "messageId": "<03b046b4-b394-dd28-d4b1-8f33c660b3e6@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780286640601-862",
+    "sentAt": "2026-06-01T04:04:00.601Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "您的入仓预约已审核通过，请点击确认最终时段 - 单号：YY20260528102",
+    "body": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260528102）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：\n\n预约单号：YY20260528102\n预约方：CN0000438\n送仓类型：散货\n预约仓库：美西4仓 (US West Warehouse)\n仓库确认地址：14500 Nelson Ave, City of Industry, CA 91744, USA\n核定入仓时段：2026-06-26 09:00--12:00（当地时间）\n\n【必须操作】\n请点击下方链接进入系统，确认上述分配的时段。逾期未确认，该时段可能会重新释放给其他预约。\n\n[点击此处：确认是否接受预约]\n\n温馨提示：\n\n确认后，系统将生成最终的“入仓二维码/凭证”，请交由司机随货携带。\n请确保司机在核定时间内到达，如需取消或变更，请至少提前12小时在系统处理。\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "warehouse_slot_pending_customer_confirm",
+    "recipientRole": "货代",
+    "title": "入仓预约已审核通过",
+    "intro": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260528102）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：",
+    "actionUrl": "http://localhost:3847/fg/reservationDetail.html?code=SCVLKD",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "点击此处：确认是否接受预约",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260528102"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西4仓 (US West Warehouse)"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "14500 Nelson Ave, City of Industry, CA 91744, USA"
+      },
+      {
+        "label": "核定入仓时段",
+        "value": "2026-06-26 09:00--12:00（当地时间）"
+      }
+    ],
+    "appointmentId": "appt-1779959448524-765",
+    "appointmentNo": "YY20260528102",
+    "deliveryCode": "SCVLKD",
+    "oldStatus": "仓库待确认",
+    "newStatus": "客户待确认",
+    "messageId": "<a77e7c8c-aa95-6c33-681c-7b4a62913bcc@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780286432593-340",
+    "sentAt": "2026-06-01T04:00:32.593Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260512002",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260512002\n预约方：CN0000438\n送仓类型：整柜\n集装箱号：MSKU1234567\n目的地：美西4仓 (US West Warehouse)\n预约仓库地址：18501 Arenth Ave, City of Industry, CA 91748\n预计派送日期：2026-06-04\n当前状态：待仓库审核（Pending Review）\n备注：也可以 5/30、6/1多个地址\n货量：17 cartons / 5 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260512002"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "整柜"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MSKU1234567"
+      },
+      {
+        "label": "目的地",
+        "value": "美西4仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "18501 Arenth Ave, City of Industry, CA 91748"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-04"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "也可以 5/30、6/1多个地址"
+      },
+      {
+        "label": "货量",
+        "value": "17 cartons / 5 pallets"
+      }
+    ],
+    "appointmentId": "appt-002",
+    "appointmentNo": "YY20260512002",
+    "deliveryCode": "SC9P3N",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待确认",
+    "messageId": "<acd079c0-0698-995b-84d0-48e6c3aeca45@qq.com>",
+    "error": ""
+  },
+  {
     "id": "mail-1780023276549-307",
     "sentAt": "2026-05-29T02:54:36.549Z",
     "channel": "smtp",

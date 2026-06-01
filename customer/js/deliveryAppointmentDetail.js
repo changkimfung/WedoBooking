@@ -14,7 +14,15 @@
     return String(item && item.deliveryType || '').trim() === '\u6574\u67dc';
   }
 
+  function isPostAuditPassStatus(item) {
+    var status = item && item.status;
+    return status === '\u5ba2\u6237\u5f85\u786e\u8ba4' ||
+      status === '\u5f85\u9001\u4ed3' ||
+      status === '\u5df2\u9001\u4ed3';
+  }
+
   function renderInfoGrid(item) {
+    var wh = item.warehouse || '';
     var fields = [
       ['预约仓库', item.warehouse],
       ['预约单号', C.formatCell(item.appointmentNo)],
@@ -34,18 +42,34 @@
     fields.push(
       ['货代公司', C.formatCell(item.forwarder)],
       ['联系邮箱', (item.emails || []).join('、') || '-'],
-      ['期望送仓日期', C.formatCell(item.expectedInboundTime)],
-      ['货代备注', C.formatCell(String(item.remark || '').trim())],
-      ['仓库确认时段', C.formatCell(item.warehouseConfirmedInboundTime)],
-      ['仓库审核备注', C.formatCell(String(item.auditRemark || '').trim())],
-      ['实际送仓时间', C.formatCell(item.actualDeliveryTime)],
+      [C.localTimeFieldLabel('期望送仓日期', wh),
+        C.formatUsWarehouseTime(item.expectedInboundTime, wh) !== '-' ?
+          C.formatUsWarehouseTime(item.expectedInboundTime, wh) : C.formatCell(item.expectedInboundTime)],
+      ['货代备注', C.formatCell(String(item.remark || '').trim())]
+    );
+    if (item.status === '\u9884\u7ea6\u5931\u8d25') {
+      fields.push(['驳回原因', C.formatCell(String(item.rejectRemark || '').trim()), false, true]);
+    } else if (isPostAuditPassStatus(item)) {
+      fields.push([C.localTimeFieldLabel('仓库确认时段', wh),
+        C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) !== '-' ?
+          C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) :
+          C.formatCell(item.warehouseConfirmedInboundTime)]);
+      fields.push(['仓库审核备注', C.formatCell(String(item.auditRemark || '').trim())]);
+    }
+    fields.push(
+      [C.localTimeFieldLabel('实际送仓时间', wh),
+        C.formatUsWarehouseTime(item.actualDeliveryTime, wh) !== '-' ?
+          C.formatUsWarehouseTime(item.actualDeliveryTime, wh) : C.formatCell(item.actualDeliveryTime)],
       ['提交时间', C.formatCell(item.submitTime)],
       ['预约链接', C.buildBookingLinkHtml(item), true]
     );
     document.getElementById('detailInfo').innerHTML = fields.map(function (f) {
       var isDeliveryCode = f[0] === '送仓码';
+      var isRejectReason = f[3] === true;
       var isHtml = f[2] === true;
-      var cls = 'detail-item' + (isDeliveryCode ? ' detail-item--delivery-code' : '');
+      var cls = 'detail-item';
+      if (isDeliveryCode) cls += ' detail-item--delivery-code';
+      if (isRejectReason) cls += ' detail-item--reject-reason';
       var valueHtml = isHtml ? f[1] : String(f[1]);
       return '<div class="' + cls + '"><label>' + f[0] + '</label><span>' + valueHtml + '</span></div>';
     }).join('');

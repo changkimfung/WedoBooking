@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>预约详情 - 运德供应链 WEDO SCM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/reservation-mobile.css" />
+</head>
+<body class="m-official-page">
+  <header class="m-official-header">
+    <div class="m-official-logo">
+      <div class="m-official-logo-icon"></div>
+      <div class="m-official-logo-text">
+        <strong>运德供应链</strong>
+        <span>WEDO SCM</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="m-official-main" id="detailMain">
+    <nav class="md-tabs" id="moduleTabs" role="tablist" aria-label="模块切换">
+      <div class="md-tabs-track">
+        <span class="md-tabs-indicator" id="tabIndicator" aria-hidden="true"></span>
+        <button type="button" class="md-tab active" role="tab" data-module="delivery" aria-selected="true" aria-controls="panelDelivery" id="tabDelivery">送仓信息</button>
+        <button type="button" class="md-tab" role="tab" data-module="overview" aria-selected="false" aria-controls="panelOverview" id="tabOverview">预约单信息</button>
+      </div>
+    </nav>
+
+    <div class="m-module-panels">
+      <section class="m-official-section m-module-panel active" id="panelDelivery" data-module="delivery" role="tabpanel" aria-labelledby="tabDelivery">
+        <div class="m-official-alert">
+          <svg class="m-official-alert-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <span class="m-official-alert-text">预约送仓时间为海外仓当日，海外仓当地人员操作预约审核，为避免时差影响送仓，请您提前2个工作日提交预约单。</span>
+        </div>
+        <div class="m-official-form-block">
+          <div class="md-field">
+            <label class="md-field-label" for="expectedDate"><span class="req">*</span><span id="labelExpectedDate">期望送仓日期（当地时间）</span></label>
+            <input type="date" class="md-outlined-input" id="expectedDate" aria-label="期望送仓日期" />
+            <p class="md-field-hint" id="hintExpectedDate">请选择期望送仓日期（当地时间），<strong>周末（周六、周日）不收货</strong>。多个候选日期或特殊时段请在备注中说明。</p>
+          </div>
+          <div class="md-field">
+            <label class="md-field-label" for="remark">备注</label>
+            <textarea class="md-outlined-input" id="remark" rows="3" maxlength="500" placeholder="如有多个候选日期或特殊时段要求请在此说明"></textarea>
+          </div>
+          <div class="md-field">
+            <label class="md-field-label"><span id="labelWhConfirmedTime">仓库确认送仓时段（当地时间）</span></label>
+            <div class="md-readonly-box">
+              <p class="m-official-placeholder" id="whConfirmedTime">— 待仓库确认后展示 —</p>
+            </div>
+          </div>
+          <div class="md-field">
+            <label class="md-field-label">仓库确认地址（当地）</label>
+            <div class="md-readonly-box">
+              <p class="m-official-placeholder" id="whConfirmedAddress">— 待仓库确认后展示 —</p>
+            </div>
+          </div>
+          <div class="md-field" id="whAuditRemarkRow" style="display:none;">
+            <label class="md-field-label">仓库审核备注</label>
+            <div class="md-readonly-box">
+              <p class="m-official-wh-feedback m-official-wh-feedback--audit" id="whAuditRemark">—</p>
+            </div>
+          </div>
+          <div class="md-field" id="whRejectRemarkRow" style="display:none;">
+            <label class="md-field-label">驳回原因</label>
+            <div class="md-readonly-box">
+              <p class="m-official-wh-feedback m-official-wh-feedback--reject" id="whRejectRemark">—</p>
+            </div>
+          </div>
+          <div class="md-field">
+            <label class="md-field-label">W.BOL 下载</label>
+            <div class="md-readonly-box">
+              <p class="m-official-placeholder" id="wPodDownload">— 待送仓后可下载 W.BOL —</p>
+            </div>
+          </div>
+          <div class="md-field">
+            <label class="md-field-label"><span id="labelActualDeliveryTime">实际送仓时段（当地时间）</span></label>
+            <div class="md-readonly-box">
+              <p class="m-official-placeholder" id="actualDeliveryTime">— 送仓完成后展示 —</p>
+            </div>
+          </div>
+          <div class="md-field">
+            <label class="md-field-label"><span class="req">*</span>通知邮箱</label>
+            <div class="m-official-form-control m-official-email-list" id="emailList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="m-official-section m-module-panel" id="panelOverview" data-module="overview" role="tabpanel" aria-labelledby="tabOverview" hidden>
+        <div class="m-module-panel-head">
+          <a href="javascript:void(0)" id="btnOpenHistory" class="m-official-history-link" role="button">协商历史</a>
+        </div>
+        <div class="md-card">
+          <ul class="m-official-kv-list" id="appointmentInfoList"></ul>
+        </div>
+        <div class="m-module-subtitle-wrap">
+          <h3 class="m-module-subtitle">发货信息</h3>
+          <div id="cargoList"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="m-official-footer-btns" id="actionBar">
+    <button type="button" class="m-official-btn m-official-btn-primary" id="btnSubmit" style="display:none;">提交预约</button>
+    <button type="button" class="m-official-btn m-official-btn-primary" id="btnAccept" style="display:none;">确认接受</button>
+    <button type="button" class="m-official-btn m-official-btn-outline" id="btnCustomerRebook" style="display:none;">重新预约</button>
+    <button type="button" class="m-official-btn m-official-btn-danger" id="btnCancel" style="display:none;">取消预约</button>
+    <button type="button" class="m-official-btn m-official-btn-outline" id="btnRebook" style="display:none;">重新预约</button>
+    <button type="button" class="m-official-btn m-official-btn-default" id="btnBack">返回</button>
+  </div>
+
+  <div class="m-official-modal-overlay" id="modalWithdraw" aria-hidden="true" style="display:none;">
+    <div class="m-official-modal" role="dialog" aria-labelledby="modalWithdrawTitle">
+      <h3 class="m-official-modal-title" id="modalWithdrawTitle">确认撤回</h3>
+      <p class="m-official-modal-body" id="modalWithdrawText">是否需要撤回本次预约？撤回后预约单将恢复为「待预约」状态。</p>
+      <div class="m-official-modal-actions">
+        <button type="button" class="m-official-btn m-official-btn-default" id="modalWithdrawNo">否</button>
+        <button type="button" class="m-official-btn m-official-btn-primary" id="modalWithdrawYes">是</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-official-modal-overlay" id="modalAccept" aria-hidden="true" style="display:none;">
+    <div class="m-official-modal" role="dialog" aria-labelledby="modalAcceptTitle">
+      <h3 class="m-official-modal-title" id="modalAcceptTitle">确认接受</h3>
+      <p class="m-official-modal-body">请确认是否接受以下仓库安排：</p>
+      <dl class="m-official-modal-dl">
+        <dt>仓库确认地址</dt>
+        <dd id="acceptModalAddress">—</dd>
+        <dt>仓库确认送仓时段</dt>
+        <dd id="acceptModalTime">—</dd>
+        <dt id="acceptModalAuditRow" style="display:none;">仓库审核备注</dt>
+        <dd id="acceptModalAuditRemark" class="m-official-wh-feedback--audit" style="display:none;">—</dd>
+      </dl>
+      <div class="m-official-modal-actions">
+        <button type="button" class="m-official-btn m-official-btn-default" id="modalAcceptNo">取消</button>
+        <button type="button" class="m-official-btn m-official-btn-primary" id="modalAcceptYes">确认接受</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-official-modal-overlay" id="modalCustomerRebook" aria-hidden="true" style="display:none;">
+    <div class="m-official-modal" role="dialog" aria-labelledby="modalCustomerRebookTitle">
+      <h3 class="m-official-modal-title" id="modalCustomerRebookTitle">重新预约</h3>
+      <p class="m-official-modal-body">不接受当前仓库时段？预约将回到「待预约」，可在协商历史中查看完整记录。</p>
+      <div class="m-official-modal-actions">
+        <button type="button" class="m-official-btn m-official-btn-default" id="modalCustomerRebookNo">取消</button>
+        <button type="button" class="m-official-btn m-official-btn-primary" id="modalCustomerRebookYes">确认重新预约</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-official-modal-overlay" id="modalHistory" aria-hidden="true" style="display:none;">
+    <div class="m-official-modal" role="dialog" aria-labelledby="modalHistoryTitle">
+      <h3 class="m-official-modal-title" id="modalHistoryTitle">协商历史</h3>
+      <p class="m-official-modal-body" style="margin-bottom:8px;">本预约单从首次提交到当前的全部协商动作。</p>
+      <div class="m-official-modal-history-body">
+        <ul class="m-official-log-list" id="historyLogList"></ul>
+      </div>
+      <div class="m-official-modal-actions" style="margin-top:12px;">
+        <button type="button" class="m-official-btn m-official-btn-primary" id="modalHistoryClose">关闭</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-official-modal-overlay" id="modalCustomerCancel" aria-hidden="true" style="display:none;">
+    <div class="m-official-modal" role="dialog" aria-labelledby="modalCustomerCancelTitle">
+      <h3 class="m-official-modal-title" id="modalCustomerCancelTitle">取消预约</h3>
+      <p class="m-official-modal-body">确定要取消本次预约？取消后预约单将回到「待预约」状态，可在协商历史中查看完整记录。</p>
+      <div class="m-official-modal-actions">
+        <button type="button" class="m-official-btn m-official-btn-default" id="modalCustomerCancelNo">放弃</button>
+        <button type="button" class="m-official-btn m-official-btn-danger" id="modalCustomerCancelYes">确认取消</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="m-official-main m-official-empty" id="emptyMain" style="display:none;">
+    <p>未找到该预约码对应的预约单</p>
+    <p style="margin-top:16px;"><a href="../index.html">返回输入预约码</a></p>
+  </main>
+
+  <script src="../../mock_data/inOrder.js"></script>
+  <script src="../../mock_data/deliveryAppointment.js"></script>
+  <script src="../../customer/js/deliveryAppointment-common.js"></script>
+  <script src="../js/wpod-render.js"></script>
+  <script src="../js/official-reservation.js"></script>
+  <script src="js/reservationDetail.js"></script>
+</body>
+</html>

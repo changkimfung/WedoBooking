@@ -84,9 +84,9 @@
         '<td>' + escapeHtml(C.formatCell(item.receivedCartons)) + '</td>' +
         '<td>' + escapeHtml(C.formatPalletized(item)) + '</td>' +
         '<td>' + escapeHtml(C.formatTotalPallets(item)) + '</td>' +
-        '<td>' + escapeHtml(item.expectedInboundTime || '-') + '</td>' +
-        '<td>' + escapeHtml(item.warehouseConfirmedInboundTime || '-') + '</td>' +
-        '<td>' + escapeHtml(item.actualDeliveryTime || '-') + '</td>' +
+        '<td>' + escapeHtml(C.formatUsWarehouseTime(item.expectedInboundTime, item.warehouse)) + '</td>' +
+        '<td>' + escapeHtml(C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, item.warehouse)) + '</td>' +
+        '<td>' + escapeHtml(C.formatUsWarehouseTime(item.actualDeliveryTime, item.warehouse)) + '</td>' +
         '<td>' + escapeHtml(item.submitTime || '-') + '</td>' +
         '<td class="button"><a href="deliveryAppointmentDetail.html?id=' + encodeURIComponent(item.id) +
         '" class="inorder-op-link">详情</a></td></tr>';

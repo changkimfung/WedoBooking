@@ -8,7 +8,59 @@
   var C = DeliveryAppointmentCommon;
   var currentPage = 1;
   var activeTabStatus = '';
+  var activeReminderFilter = '';
   var detailBase = 'receiving-appointment-detail.html';
+
+  var STATUS_WH_PENDING = '\u4ed3\u5e93\u5f85\u786e\u8ba4';
+  var STATUS_TIMEOUT = '\u5df2\u8d85\u65f6';
+  var STATUS_PENDING_DELIVERY = '\u5f85\u9001\u4ed3';
+
+  function parseReminderFromQuery() {
+    var params = new URLSearchParams(window.location.search);
+    var reminder = params.get('reminder') || '';
+    if (reminder === 'wh_pending') {
+      activeTabStatus = STATUS_WH_PENDING;
+      activeReminderFilter = '';
+    } else if (reminder === 'timeout') {
+      activeTabStatus = STATUS_TIMEOUT;
+      activeReminderFilter = '';
+    } else if (reminder === 'week_pending') {
+      activeTabStatus = STATUS_PENDING_DELIVERY;
+      activeReminderFilter = 'week_pending';
+    }
+    var status = params.get('status') || '';
+    if (status && !reminder) activeTabStatus = status;
+  }
+
+  function applyReminderFilter(key) {
+    if (key === 'wh_pending') {
+      activeTabStatus = STATUS_WH_PENDING;
+      activeReminderFilter = '';
+    } else if (key === 'timeout') {
+      activeTabStatus = STATUS_TIMEOUT;
+      activeReminderFilter = '';
+    } else if (key === 'week_pending') {
+      activeTabStatus = STATUS_PENDING_DELIVERY;
+      activeReminderFilter = 'week_pending';
+    } else {
+      return;
+    }
+    currentPage = 1;
+    renderTabs();
+    refresh(true);
+    scrollToListArea();
+  }
+
+  function scrollToListArea() {
+    var el = document.getElementById('recv-tab-subnav') || document.getElementById('recv-wrap');
+    if (el && el.scrollIntoView) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function clearReminderFilter() {
+    activeReminderFilter = '';
+  }
 
   function val(id) {
     var el = document.getElementById(id);
@@ -54,6 +106,7 @@
     };
     return C.getReceivingAppointmentList().filter(function (item) {
       if (activeTabStatus && item.status !== activeTabStatus) return false;
+      if (activeReminderFilter === 'week_pending' && !C.isPendingDeliveryThisWeek(item)) return false;
       if (f.appointmentNo && norm(item.appointmentNo).indexOf(norm(f.appointmentNo)) === -1) return false;
       if (f.deliveryCode && norm(item.deliveryCode).indexOf(norm(f.deliveryCode)) === -1) return false;
       if (f.booker) {
@@ -129,6 +182,7 @@
     $(ul).find('a.tab-pill').on('click', function (e) {
       e.preventDefault();
       activeTabStatus = $(this).attr('data-status') || '';
+      clearReminderFilter();
       renderTabs();
       refresh(true);
     });
@@ -185,6 +239,7 @@
     $('#btn_recv_reset').on('click', function () {
       $('#q_appointment_no,#q_delivery_code,#q_booker,#q_warehouse,#q_delivery_type,#q_container_no,#q_submit_start,#q_submit_end').val('');
       activeTabStatus = '';
+      clearReminderFilter();
       renderTabs();
       refresh(true);
     });
@@ -204,12 +259,19 @@
       return;
     }
     initWarehouseFilter();
+    parseReminderFromQuery();
     renderTabs();
     bind();
+    window.UsRecvAppointmentList = {
+      applyReminderFilter: applyReminderFilter,
+      refresh: function () { refresh(false); }
+    };
     C.bindAppointmentStorageSync(function () {
       renderTabs();
       refresh(false);
+      if (window.UsRecvAppointmentReminder) window.UsRecvAppointmentReminder.refresh();
     });
     refresh(true);
+    if (activeReminderFilter || activeTabStatus) scrollToListArea();
   });
 })(jQuery);
