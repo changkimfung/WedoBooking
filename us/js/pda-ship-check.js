@@ -187,7 +187,7 @@
       closeOpenSession();
     }
     var st = ShipCheckStore.getOrderCheckStatus(order.orderNo, order.checkStatus);
-    if (st === '已达标') {
+    if (st === '已达标' || st === '已合规') {
       orderDoneHint.classList.remove('pda-hidden');
       return;
     }
@@ -232,12 +232,12 @@
 
     if (!item) {
       // 非当前订单料号：同样记录扫描次数，订单数量显示为 0，弹窗提示
-      setSkuStatus('该料号不属于当前订单，已记录扫描次数', 'err');
-      showAlert('该料号不属于当前订单\n' + code + ' 已计入扫描次数（订单数量为 0）');
+      setSkuStatus('该料号不属于当前订单，请检查！', 'err');
+      showAlert('该料号不属于当前订单，请检查！');
     } else if (count > item.qty) {
       // 超扫：同样记录扫描次数，弹窗提示
-      setSkuStatus('当前料号扫描次数已超过订单发货数量', 'err');
-      showAlert('当前料号扫描次数已超过订单发货数量\n' + item.itemNo +
+      setSkuStatus('该料号扫描次数已超过订单发货数量，请检查！', 'err');
+      showAlert('该料号扫描次数已超过订单发货数量，请检查！\n' + item.itemNo +
         ' 已扫 ' + count + ' / 应扫 ' + item.qty);
     } else {
       setSkuStatus('匹配成功，' + item.itemNo + ' 扫描次数 +1', 'ok');

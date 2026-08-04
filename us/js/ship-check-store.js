@@ -105,36 +105,38 @@ var ShipCheckStore = (function () {
   }
 
   /**
-   * 订单当前有效状态：
-   * 取最新一条档案的状态（含复核中）；无档案时回退 mock 初始 checkStatus
+   * 订单当前有效状态：取最新一条档案的状态（含复核中）；无档案统一为未复核
    */
   function getEffectiveStatus(orderNo, fallbackStatus) {
     var list = listByOrder(orderNo);
     if (list.length) return list[0].status;
-    return fallbackStatus || '未复核';
+    return '未复核';
   }
 
   /**
-   * 订单复核状态（订单级四态）：
-   *  - 已达标：存在一条「复核完成」的档案
+   * 订单复核状态（订单级五态）：
+   *  - 已达标：仅完成 1 次复核，且该次档案为「复核完成」
+   *  - 已合规：复核次数大于 1 后完成，或存在「人工完结」档案
    *  - 复核异常：存在主动提交的「复核异常」档案，且无复核完成
-   *  - 部分复核：所有复核档案都是「部分复核」（含进行中的未终结档案）
-   *  - 未复核：未产生过任何复核档案（回退 mock 初始 checkStatus，初始复核完成视为已达标）
+   *  - 部分复核：有档案但未满足以上状态
+   *  - 未复核：未产生过任何复核档案
    */
   function getOrderCheckStatus(orderNo, fallbackStatus) {
     var list = listByOrder(orderNo);
-    if (!list.length) {
-      if (fallbackStatus === '复核完成') return '已达标';
-      if (fallbackStatus === '复核异常') return '复核异常';
-      if (fallbackStatus === '部分复核') return '部分复核';
-      return '未复核';
-    }
+    // 复核次数为 0 时，不读取模拟数据预设状态，统一归为未复核
+    if (!list.length) return '未复核';
     var hasAbnormalSubmit = false;
+    var hasCompleted = false;
+    var hasManualComplete = false;
     for (var i = 0; i < list.length; i++) {
       var r = list[i];
-      if (r.status === '复核完成') return '已达标';
+      if (r.status === '复核完成') {
+        hasCompleted = true;
+        if (r.finishType === '人工完结') hasManualComplete = true;
+      }
       if (r.status === '复核异常' && r.finishType === '主动提交') hasAbnormalSubmit = true;
     }
+    if (hasCompleted) return hasManualComplete || list.length > 1 ? '已合规' : '已达标';
     if (hasAbnormalSubmit) return '复核异常';
     return '部分复核';
   }

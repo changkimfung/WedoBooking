@@ -1,6 +1,6 @@
 /* 海外仓 us · 发货复核（出库单列表）PC 样式 */
 
-/* ========== 当日指标看板 ========== */
+/* ========== 数据指标看板 ========== */
 
 .oor-stats {
   margin: 10px 0;
@@ -41,6 +41,88 @@
   white-space: nowrap;
 }
 
+/* 看板指标说明：鼠标移入或键盘聚焦问号时显示 */
+.oor-stat-help {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 3px;
+  padding: 0;
+  border: 1px solid #8a97a5;
+  border-radius: 50%;
+  background: #fff;
+  color: #5a6b7d;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  text-align: center;
+  vertical-align: -1px;
+  cursor: help;
+  outline: none;
+}
+
+.oor-stat-help:hover,
+.oor-stat-help:focus {
+  border-color: #1d6fd1;
+  color: #1d6fd1;
+}
+
+.oor-stat-help::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 1080;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #fff;
+  text-align: left;
+  white-space: normal;
+  background: rgba(31, 45, 61, 0.94);
+  box-shadow: 0 2px 8px rgba(31, 45, 61, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 3px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+
+.oor-stat-help::before {
+  content: '';
+  position: absolute;
+  z-index: 1080;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-top-color: rgba(31, 45, 61, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity .15s ease, visibility .15s ease;
+}
+
+.oor-stat-help:hover::after,
+.oor-stat-help:focus::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.oor-stat-help:hover::before,
+.oor-stat-help:focus::before {
+  opacity: 1;
+  visibility: visible;
+}
+
 .oor-stat-value {
   font-size: 22px;
   font-weight: 700;
@@ -51,8 +133,11 @@
 .oor-stat-card.sc-total { border-top: 3px solid #1d6fd1; }
 .oor-stat-card.sc-total .oor-stat-value { color: #1d6fd1; }
 
-.oor-stat-card.sc-met { border-top: 3px solid #0c8a3e; }
-.oor-stat-card.sc-met .oor-stat-value { color: #0c8a3e; }
+.oor-stat-card.sc-compliant { border-top: 3px solid #0c8a3e; }
+.oor-stat-card.sc-compliant .oor-stat-value { color: #0c8a3e; }
+
+.oor-stat-card.sc-met { border-top: 3px solid #1d6fd1; }
+.oor-stat-card.sc-met .oor-stat-value { color: #1d6fd1; }
 
 .oor-stat-card.sc-none { border-top: 3px solid #8a97a5; }
 .oor-stat-card.sc-none .oor-stat-value { color: #5a6b7d; }
@@ -126,9 +211,72 @@
 
 .oor-status-tag.s-none { color: #8a97a5; background: #f2f4f7; border-color: #dfe4ea; }
 .oor-status-tag.s-doing { color: #1d6fd1; background: #e8f2ff; border-color: #bcd8f7; }
-.oor-status-tag.s-done { color: #0c8a3e; background: #e9f8ef; border-color: #bce6cd; }
+.oor-status-tag.s-done { color: #1d6fd1; background: #e8f2ff; border-color: #bcd8f7; }
+.oor-status-tag.s-compliant { color: #0c8a3e; background: #e9f8ef; border-color: #bce6cd; }
 .oor-status-tag.s-error { color: #d9363e; background: #fdecee; border-color: #f6c2c6; }
 .oor-status-tag.s-partial { color: #d46b08; background: #fff4e5; border-color: #f5cf9e; }
+
+/* 状态说明气泡：移入、移出与键盘聚焦时显示 */
+.oor-status-tip {
+  position: relative;
+  cursor: help;
+  outline: none;
+}
+
+.oor-status-tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 1080;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #fff;
+  text-align: left;
+  white-space: normal;
+  background: rgba(31, 45, 61, 0.94);
+  box-shadow: 0 2px 8px rgba(31, 45, 61, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 3px);
+  transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+}
+
+.oor-status-tip::before {
+  content: '';
+  position: absolute;
+  z-index: 1080;
+  left: 50%;
+  bottom: 4px;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-top-color: rgba(31, 45, 61, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity .15s ease, visibility .15s ease;
+}
+
+.oor-status-tip:hover::after,
+.oor-status-tip:focus::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.oor-status-tip:hover::before,
+.oor-status-tip:focus::before {
+  opacity: 1;
+  visibility: visible;
+}
 
 /* 复核档案弹窗 */
 .oor-modal-backdrop {

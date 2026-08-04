@@ -6,8 +6,9 @@
   'use strict';
 
   var STATUS_CLASS = {
-    // 订单级四态
+    // 订单级五态
     '已达标': 's-done',
+    '已合规': 's-compliant',
     '复核异常': 's-error',
     '部分复核': 's-partial',
     '未复核': 's-none',
@@ -35,8 +36,20 @@
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  var STATUS_TIP = {
+    '已达标': '首次复核即完成，且复核次数为 1 次。',
+    '已合规': '多次复核后完成，或由管理人员人工完结。',
+    '复核异常': '已提交复核，但存在少扫、多扫或错扫。',
+    '部分复核': '已开始复核但未完成提交，或作业中断。',
+    '未复核': '尚未产生任何复核记录。',
+    '复核中': '正在进行复核，尚未提交结果。',
+    '复核完成': '本轮复核商品和数量均与订单一致。'
+  };
+
   function statusTag(st) {
-    return '<span class="oor-status-tag ' + (STATUS_CLASS[st] || 's-none') + '">' + esc(st || '未复核') + '</span>';
+    st = st || '未复核';
+    return '<span class="oor-status-tag oor-status-tip ' + (STATUS_CLASS[st] || 's-none') +
+      '" data-tip="' + esc(STATUS_TIP[st] || '') + '" tabindex="0">' + esc(st) + '</span>';
   }
 
   function fmtDuration(sec) {

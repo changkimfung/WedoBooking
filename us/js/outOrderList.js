@@ -6,8 +6,9 @@
   'use strict';
 
   var STATUS_CLASS = {
-    // 订单级四态
+    // 订单级五态
     '已达标': 's-done',
+    '已合规': 's-compliant',
     '复核异常': 's-error',
     '部分复核': 's-partial',
     '未复核': 's-none',
@@ -21,38 +22,56 @@
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  var STATUS_TIP = {
+    '已达标': '首次复核即完成，且复核次数为 1 次。',
+    '已合规': '多次复核后完成，或由管理人员人工完结。',
+    '复核异常': '已提交复核，但存在少扫、多扫或错扫。',
+    '部分复核': '已开始复核但未完成提交，或作业中断。',
+    '未复核': '尚未产生任何复核记录。',
+    '复核中': '正在进行复核，尚未提交结果。',
+    '复核完成': '本轮复核商品和数量均与订单一致。'
+  };
+
   function statusTag(st) {
-    return '<span class="oor-status-tag ' + (STATUS_CLASS[st] || 's-none') + '">' + esc(st || '未复核') + '</span>';
+    st = st || '未复核';
+    return '<span class="oor-status-tag oor-status-tip ' + (STATUS_CLASS[st] || 's-none') +
+      '" data-tip="' + esc(STATUS_TIP[st] || '') + '" tabindex="0">' + esc(st) + '</span>';
   }
 
-  /** 订单复核状态（四态）：已达标 / 复核异常 / 部分复核 / 未复核 */
+  /** 订单复核状态（五态）：已达标 / 已合规 / 复核异常 / 部分复核 / 未复核 */
   function orderStatus(order) {
     return ShipCheckStore.getOrderCheckStatus(order.orderNo, order.checkStatus);
   }
 
-  /* ========== 当日指标看板 ========== */
+  /* ========== 数据指标看板 ========== */
 
-  /** 当日已发货订单的四态指标统计（统计日期随所选时区变化） */
+  /** 按发货时间段统计订单状态；时间均按所选时区换算 */
   function renderStats() {
-    var today = WedoTime.today();
-    $('#oorStatDate').text(today);
-    var total = 0, met = 0, none = 0, partial = 0, abnormal = 0;
+    var qFrom = $('#q_ship_from').val();
+    var qTo = $('#q_ship_to').val();
+    var rangeText = qFrom || qTo ? (qFrom || '开始') + ' ~ ' + (qTo || '结束') : '全部发货时间';
+    $('#oorStatDate').text(rangeText);
+    var total = 0, met = 0, compliant = 0, none = 0, partial = 0, abnormal = 0;
     $.each(MOCK_OUT_ORDER_LIST || [], function (i, o) {
-      if (WedoTime.day(o.shipDate) !== today) return; // 仅统计当日已发货订单（发货日按所选时区换算）
+      var shipDay = WedoTime.day(o.shipDate);
+      if (qFrom && shipDay < qFrom) return;
+      if (qTo && shipDay > qTo) return;
       total++;
       var st = orderStatus(o);
       if (st === '已达标') met++;
+      else if (st === '已合规') compliant++;
       else if (st === '未复核') none++;
       else if (st === '部分复核') partial++;
       else if (st === '复核异常') abnormal++;
     });
     $('#statTotal').text(total);
+    $('#statCompliant').text(compliant);
     $('#statMet').text(met);
     $('#statNone').text(none);
     $('#statPartial').text(partial);
     $('#statError').text(abnormal);
-    // 复核完成率 = 已合规复核订单量 / 总发货订单量，百分数保留两位小数
-    $('#statRate').text(total ? (met / total * 100).toFixed(2) + '%' : '0.00%');
+    // 复核完成率 = 已达标订单量 + 已合规订单量 / 发货订单量，百分数保留两位小数
+    $('#statRate').text(total ? ((met + compliant) / total * 100).toFixed(2) + '%' : '0.00%');
   }
 
   /* ========== 分页 ========== */
@@ -119,7 +138,7 @@
       $tr.append('<td>' + esc(WedoTime.fmt(o.shipDate)) + '</td>');
       $tr.append('<td>' + (doneTime === '-' ? '-' : esc(WedoTime.fmt(doneTime))) + '</td>');
       var opHtml = '<a href="outOrderDetail.html?orderNo=' + encodeURIComponent(o.orderNo) + '">查看详情</a>';
-      if (st !== '已达标') {
+      if (st !== '已达标' && st !== '已合规') {
         opHtml += ' <a href="javascript:;" class="oor-finish-link" data-order="' + esc(o.orderNo) + '">完结</a>';
       }
       $tr.append('<td>' + opHtml + '</td>');
@@ -158,22 +177,69 @@
     });
   }
 
+  /** 归集单条复核档案的少扫、错扫、多扫异常类型（按首次出现顺序去重） */
+  function recordExceptionTypes(rec) {
+    var types = [];
+    function add(type) {
+      if ($.inArray(type, types) === -1) types.push(type);
+    }
+    $.each(rec.scanDetail || [], function (i, detail) {
+      // 非本单料号（订单数量为 0）由扫描日志中的错扫体现，避免同时误判为多扫
+      if (detail.orderQty > 0 && detail.scanCount < detail.orderQty) add('少扫');
+      if (detail.orderQty > 0 && detail.scanCount > detail.orderQty) add('多扫');
+    });
+    $.each(rec.scanLogs || [], function (i, log) {
+      if (log.scanType === '错扫') add('错扫');
+      else if (log.scanType === '多扫') add('多扫');
+    });
+    return types;
+  }
+
+  /** 分表一异常分析：按订单最终状态生成可追溯的异常说明 */
+  function exportExceptionAnalysis(order, status, records) {
+    var count = records.length;
+    if (status === '已达标') return '';
+    if (status === '已合规') return '复核次数大于1，值为' + count;
+
+    var types = [];
+    function merge(rec) {
+      $.each(recordExceptionTypes(rec), function (i, type) {
+        if ($.inArray(type, types) === -1) types.push(type);
+      });
+    }
+    if (status === '部分复核') {
+      $.each(records, function (i, rec) {
+        if (rec.finishType !== '主动提交') merge(rec);
+      });
+      return '非主动提交：' + (types.join('，') || '无异常记录');
+    }
+    if (status === '复核异常') {
+      $.each(records, function (i, rec) {
+        if (rec.status === '复核异常' && rec.finishType === '主动提交') merge(rec);
+      });
+      return '主动提交：' + (types.join('，') || '无异常记录');
+    }
+    return '';
+  }
+
   /** 生成 XML Spreadsheet 文档：分表一 订单列表 / 分表二 复核日志 */
   function buildExportXml(orders) {
-    var rows1 = [ssRow(['出库单', '复核状态', '复核次数', '发货时间', '复核完成时间'], true)];
+    var rows1 = [ssRow(['出库单', '复核状态', '复核次数', '发货时间', '复核完成时间', '异常分析'], true)];
     var rows2 = [ssRow(['出库单', '复核编号', '复核状态', '操作人', '料号', '扫描时间', '异常类型'], true)];
 
     $.each(orders, function (i, o) {
+      var status = orderStatus(o);
+      var records = ShipCheckStore.listByOrder(o.orderNo);
       var doneTime = ShipCheckStore.getCompletionTime(o.orderNo);
       rows1.push(ssRow([
         o.orderNo,
-        orderStatus(o),
+        status,
         String(ShipCheckStore.countByOrder(o.orderNo)),
         WedoTime.fmt(o.shipDate),
-        doneTime ? WedoTime.fmt(doneTime) : '-'
+        doneTime ? WedoTime.fmt(doneTime) : '-',
+        exportExceptionAnalysis(o, status, records)
       ]));
       // 复核日志：该订单全部档案的逐条扫描记录（时间按所选时区）
-      var records = ShipCheckStore.listByOrder(o.orderNo);
       $.each(records, function (j, rec) {
         $.each(rec.scanLogs || [], function (k, log) {
           rows2.push(ssRow([
@@ -253,7 +319,7 @@
       currentPage = p;
       render();
     });
-    // 人工完结：生成一条「复核完成 / 人工完结」档案，订单状态变为已达标
+    // 人工完结：生成一条「复核完成 / 人工完结」档案，订单状态变为已合规
     $('#oorBody').on('click', '.oor-finish-link', function () {
       var orderNo = $(this).attr('data-order');
       var order = null;
@@ -261,7 +327,7 @@
         if (o.orderNo === orderNo) { order = o; return false; }
       });
       if (!order) return;
-      if (!confirm('确认将出库单 ' + orderNo + ' 人工完结为「已达标」吗？')) return;
+      if (!confirm('确认将出库单 ' + orderNo + ' 人工完结为「已合规」吗？')) return;
       ShipCheckStore.completeOrder(order, '演示用户');
       render();
     });
