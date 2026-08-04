@@ -263,6 +263,39 @@ var ShipCheckStore = (function () {
   }
 
   /**
+   * PC 端人工完结：为订单生成一条「复核完成 / 人工完结」档案，订单级状态即变为已达标
+   * 扫描明细按订单清单补齐（已扫=订单数量），保证档案明细展示自洽
+   */
+  function completeOrder(order, operator) {
+    var list = loadAll();
+    var totalQty = 0;
+    var scanDetail = (order.items || []).map(function (it) {
+      totalQty += it.qty || 0;
+      return { itemNo: it.itemNo, scanCount: it.qty || 0, orderQty: it.qty || 0 };
+    });
+    var now = nowStr();
+    var rec = {
+      id: genId(list),
+      orderNo: order.orderNo,
+      trackingNo: order.trackingNo,
+      operator: operator || '-',
+      site: '',
+      startTime: now,
+      endTime: now,
+      duration: 0,
+      scanLogs: [],
+      scanDetail: scanDetail,
+      totalScanCount: totalQty,
+      totalOrderQty: totalQty,
+      finishType: '人工完结',
+      status: '复核完成'
+    };
+    list.push(rec);
+    saveAll(list);
+    return rec;
+  }
+
+  /**
    * PC 端修改已终结档案：支持修改复核状态与完结类型
    * @param {string} id 档案编号
    * @param {{status?:string, finishType?:string}} changes
@@ -279,7 +312,7 @@ var ShipCheckStore = (function () {
     if (changes.status && allowedStatus.indexOf(changes.status) > -1) {
       rec.status = changes.status;
     }
-    if (changes.finishType === '主动提交' || changes.finishType === '中断完结') {
+    if (changes.finishType === '主动提交' || changes.finishType === '中断完结' || changes.finishType === '人工完结') {
       rec.finishType = changes.finishType;
     }
     saveAll(list);
@@ -299,6 +332,7 @@ var ShipCheckStore = (function () {
     appendScan: appendScan,
     submitRecord: submitRecord,
     closeAsPartial: closeAsPartial,
+    completeOrder: completeOrder,
     updateRecord: updateRecord
   };
 })();

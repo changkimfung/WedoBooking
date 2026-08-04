@@ -118,7 +118,11 @@
       $tr.append('<td>' + ShipCheckStore.countByOrder(o.orderNo) + '</td>');
       $tr.append('<td>' + esc(WedoTime.fmt(o.shipDate)) + '</td>');
       $tr.append('<td>' + (doneTime === '-' ? '-' : esc(WedoTime.fmt(doneTime))) + '</td>');
-      $tr.append('<td><a href="outOrderDetail.html?orderNo=' + encodeURIComponent(o.orderNo) + '">查看详情</a></td>');
+      var opHtml = '<a href="outOrderDetail.html?orderNo=' + encodeURIComponent(o.orderNo) + '">查看详情</a>';
+      if (st !== '已达标') {
+        opHtml += ' <a href="javascript:;" class="oor-finish-link" data-order="' + esc(o.orderNo) + '">完结</a>';
+      }
+      $tr.append('<td>' + opHtml + '</td>');
       $body.append($tr);
     });
 
@@ -247,6 +251,18 @@
       var p = parseInt($(this).attr('data-page'), 10);
       if (!p || p === currentPage) return;
       currentPage = p;
+      render();
+    });
+    // 人工完结：生成一条「复核完成 / 人工完结」档案，订单状态变为已达标
+    $('#oorBody').on('click', '.oor-finish-link', function () {
+      var orderNo = $(this).attr('data-order');
+      var order = null;
+      $.each(MOCK_OUT_ORDER_LIST || [], function (i, o) {
+        if (o.orderNo === orderNo) { order = o; return false; }
+      });
+      if (!order) return;
+      if (!confirm('确认将出库单 ' + orderNo + ' 人工完结为「已达标」吗？')) return;
+      ShipCheckStore.completeOrder(order, '演示用户');
       render();
     });
   });
