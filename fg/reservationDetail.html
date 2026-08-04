@@ -31,40 +31,40 @@
     <nav class="official-stepper" aria-label="预约流程">
       <div class="official-step done" data-step="1">
         <span class="official-step-num">1</span>
-        <span class="official-step-label">输入预约码<br /><small>Enter Reservation Code</small></span>
+        <span class="official-step-label" data-i18n-step="1">输入预约码<br /><small>Enter Reservation Code</small></span>
       </div>
       <div class="official-step active" data-step="2">
         <span class="official-step-num">2</span>
-        <span class="official-step-label">预约送仓<br /><small>Schedule Delivery</small></span>
+        <span class="official-step-label" data-i18n-step="2">预约送仓<br /><small>Schedule Delivery</small></span>
       </div>
       <div class="official-step" data-step="3">
         <span class="official-step-num">3</span>
-        <span class="official-step-label">送仓完成<br /><small>Delivery Completed</small></span>
+        <span class="official-step-label" data-i18n-step="3">送仓完成<br /><small>Delivery Completed</small></span>
       </div>
     </nav>
 
-    <div class="official-alert">
+    <div class="official-alert" data-i18n="alertTimezone">
       预约送仓时间为海外仓当日，海外仓当地人员操作预约审核，为避免时差影响送仓，请您提前2个工作日提交预约单。
     </div>
 
     <section class="official-section">
       <h2 class="official-section-title">
-        预约单信息
-        <a href="javascript:void(0)" id="btnOpenHistory" class="official-history-link" role="button" aria-label="查看协商历史">协商历史</a>
+        <span data-i18n="sectionApptInfo">预约单信息</span>
+        <a href="javascript:void(0)" id="btnOpenHistory" class="official-history-link" role="button" data-i18n="negotiationHistory">协商历史</a>
       </h2>
       <table class="official-info-table" id="appointmentInfoTable">
         <thead>
           <tr>
-            <th>预约单号</th>
-            <th>预约码</th>
-            <th>目的仓</th>
-            <th>预约状态</th>
-            <th>送仓类型</th>
-            <th>送仓总箱数</th>
-            <th class="appt-info-fcl-only">集装箱号</th>
-            <th class="appt-info-fcl-only">柜型</th>
-            <th>是否打托</th>
-            <th>送仓总托数</th>
+            <th data-i18n="thApptNo">预约单号</th>
+            <th data-i18n="thDeliveryCode">预约码</th>
+            <th data-i18n="thWarehouse">目的仓</th>
+            <th data-i18n="thStatus">预约状态</th>
+            <th data-i18n="thDeliveryType">送仓类型</th>
+            <th data-i18n="thTotalCartons">送仓总箱数</th>
+            <th class="appt-info-fcl-only" data-i18n="thContainerNo">集装箱号</th>
+            <th class="appt-info-fcl-only" data-i18n="thContainerType">柜型</th>
+            <th data-i18n="thPalletized">是否打托</th>
+            <th data-i18n="thTotalPallets">送仓总托数</th>
           </tr>
         </thead>
         <tbody><tr id="appointmentInfoRow"></tr></tbody>
@@ -72,14 +72,14 @@
     </section>
 
     <section class="official-section">
-      <h2 class="official-section-title">发货信息</h2>
+      <h2 class="official-section-title" data-i18n="sectionCargo">发货信息</h2>
       <table class="official-info-table official-cargo-table" id="cargoTable">
         <thead>
           <tr>
-            <th>入库单/票号</th>
-            <th>运输方式</th>
-            <th>下单时间</th>
-            <th>送仓箱数</th>
+            <th data-i18n="thOrderNo">入库单/票号</th>
+            <th data-i18n="thShippingMethod">运输方式</th>
+            <th data-i18n="thCreateDate">下单时间</th>
+            <th data-i18n="thDeliveryCartons">送仓箱数</th>
           </tr>
         </thead>
         <tbody id="cargoBody"></tbody>
@@ -87,100 +87,106 @@
     </section>
 
     <section class="official-section">
-      <h2 class="official-section-title">送仓信息</h2>
+      <h2 class="official-section-title" data-i18n="sectionDelivery">送仓信息</h2>
       <div class="official-form-block">
         <div class="official-form-row">
-          <label><span class="req">*</span><span id="labelExpectedDate">期望送仓日期（当地时间）</span></label>
+          <label><span class="req">*</span><span id="labelExpectedDate">期望送仓日期（美西时间）</span></label>
           <div class="official-form-control">
-            <input type="date" id="expectedDate" aria-label="期望送仓日期" />
-            <p class="official-form-hint" id="hintExpectedDate">请选择期望送仓日期（当地时间），<strong>周末（周六、周日）不收货</strong>。多个候选日期或特殊时段请在备注中说明。</p>
+            <div class="official-expected-date-list" id="expectedDateList" aria-label="期望送仓日期"></div>
+            <p class="official-form-hint" id="hintExpectedDate">请选择期望送仓日期（美西时间），<strong>周末（周六、周日）不收货</strong>。最多可添加 3 个候选日期，第一个必填。</p>
           </div>
         </div>
         <div class="official-form-row">
-          <label>备注</label>
+          <label data-i18n="labelRemark">备注</label>
           <div class="official-form-control">
-            <textarea id="remark" rows="3" maxlength="500" placeholder="如有多个候选日期或特殊时段要求请在此说明（例：6/2 或 6/3，上午到货最佳）"></textarea>
+            <textarea id="remark" rows="3" maxlength="500" data-i18n-placeholder="remarkPlaceholder" placeholder="如有多个候选日期或特殊时段要求请在此说明（例：6/2 或 6/3，上午到货最佳）"></textarea>
           </div>
         </div>
-        <div class="official-form-row">
-          <label><span id="labelWhConfirmedTime">仓库确认送仓时段（当地时间）</span></label>
+        <div class="official-form-row" id="rowWhConfirmedTime">
+          <label><span id="labelWhConfirmedTime">仓库确认送仓时段（美西时间）</span></label>
           <div class="official-form-control">
-            <p class="official-placeholder" id="whConfirmedTime">— 待仓库确认后展示 —</p>
+            <p id="whConfirmedTime">-</p>
           </div>
         </div>
-        <div class="official-form-row">
-          <label>仓库确认地址（当地）</label>
+        <div class="official-form-row" id="rowWhConfirmedAddress">
+          <label data-i18n="labelWhAddress">仓库确认地址</label>
           <div class="official-form-control">
-            <p class="official-placeholder" id="whConfirmedAddress">— 待仓库确认后展示 —</p>
+            <p id="whConfirmedAddress">-</p>
           </div>
         </div>
         <div class="official-form-row" id="whAuditRemarkRow" style="display:none;">
-          <label>仓库审核备注</label>
+          <label data-i18n="labelWhAuditRemark">仓库审核备注</label>
           <div class="official-form-control">
             <p class="official-wh-feedback official-wh-feedback--audit" id="whAuditRemark">—</p>
           </div>
         </div>
         <div class="official-form-row" id="whRejectRemarkRow" style="display:none;">
-          <label>驳回原因</label>
+          <label data-i18n="labelRejectRemark">驳回原因</label>
           <div class="official-form-control">
             <p class="official-wh-feedback official-wh-feedback--reject" id="whRejectRemark">—</p>
           </div>
         </div>
-        <div class="official-form-row">
-          <label>W.BOL 下载</label>
+        <div class="official-form-row" id="rowWPodDownload">
+          <label data-i18n="labelWPod">W.BOL 下载</label>
           <div class="official-form-control">
-            <p class="official-placeholder" id="wPodDownload">— 待送仓后可下载 W.BOL —</p>
+            <p id="wPodDownload">-</p>
+          </div>
+        </div>
+        <div class="official-form-row" id="rowActualDeliveryTime">
+          <label><span id="labelActualDeliveryTime">实际送仓时段（美西时间）</span></label>
+          <div class="official-form-control">
+            <p id="actualDeliveryTime">-</p>
           </div>
         </div>
         <div class="official-form-row">
-          <label><span id="labelActualDeliveryTime">实际送仓时段（当地时间）</span></label>
+          <label data-i18n="labelContactPhone">联系电话</label>
           <div class="official-form-control">
-            <p class="official-placeholder" id="actualDeliveryTime">— 送仓完成后展示 —</p>
+            <input type="tel" id="contactPhone" maxlength="32" data-i18n-placeholder="contactPhonePlaceholder" placeholder="选填，便于仓库联系" />
           </div>
         </div>
         <div class="official-form-row">
-          <label><span class="req">*</span>通知邮箱</label>
+          <label><span class="req">*</span><span data-i18n="labelContactEmail">货代联系邮箱</span></label>
           <div class="official-form-control official-email-list" id="emailList"></div>
         </div>
       </div>
     </section>
 
     <div class="official-footer-btns" id="actionBar">
-      <button type="button" class="official-btn official-btn-primary" id="btnSubmit" style="display:none;">提交预约</button>
-      <button type="button" class="official-btn official-btn-primary" id="btnAccept" style="display:none;">确认接受</button>
-      <button type="button" class="official-btn official-btn-outline" id="btnCustomerRebook" style="display:none;">重新预约</button>
-      <button type="button" class="official-btn official-btn-danger" id="btnCancel" style="display:none;">取消预约</button>
-      <button type="button" class="official-btn official-btn-outline" id="btnRebook" style="display:none;">重新预约</button>
-      <button type="button" class="official-btn official-btn-default" id="btnBack">返回</button>
+      <button type="button" class="official-btn official-btn-primary" id="btnSubmit" style="display:none;" data-i18n="btnSubmit">提交预约</button>
+      <button type="button" class="official-btn official-btn-primary" id="btnAccept" style="display:none;" data-i18n="btnAccept">确认接受</button>
+      <button type="button" class="official-btn official-btn-outline" id="btnCustomerRebook" style="display:none;" data-i18n="btnCustomerRebook">重新预约</button>
+      <button type="button" class="official-btn official-btn-danger" id="btnCancel" style="display:none;" data-i18n="btnCancel">取消预约</button>
+      <button type="button" class="official-btn official-btn-outline" id="btnRebook" style="display:none;" data-i18n="btnRebook">重新预约</button>
+      <button type="button" class="official-btn official-btn-default" id="btnBack" data-i18n="btnBack">返回</button>
     </div>
   </main>
 
   <div class="official-modal-overlay" id="modalWithdraw" aria-hidden="true" style="display:none;">
     <div class="official-modal" role="dialog" aria-labelledby="modalWithdrawTitle">
-      <h3 class="official-modal-title" id="modalWithdrawTitle">确认撤回</h3>
-      <p class="official-modal-body" id="modalWithdrawText">是否需要撤回本次预约？撤回后预约单将恢复为「待预约」状态。</p>
+      <h3 class="official-modal-title" id="modalWithdrawTitle" data-i18n="modalWithdrawTitle">确认撤回</h3>
+      <p class="official-modal-body" id="modalWithdrawText" data-i18n="modalWithdrawText">是否需要撤回本次预约？撤回后预约单将恢复为「待预约」状态。</p>
       <div class="official-modal-actions">
-        <button type="button" class="official-btn official-btn-default" id="modalWithdrawNo">否</button>
-        <button type="button" class="official-btn official-btn-primary" id="modalWithdrawYes">是</button>
+        <button type="button" class="official-btn official-btn-default" id="modalWithdrawNo" data-i18n="btnNo">否</button>
+        <button type="button" class="official-btn official-btn-primary" id="modalWithdrawYes" data-i18n="btnYes">是</button>
       </div>
     </div>
   </div>
 
   <div class="official-modal-overlay" id="modalAccept" aria-hidden="true" style="display:none;">
     <div class="official-modal" role="dialog" aria-labelledby="modalAcceptTitle">
-      <h3 class="official-modal-title" id="modalAcceptTitle">确认接受</h3>
-      <p class="official-modal-body">请确认是否接受以下仓库安排：</p>
+      <h3 class="official-modal-title" id="modalAcceptTitle" data-i18n="modalAcceptTitle">确认接受</h3>
+      <p class="official-modal-body" data-i18n="modalAcceptBody">请确认是否接受以下仓库安排：</p>
       <dl class="official-modal-dl">
-        <dt>仓库确认地址</dt>
+        <dt data-i18n="modalAcceptAddress">仓库确认地址</dt>
         <dd id="acceptModalAddress">—</dd>
-        <dt>仓库确认送仓时段</dt>
+        <dt data-i18n="modalAcceptTime">仓库确认送仓时段</dt>
         <dd id="acceptModalTime">—</dd>
-        <dt id="acceptModalAuditRow" style="display:none;">仓库审核备注</dt>
+        <dt id="acceptModalAuditRow" style="display:none;" data-i18n="labelWhAuditRemark">仓库审核备注</dt>
         <dd id="acceptModalAuditRemark" class="official-wh-feedback--audit" style="display:none;">—</dd>
       </dl>
       <div class="official-modal-actions">
-        <button type="button" class="official-btn official-btn-default" id="modalAcceptNo">取消</button>
-        <button type="button" class="official-btn official-btn-primary" id="modalAcceptYes">确认接受</button>
+        <button type="button" class="official-btn official-btn-default" id="modalAcceptNo" data-i18n="btnNo">取消</button>
+        <button type="button" class="official-btn official-btn-primary" id="modalAcceptYes" data-i18n="btnConfirmAccept">确认接受</button>
       </div>
     </div>
   </div>
@@ -221,15 +227,18 @@
   </div>
 
   <main class="official-main official-empty" id="emptyMain" style="display:none;">
-    <p>未找到该预约码对应的预约单</p>
-    <p style="margin-top:16px;"><a href="index.html">返回输入预约码</a></p>
+    <p data-i18n="emptyNotFound">未找到该预约码对应的预约单</p>
+    <p style="margin-top:16px;"><a href="index.html" data-i18n="emptyBackLink">返回输入预约码</a></p>
   </main>
 
+  <script src="../mock_data/warehouses.js"></script>
   <script src="../mock_data/inOrder.js"></script>
   <script src="../mock_data/deliveryAppointment.js"></script>
   <script src="../customer/js/deliveryAppointment-common.js"></script>
   <script src="js/wpod-render.js"></script>
+  <script src="js/fg-i18n.js"></script>
   <script src="js/official-reservation.js"></script>
   <script src="js/reservationDetail.js"></script>
+  <script>FgI18n.initHeaderLangSwitch('.official-header');</script>
 </body>
 </html>

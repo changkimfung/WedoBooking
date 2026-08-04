@@ -4,7 +4,7 @@
  * 说明：
  * 1. 页面原型用于从运德物流系统按柜号查询实装票号，并快速带入 WH 中台创建预约单。
  * 2. 当前原型按业务要求设置为“预装 = 实装”。
- * 3. 票号目的仓暂时与 WH 目的仓口径对齐：深圳A仓 / 美东仓；cn 开头展示层统一归并为 FBA。
+ * 3. 票号目的仓与 mock_data/warehouses.js 标准名称对齐；cn 开头展示层统一归并为 FBA。
  */
 var MOCK_CONTAINER_LOADING_LIST = [
   {
@@ -128,7 +128,7 @@ var MOCK_CONTAINER_LOADING_LIST = [
         shippingMethod: '快提 海卡-不含税',
         trackingNo: 'R6464000041',
         destinationPort: 'SAVANNAH, GA',
-        rawDestinationWarehouse: '美东仓',
+        rawDestinationWarehouse: '美东六仓(NJ-08807)',
         cartons: 25,
         weight: 469.8000,
         volume: 3.2410
@@ -154,7 +154,7 @@ var MOCK_CONTAINER_LOADING_LIST = [
         shippingMethod: '快提 海卡-包税',
         trackingNo: 'R572400016',
         destinationPort: 'SAVANNAH, GA',
-        rawDestinationWarehouse: '美东仓',
+        rawDestinationWarehouse: '美东六仓(NJ-08807)',
         cartons: 9,
         weight: 76.8500,
         volume: 1.4590
@@ -205,7 +205,7 @@ var MOCK_CONTAINER_LOADING_LIST = [
         shippingMethod: '统配 海卡-包税',
         trackingNo: 'R5192000106',
         destinationPort: 'SAVANNAH, GA',
-        rawDestinationWarehouse: '美东仓',
+        rawDestinationWarehouse: '美东六仓(NJ-08807)',
         cartons: 10,
         weight: 120.5000,
         volume: 0.8800
@@ -256,7 +256,7 @@ var MOCK_CONTAINER_LOADING_LIST = [
         shippingMethod: '统配 海卡-包税',
         trackingNo: 'R5287000442',
         destinationPort: 'NEW YORK, NY',
-        rawDestinationWarehouse: '美东仓',
+        rawDestinationWarehouse: '美东六仓(NJ-08807)',
         cartons: 15,
         weight: 130.8000,
         volume: 1.4850

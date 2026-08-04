@@ -5,7 +5,7 @@ var OfficialReservation = (function () {
   var C = typeof DeliveryAppointmentCommon !== 'undefined' ? DeliveryAppointmentCommon : null;
 
   var STATUS_OFFICIAL_MAP = {
-    '仓库待确认': '待仓库确认',
+    '仓库待审核': '待仓库审核',
     '客户待确认': '待客户确认',
     '预约失败': '预约失败'
   };
@@ -26,7 +26,13 @@ var OfficialReservation = (function () {
   }
 
   function displayStatus(status) {
-    return STATUS_OFFICIAL_MAP[status] || status || '-';
+    var mapped = STATUS_OFFICIAL_MAP[status] || status || '-';
+    if (typeof FgI18n !== 'undefined') {
+      if (mapped === '待仓库审核') return FgI18n.t('statusPendingWh');
+      if (mapped === '待客户确认') return FgI18n.t('statusPendingCustomer');
+      if (mapped === '预约失败') return FgI18n.getLocale() === 'en' ? 'Failed' : mapped;
+    }
+    return mapped;
   }
 
   function findInOrder(snap) {
@@ -64,7 +70,7 @@ var OfficialReservation = (function () {
     if (!orders.length) {
       return [{
         orderNo: '-',
-        shippingMethod: item.forwarder || '-',
+        shippingMethod: '-',
         pallets: item.totalPallets || 0,
         cartons: 0,
         weight: Number(item.totalWeight) || 0,
@@ -136,7 +142,7 @@ var OfficialReservation = (function () {
   }
 
   function getWPodDocumentUrl(item) {
-    if (C && C.getWPodDocumentUrl) return C.getWPodDocumentUrl(item, '');
+    if (C && C.getWPodDocumentUrl) return C.getWPodDocumentUrl(item, '/fg/');
     return '';
   }
 

@@ -31,6 +31,8 @@
     { id: 'unclaimedOwnerlessList', slug: 'unclaimedOwnerlessList', label: '无主待认领列表', href: DEMO_HTML + 'unclaimed-ownerless-list.html' },
     { id: 'receivingAppointmentMgmt', slug: 'receivingAppointmentMgmt', label: '入库预约管理', href: '/us/receiving-appointment.html' },
     { id: 'pdaReceivingScan', slug: 'pdaReceivingScan', label: 'PDA收货扫描', href: '/us/pda-receiving-scan.html' },
+    { id: 'outOrderList', slug: 'outOrderList', label: '发货复核', href: '/us/outOrder.html' },
+    { id: 'pdaShipCheck', slug: 'pdaShipCheck', label: 'PDA发货复核', href: '/us/pda-ship-check.html' },
     { id: 'accountManage', slug: 'accountManage', label: '账号邮箱管理', href: '#' },
     { id: 'invoiceManage', slug: 'invoiceManage', label: '发票邮件管理', href: '#' },
     { id: 'skuShipCostExport', slug: 'skuShipCostExport', label: '运费报表导出', href: '#' },

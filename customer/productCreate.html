@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>新增产品 - 客户前台</title>
+  <link rel="stylesheet" href="css/customer-common.css" />
+  <link rel="stylesheet" href="css/product-manage.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo"><div class="logo-icon">仓</div><span>运德仓储系统</span></div>
+    </div>
+    <div class="topbar-right">
+      <span class="top-icon">🔔 消息</span>
+      <span class="top-icon">⚙ 设置</span>
+      <span class="top-icon">Hello！郑乔俊</span>
+      <span class="top-icon">退出</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="menu-section">
+        <div class="menu-section-title">主菜单</div>
+        <div class="menu-item"><div class="menu-label">🏠 首页</div></div>
+        <div class="menu-item" id="productManageBtn">
+          <div class="menu-label">📦 产品管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu show" id="productManageSubmenu">
+          <div class="menu-item"><a href="productList.html">产品列表</a></div>
+          <div class="menu-item active"><a href="productCreate.html">新增产品</a></div>
+          <div class="menu-item">批量导入</div>
+        </div>
+        <div class="menu-item" id="docManageBtn">
+          <div class="menu-label">📑 单据管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu" id="docManageSubmenu">
+          <div class="menu-item"><a href="inOrder.html">入库单</a></div>
+          <div class="menu-item"><a href="deliveryAppointment.html">预约送仓</a></div>
+          <div class="menu-item">出库单</div>
+          <div class="menu-item">调拨单</div>
+        </div>
+        <div class="menu-item"><div class="menu-label">🛠 服务工单</div></div>
+        <div class="menu-item"><div class="menu-label">📊 数据统计</div></div>
+        <div class="menu-item"><div class="menu-label">👤 用户中心</div></div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="breadcrumb">产品管理 &gt;&gt; 产品列表 &gt;&gt; 新增产品</div>
+
+      <div class="panel product-create-panel">
+        <div class="product-form-section">
+          <div class="product-form-section-title">产品图片</div>
+          <div class="product-image-tabs">
+            <button type="button" class="product-image-tab active" data-tab="local">本地上传</button>
+            <button type="button" class="product-image-tab" data-tab="url">产品URL</button>
+          </div>
+          <div id="imageTabLocal">
+            <div class="product-upload-box" id="uploadBox">选择附件</div>
+            <input type="file" id="imageFile" accept="image/*" hidden />
+            <p class="form-hint form-hint-muted" style="margin-top:8px;">原型：选择图片后标记为已上传，提交时同步至中台</p>
+          </div>
+          <div id="imageTabUrl" style="display:none;">
+            <input class="input" id="imageUrl" type="text" placeholder="请输入产品图片 URL" style="width:100%;max-width:480px;" />
+          </div>
+        </div>
+
+        <div class="product-form-section">
+          <div class="product-form-section-title">基本信息</div>
+          <div class="product-form-grid">
+            <div class="form-item">
+              <label class="field-required">产品编号</label>
+              <div>
+                <input class="input" id="productCode" type="text" maxlength="20" placeholder="最多20位" />
+                <p class="form-hint form-hint-muted">最多20位字符，支持字母、数字、下划线、中划线、点号</p>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="field-required">产品名称</label>
+              <input class="input" id="productName" type="text" />
+            </div>
+            <div class="form-item">
+              <label class="field-required">产品类别</label>
+              <select class="select" id="category">
+                <option value="">请选择</option>
+              </select>
+            </div>
+            <div class="form-item">
+              <label class="field-required">产品描述</label>
+              <input class="input" id="description" type="text" placeholder="中文产品描述" />
+            </div>
+            <div class="form-item">
+              <label class="field-required">产品净重</label>
+              <div class="pack-spec-row">
+                <input class="input" id="netWeight" type="number" min="0.001" step="0.001" />
+                <span>KG</span>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="field-required">UPC全称</label>
+              <input class="input" id="upc" type="text" />
+            </div>
+            <div class="form-item full-width">
+              <label class="field-required">包装规格</label>
+              <div>
+                <div class="pack-spec-row">
+                  <input class="input" id="packLength" type="number" min="1" step="0.1" placeholder="长" />
+                  <span>×</span>
+                  <input class="input" id="packWidth" type="number" min="1" step="0.1" placeholder="宽" />
+                  <span>×</span>
+                  <input class="input" id="packHeight" type="number" min="1" step="0.1" placeholder="高" />
+                  <span>CM</span>
+                </div>
+                <p class="form-hint">长宽高至少 10×10×1 cm；单边不超过 118cm；体积重（长×宽×高/6000）不超过 14kg</p>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="field-required">计费重量</label>
+              <div class="pack-spec-row">
+                <input class="input" id="chargeWeight" type="number" min="0.001" step="0.001" />
+                <span>KG</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-form-section">
+          <div class="product-form-section-title">申报信息</div>
+          <div class="product-form-grid">
+            <div class="form-item">
+              <label class="field-required">中文申报名称</label>
+              <div>
+                <input class="input" id="declareNameCn" type="text" maxlength="50" />
+                <p class="form-hint form-hint-muted">限制50字符</p>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="field-required">英文申报名称</label>
+              <div>
+                <input class="input" id="declareNameEn" type="text" maxlength="50" />
+                <p class="form-hint form-hint-muted">限制50字符</p>
+              </div>
+            </div>
+            <div class="form-item">
+              <label class="field-required">申报价格</label>
+              <div>
+                <input class="input" id="declarePrice" type="number" min="0.01" step="0.01" />
+                <p class="form-hint form-hint-muted">申报币种为 CNY</p>
+              </div>
+            </div>
+            <div class="form-item">
+              <label>海关编码</label>
+              <div>
+                <input class="input" id="hsCode" type="text" maxlength="20" />
+                <p class="form-hint form-hint-muted">限制20字符</p>
+              </div>
+            </div>
+            <div class="form-item">
+              <label>申报重量</label>
+              <input class="input" id="declareWeight" type="number" min="0" step="0.001" />
+            </div>
+            <div class="form-item">
+              <label class="field-required">材质（中文）</label>
+              <input class="input" id="materialCn" type="text" maxlength="50" />
+            </div>
+            <div class="form-item">
+              <label class="field-required">材质（英文）</label>
+              <input class="input" id="materialEn" type="text" maxlength="50" />
+            </div>
+            <div class="form-item">
+              <label class="field-required">用途（中文）</label>
+              <input class="input" id="usageCn" type="text" maxlength="50" />
+            </div>
+            <div class="form-item">
+              <label>品牌</label>
+              <input class="input" id="brand" type="text" maxlength="50" />
+            </div>
+            <div class="form-item">
+              <label>型号</label>
+              <input class="input" id="model" type="text" maxlength="50" />
+            </div>
+            <div class="form-item">
+              <label class="field-required">商品单位</label>
+              <div>
+                <input class="input" id="unit" type="text" value="PCS" />
+                <p class="form-hint form-hint-muted">常用单位：PCS、SET</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-form-footer">
+          <button type="button" class="btn btn-primary" id="btnSubmit">提交</button>
+          <button type="button" class="btn btn-cancel" id="btnCancel">取消</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../mock_data/productInfo.js"></script>
+  <script src="js/product-common.js"></script>
+  <script src="js/productCreate.js"></script>
+</body>
+</html>

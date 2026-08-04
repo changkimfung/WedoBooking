@@ -25,7 +25,15 @@
       <div class="menu-section">
         <div class="menu-section-title">主菜单</div>
         <div class="menu-item"><div class="menu-label">🏠 首页</div></div>
-        <div class="menu-item"><div class="menu-label">📦 产品管理</div></div>
+        <div class="menu-item" id="productManageBtn">
+          <div class="menu-label">📦 产品管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu" id="productManageSubmenu">
+          <div class="menu-item"><a href="productList.html">产品列表</a></div>
+          <div class="menu-item"><a href="productCreate.html">新增产品</a></div>
+          <div class="menu-item">批量导入</div>
+        </div>
         <div class="menu-item" id="docManageBtn">
           <div class="menu-label">📑 单据管理</div>
           <span>▾</span>
@@ -48,9 +56,9 @@
         <div class="form-section-title">预约信息</div>
         <div class="detail-grid" id="detailInfo"></div>
         <div class="detail-tabs">
-          <ul class="detail-tab-nav" id="detailTabs">
+          <ul class="detail-tab-nav" id="detailTabNav">
             <li class="active"><a href="#" data-tab="inbound">货物明细</a></li>
-            <li><a href="#" data-tab="logs">日志明细</a></li>
+            <li><a href="#" data-tab="logs">操作记录</a></li>
           </ul>
           <div class="detail-tab-pane active" id="paneInbound">
             <div class="form-section-body sub-table-wrap">
@@ -63,7 +71,7 @@
             </div>
           </div>
           <div class="detail-tab-pane" id="paneLogs">
-            <ul class="detail-log-list" id="logList"></ul>
+            <ul class="detail-log-list" id="detailLogList"></ul>
           </div>
         </div>
         <div class="detail-actions" id="detailActions"></div>
@@ -77,7 +85,9 @@
     </main>
   </div>
   
+  <script src="../mock_data/warehouses.js"></script>
   <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="js/product-common.js"></script>
   <script src="js/deliveryAppointment-common.js"></script>
   <script src="js/deliveryAppointmentDetail.js"></script>
 </body>

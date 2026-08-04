@@ -6,6 +6,20 @@
   margin: 8px 18px;
 }
 
+.recv-detail-customer {
+  margin: 0 18px 12px;
+  padding: 14px 20px;
+  background: #f9fcff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.recv-detail-customer strong {
+  color: #0092dc;
+  margin-left: 8px;
+}
+
 .recv-detail-header {
   margin: 0 18px 16px;
   padding: 16px 20px;
@@ -213,6 +227,29 @@
   color: #999;
 }
 
+.recv-col-select,
+.appt-col-select {
+  width: 36px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.recv-col-select input,
+.appt-col-select input {
+  margin: 0;
+  cursor: pointer;
+}
+
+.recv-list-ops {
+  white-space: nowrap;
+}
+
+.recv-list-ops .btn-mini {
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
 .recv-audit-modal-backdrop {
   position: fixed;
   left: 0;
@@ -271,6 +308,106 @@
 
 .recv-audit-modal-footer .btn {
   margin-left: 8px;
+}
+
+.recv-signoff-photo-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+  min-height: 32px;
+}
+
+.recv-signoff-photo-empty {
+  font-size: 12px;
+  color: #999;
+}
+
+.recv-signoff-photo-item {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.recv-signoff-photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.recv-signoff-photo-del {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.recv-signoff-batch-modal {
+  width: min(1100px, 96vw);
+  max-width: 96vw;
+}
+
+.recv-signoff-batch-hint {
+  margin: 0 0 10px;
+}
+
+.recv-signoff-batch-table-wrap {
+  max-height: 55vh;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.recv-signoff-batch-table {
+  width: 100%;
+  margin: 0;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+
+.recv-signoff-batch-table th,
+.recv-signoff-batch-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+
+.recv-signoff-batch-table th {
+  background: #fafafa;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.recv-signoff-batch-readonly {
+  color: #333;
+  white-space: nowrap;
+}
+
+.recv-signoff-batch-table input[type="number"],
+.recv-signoff-batch-table input[type="datetime-local"] {
+  width: 100%;
+  max-width: 160px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.recv-signoff-batch-table .recv-signoff-photo-list {
+  max-width: 200px;
+}
+
+.recv-signoff-batch-table .recv-signoff-photo-item {
+  width: 56px;
+  height: 56px;
 }
 
 .recv-audit-field {

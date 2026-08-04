@@ -5,6 +5,8 @@ var fs = require('fs');
 var path = require('path');
 var nodemailer = require('nodemailer');
 var dns = require('dns');
+var publicBaseUrl = require('./publicBaseUrl');
+var warehouseAddressBook = require('./warehouseAddressBook');
 
 var LOG_FILE = path.join(__dirname, '..', '..', 'mock_data', 'appointment-notify-mail.json');
 
@@ -25,6 +27,21 @@ function appendMailEntry(entry) {
   if (list.length > 500) list.length = 500;
   fs.writeFileSync(LOG_FILE, JSON.stringify(list, null, 2), 'utf8');
   return entry;
+}
+
+var DEFAULT_MAIL_FROM_NAME = 'Wedo bookingsystem';
+
+function resolveMailFrom() {
+  var from = String(process.env.SMTP_FROM || '').trim();
+  var user = String(process.env.SMTP_USER || '').trim();
+  if (from) {
+    if (from.indexOf('\u8fd0\u5fb7\u9884\u7ea6\u901a\u77e5') >= 0) {
+      from = from.replace('\u8fd0\u5fb7\u9884\u7ea6\u901a\u77e5', DEFAULT_MAIL_FROM_NAME);
+    }
+    return from;
+  }
+  if (user) return DEFAULT_MAIL_FROM_NAME + ' <' + user + '>';
+  return '';
 }
 
 function escapeHtml(str) {
@@ -103,6 +120,14 @@ function buildHtmlBody(payload) {
       escapeHtml(payload.recipientRole) + '</span>'
     : '';
   var footerStyle = 'margin-top:24px;color:' + escapeHtml(payload.footerColor || '#99a7b5') + ';font-size:12px;';
+  var systemFooter = payload.footerNote || 'This is an automated message from Wedo Booking System. Please do not reply.';
+  if (payload.warehouseContactFooter) {
+    systemFooter = String(systemFooter).replace(payload.warehouseContactFooter, '').replace(/\n\n+$/, '').trim();
+  }
+  var contactBlock = payload.warehouseContactFooter
+    ? renderTextBlock(payload.warehouseContactFooter,
+      'margin-top:20px;padding:12px 0 0;border-top:1px solid #e8eef6;color:#1f5f9f;font-size:13px;font-weight:600;')
+    : '';
 
   return [
     '<div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#25384d;line-height:1.7;' + bgStyle + 'padding:24px;">',
@@ -119,7 +144,8 @@ function buildHtmlBody(payload) {
     actionButton,
     payload.showRawBody && payload.body ? '<pre style="white-space:pre-wrap;background:#f7faff;border:1px solid #e8eef6;padding:12px;border-radius:6px;color:#5d7288;font-family:Arial,Helvetica,sans-serif;">' +
       escapeHtml(payload.body) + '</pre>' : '',
-    renderTextBlock(payload.footerNote || '本邮件由运德预约送仓系统自动发送，请勿直接回复。', footerStyle),
+    contactBlock,
+    renderTextBlock(systemFooter, footerStyle),
     '</div>',
     '</div>',
     '</div>'
@@ -153,8 +179,27 @@ function isSmtpConfigured() {
   return !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS);
 }
 
+var DEMO_CC_NOTIFY_EMAIL = process.env.APPOINTMENT_DEMO_CC_EMAIL || 'liuyongmeib@sailvan.com';
+
+function joinUniqueEmails(emailCsv) {
+  var list = [];
+  String(emailCsv || '').split(',').forEach(function (email) {
+    var v = String(email || '').trim();
+    if (v && list.indexOf(v) === -1) list.push(v);
+  });
+  return list;
+}
+
+function withDemoCcEmail(emailCsv) {
+  var list = joinUniqueEmails(emailCsv);
+  if (DEMO_CC_NOTIFY_EMAIL && list.indexOf(DEMO_CC_NOTIFY_EMAIL) === -1) {
+    list.push(DEMO_CC_NOTIFY_EMAIL);
+  }
+  return list.join(',');
+}
+
 function getDefaultNotifyEmail() {
-  return process.env.APPOINTMENT_NOTIFY_EMAIL || 'zhengjianfengb@sailvan.com';
+  return withDemoCcEmail(process.env.APPOINTMENT_NOTIFY_EMAIL || 'zhengjianfengb@sailvan.com');
 }
 
 function getTransporter() {
@@ -184,6 +229,8 @@ function recordAppointmentNotifyEmail(payload, meta) {
     hideRecipientRole: payload.hideRecipientRole === true,
     hideActionButton: payload.hideActionButton === true,
     inlineActionLinkLabel: payload.inlineActionLinkLabel || '',
+    warehouseContactFooter: payload.warehouseContactFooter || '',
+    warehouse: payload.warehouse || '',
     fields: Array.isArray(payload.fields) ? payload.fields : [],
     appointmentId: payload.appointmentId || '',
     appointmentNo: payload.appointmentNo || '',
@@ -203,8 +250,13 @@ function recordAppointmentNotifyEmail(payload, meta) {
  * @returns {Promise<object>} 日志条目
  */
 function sendAppointmentNotifyEmail(payload) {
-  var mailPayload = Object.assign({}, payload);
-  if (!mailPayload.to) mailPayload.to = getDefaultNotifyEmail();
+  var mailPayload = warehouseAddressBook.enrichPayloadWithWarehouseContact(
+    Object.assign({}, payload)
+  );
+  mailPayload.to = withDemoCcEmail(mailPayload.to || getDefaultNotifyEmail());
+  if (mailPayload.actionUrl) {
+    mailPayload.actionUrl = publicBaseUrl.resolvePublicUrl(mailPayload.actionUrl);
+  }
 
   var transporter = getTransporter();
   if (!transporter) {
@@ -217,7 +269,7 @@ function sendAppointmentNotifyEmail(payload) {
     return Promise.resolve(missing);
   }
 
-  var from = process.env.SMTP_FROM || process.env.SMTP_USER;
+  var from = resolveMailFrom();
 
   return transporter.sendMail({
     from: from,
@@ -249,7 +301,7 @@ function getSmtpStatus() {
     configured: isSmtpConfigured(),
     host: process.env.SMTP_HOST || '',
     port: Number(process.env.SMTP_PORT) || 587,
-    from: process.env.SMTP_FROM || process.env.SMTP_USER || '',
+    from: resolveMailFrom() || process.env.SMTP_USER || '',
     defaultTo: getDefaultNotifyEmail()
   };
 }

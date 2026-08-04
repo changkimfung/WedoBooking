@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发货复核详情 - 海外仓</title>
+  <link href="css/vendor/overseawh-legacy/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/overseawh-legacy/main.css" rel="stylesheet" type="text/css">
+  <link href="css/out-order-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-overseas-chrome-header"></div>
+
+<div class="container-fluid conter_menu" id="ood-wrap">
+  <div class="subnav mywell padding8">
+    <a href="outOrder.html" class="btn" style="margin-left:10px;">&laquo; 返回发货复核列表</a>
+    <a href="pda-ship-check.html" class="btn btn-info" style="margin-left:8px;">PDA发货复核</a>
+    <span style="margin-left:16px;font-size:12px;color:#5a6b7d;">
+      时间展示：
+      <select id="oodTimeZone" style="width:110px;">
+        <option value="cn">中国时间</option>
+        <option value="us">美国时间</option>
+      </select>
+    </span>
+  </div>
+
+  <div class="container-fluid padding10 ood-page-body" style="box-sizing:border-box;">
+
+    <div id="oodEmpty" style="display:none;text-align:center;color:#8a97a5;padding:24px 0;">出库单不存在</div>
+
+    <!-- 第一部分：订单信息 -->
+    <div id="oodMain">
+      <div class="ood-card">
+        <h4 class="ood-section-title">订单信息</h4>
+        <table class="ood-info-table" id="oodInfoTable"></table>
+      </div>
+
+      <div class="ood-columns">
+        <!-- 第二部分：SKU详情 -->
+        <div class="ood-card ood-col-sku">
+          <h4 class="ood-section-title">SKU详情</h4>
+          <table class="ood-table" id="oodSkuTable">
+            <thead>
+              <tr>
+                <th style="width:48px;">#</th>
+                <th>料号</th>
+                <th style="width:130px;">订单数量(PCS)</th>
+              </tr>
+            </thead>
+            <tbody id="oodSkuBody"></tbody>
+          </table>
+        </div>
+
+        <!-- 第三部分：复核档案列表 -->
+        <div class="ood-card ood-col-records">
+          <h4 class="ood-section-title">复核档案列表</h4>
+          <table class="ood-table" id="oodRecordTable">
+            <thead>
+              <tr>
+                <th>档案编号</th>
+                <th>复核状态</th>
+                <th>完结类型</th>
+                <th>操作人</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>复核时长</th>
+                <th>扫描总数/总PCS</th>
+                <th style="width:90px;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="oodRecordBody"></tbody>
+          </table>
+          <p id="oodRecordEmpty" style="display:none;text-align:center;color:#8a97a5;padding:16px 0;">该出库单暂无复核档案记录</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 单条复核档案明细弹窗 -->
+<div class="oor-modal-backdrop" id="oodModalBackdrop" style="display:none;">
+  <div class="oor-modal" role="dialog" aria-labelledby="oodModalTitle">
+    <div class="oor-modal-header">
+      <h3 id="oodModalTitle">复核档案明细</h3>
+      <button type="button" class="close" id="oodModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="oor-modal-body" id="oodModalBody"></div>
+  </div>
+</div>
+
+<!-- 复核档案修改弹窗 -->
+<div class="oor-modal-backdrop" id="oodEditBackdrop" style="display:none;">
+  <div class="oor-modal ood-edit-modal" role="dialog" aria-labelledby="oodEditTitle">
+    <div class="oor-modal-header">
+      <h3 id="oodEditTitle">修改复核档案</h3>
+      <button type="button" class="close" id="oodEditClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="oor-modal-body">
+      <p class="ood-edit-id">档案编号：<strong id="oodEditRecId">-</strong></p>
+      <table class="ood-edit-form">
+        <tr>
+          <td class="ood-edit-label">复核状态：</td>
+          <td>
+            <select id="oodEditStatus">
+              <option value="复核完成">复核完成</option>
+              <option value="复核异常">复核异常</option>
+              <option value="部分复核">部分复核</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="ood-edit-label">完结类型：</td>
+          <td>
+            <select id="oodEditFinishType">
+              <option value="主动提交">主动提交</option>
+              <option value="中断完结">中断完结</option>
+            </select>
+          </td>
+        </tr>
+      </table>
+      <div class="ood-edit-actions">
+        <button type="button" class="btn btn-primary" id="oodEditSave">保存</button>
+        <button type="button" class="btn" id="oodEditCancel">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    Copyright &copy; 运德供应链 &middot; 发货复核详情
+  </div>
+</footer>
+
+<script src="js/vendor/overseawh-legacy/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/vendor/overseawh-legacy/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/overseawh-chrome.js" type="text/javascript"></script>
+<script src="js/wedo-time.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoOverseasChrome.mountHeader('#wedo-overseas-chrome-header', {
+    activeSecondMenu: 'outOrderList',
+    activeWarehouseIndex: 0,
+    userName: '演示用户',
+    assetsRoot: 'css/vendor/'
+  });
+</script>
+<script src="../mock_data/outOrder.js"></script>
+<script src="js/ship-check-store.js"></script>
+<script src="js/outOrderDetail.js" type="text/javascript"></script>
+</body>
+</html>

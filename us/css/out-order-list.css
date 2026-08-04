@@ -1,0 +1,423 @@
+/* 海外仓 us · 发货复核（出库单列表）PC 样式 */
+
+/* ========== 当日指标看板 ========== */
+
+.oor-stats {
+  margin: 10px 0;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(31, 45, 61, 0.04);
+}
+
+.oor-stats-date {
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #5a6b7d;
+}
+
+.oor-stats-date strong { color: #1f2d3d; }
+
+.oor-stats-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.oor-stat-card {
+  flex: 1 1 140px;
+  min-width: 140px;
+  padding: 10px 14px;
+  border-radius: 5px;
+  border: 1px solid #e5e9ef;
+  background: #f7f9fc;
+}
+
+.oor-stat-label {
+  font-size: 12px;
+  color: #5a6b7d;
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.oor-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1f2d3d;
+}
+
+.oor-stat-card.sc-total { border-top: 3px solid #1d6fd1; }
+.oor-stat-card.sc-total .oor-stat-value { color: #1d6fd1; }
+
+.oor-stat-card.sc-met { border-top: 3px solid #0c8a3e; }
+.oor-stat-card.sc-met .oor-stat-value { color: #0c8a3e; }
+
+.oor-stat-card.sc-none { border-top: 3px solid #8a97a5; }
+.oor-stat-card.sc-none .oor-stat-value { color: #5a6b7d; }
+
+.oor-stat-card.sc-partial { border-top: 3px solid #d46b08; }
+.oor-stat-card.sc-partial .oor-stat-value { color: #d46b08; }
+
+.oor-stat-card.sc-error { border-top: 3px solid #d9363e; }
+.oor-stat-card.sc-error .oor-stat-value { color: #d9363e; }
+
+.oor-stat-card.sc-rate { border-top: 3px solid #7048c6; }
+.oor-stat-card.sc-rate .oor-stat-value { color: #7048c6; }
+
+/* ========== 状态标签 ========== */
+
+/* 分页 */
+.oor-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eef1f5;
+}
+
+.oor-pager-info {
+  font-size: 12px;
+  color: #5a6b7d;
+}
+
+.oor-pager-nav { white-space: nowrap; }
+
+.oor-pager-btn {
+  min-width: 30px;
+  padding: 4px 9px;
+  margin-left: 4px;
+  border: 1px solid #dfe4ea;
+  border-radius: 3px;
+  background: #fff;
+  color: #3d4a5a;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.oor-pager-btn:hover:not(:disabled):not(.active) { border-color: #1d6fd1; color: #1d6fd1; }
+
+.oor-pager-btn.active {
+  background: #1d6fd1;
+  border-color: #1d6fd1;
+  color: #fff;
+}
+
+.oor-pager-btn:disabled {
+  color: #c0c8d1;
+  background: #f7f9fc;
+  cursor: not-allowed;
+}
+
+.oor-status-tag {
+  display: inline-block;
+  min-width: 56px;
+  padding: 2px 8px;
+  text-align: center;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 18px;
+  border: 1px solid transparent;
+}
+
+.oor-status-tag.s-none { color: #8a97a5; background: #f2f4f7; border-color: #dfe4ea; }
+.oor-status-tag.s-doing { color: #1d6fd1; background: #e8f2ff; border-color: #bcd8f7; }
+.oor-status-tag.s-done { color: #0c8a3e; background: #e9f8ef; border-color: #bce6cd; }
+.oor-status-tag.s-error { color: #d9363e; background: #fdecee; border-color: #f6c2c6; }
+.oor-status-tag.s-partial { color: #d46b08; background: #fff4e5; border-color: #f5cf9e; }
+
+/* 复核档案弹窗 */
+.oor-modal-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.oor-modal {
+  width: 100%;
+  max-width: 760px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.oor-modal-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e9ef;
+}
+
+.oor-modal-header h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.oor-modal-header .close {
+  margin-left: auto;
+  border: none;
+  background: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #8a97a5;
+}
+
+.oor-modal-body {
+  padding: 12px 16px 16px;
+  overflow: auto;
+}
+
+.oor-modal-empty {
+  padding: 24px 0;
+  text-align: center;
+  color: #8a97a5;
+}
+
+/* 单条复核档案卡片 */
+.oor-record {
+  border: 1px solid #dfe4ea;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.oor-record-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  padding: 8px 12px;
+  background: #f7f9fc;
+  cursor: pointer;
+  font-size: 12px;
+  color: #3d4a5a;
+}
+
+.oor-record-head:hover { background: #eef3f9; }
+
+.oor-record-head .oor-rid {
+  font-weight: 700;
+  color: #1f2d3d;
+}
+
+.oor-record-head .oor-caret {
+  margin-left: auto;
+  color: #8a97a5;
+}
+
+.oor-record-body {
+  padding: 10px 12px;
+  border-top: 1px solid #eef1f5;
+}
+
+.oor-record-body h4 {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #5a6b7d;
+}
+
+.oor-sub-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.oor-sub-table th,
+.oor-sub-table td {
+  border: 1px solid #e5e9ef;
+  padding: 5px 8px;
+  text-align: left;
+}
+
+.oor-sub-table th { background: #f7f9fc; font-weight: 600; }
+
+.oor-sub-table .oor-over { color: #d9363e; font-weight: 600; }
+.oor-sub-table .oor-lack { color: #d46b08; font-weight: 600; }
+.oor-sub-table .oor-eq { color: #0c8a3e; }
+
+/* 扫描记录异常类型标签（错扫/多扫） */
+.oor-scan-type {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.oor-scan-type.t-wrong { color: #d9363e; background: #fdecee; border: 1px solid #f7c2c7; }
+.oor-scan-type.t-over { color: #d46b08; background: #fdf3e6; border: 1px solid #f3d9b0; }
+
+/* ========== 发货复核详情页 ========== */
+
+/* 页面底色 */
+.ood-page-body {
+  background: #f0f2f5;
+  border-radius: 4px;
+  min-height: 320px;
+}
+
+/* 卡片容器 */
+.ood-card {
+  background: #fff;
+  border: 1px solid #e5e9ef;
+  border-radius: 6px;
+  padding: 14px 16px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(31, 45, 61, 0.04);
+}
+
+/* SKU详情 + 复核档案列表 左右分栏 */
+.ood-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.ood-columns .ood-card { margin-bottom: 0; }
+
+.ood-col-sku { flex: 0 0 380px; }
+.ood-col-records { flex: 1 1 auto; min-width: 0; }
+
+@media (max-width: 1200px) {
+  .ood-columns { flex-direction: column; }
+  .ood-col-sku { flex: 1 1 auto; width: 100%; }
+  .ood-columns .ood-card { margin-bottom: 14px; }
+  .ood-columns .ood-card:last-child { margin-bottom: 0; }
+}
+
+/* 区块标题 */
+.ood-section-title {
+  margin: 0 0 12px;
+  padding-left: 8px;
+  border-left: 3px solid #1d6fd1;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2d3d;
+  line-height: 18px;
+}
+
+/* 订单信息：三列描述式 */
+.ood-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #eef1f5;
+}
+
+.ood-info-table td {
+  padding: 8px 10px;
+  font-size: 13px;
+  vertical-align: middle;
+  border: 1px solid #eef1f5;
+}
+
+.ood-info-label {
+  width: 100px;
+  background: #f7f9fc;
+  color: #5a6b7d;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ood-info-value {
+  color: #1f2d3d;
+  word-break: break-all;
+}
+
+/* 通用列表表格（SKU详情 / 复核档案列表） */
+.ood-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+.ood-table th,
+.ood-table td {
+  padding: 7px 8px;
+  text-align: left;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.ood-table thead th {
+  background: #f7f9fc;
+  color: #5a6b7d;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 1px solid #e5e9ef;
+}
+
+.ood-table tbody tr:hover { background: #f5f9fe; }
+
+.ood-sku-total td {
+  background: #f7f9fc;
+  border-bottom: none;
+}
+
+/* 档案弹窗顶部摘要行 */
+.ood-modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background: #f7f9fc;
+  border: 1px solid #eef1f5;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #3d4a5a;
+}
+
+.ood-modal-meta span { white-space: nowrap; }
+
+/* 档案修改弹窗 */
+.ood-edit-modal { max-width: 420px; }
+
+.ood-edit-id {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #3d4a5a;
+}
+
+.ood-edit-form td {
+  padding: 6px 4px;
+  font-size: 13px;
+}
+
+.ood-edit-label {
+  width: 80px;
+  color: #5a6b7d;
+  text-align: right;
+}
+
+.ood-edit-form select {
+  width: 180px;
+  margin-bottom: 0;
+}
+
+.ood-edit-actions {
+  margin-top: 14px;
+  text-align: right;
+}
+
+.ood-edit-actions .btn { margin-left: 8px; }
+
+.ood-record-edit { margin-left: 8px; }

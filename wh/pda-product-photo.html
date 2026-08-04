@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>PDA 产品拍照 - 仓储中台</title>
+  <link rel="stylesheet" href="../us/css/pda.css">
+</head>
+<body class="pda-body pda-theme-photo">
+  <div class="pda-view">
+    <header class="pda-bar">
+      <div class="pda-bar-inner">
+        <span class="pda-bar-user">用户名:郑剑锋b<strong class="pda-bar-site" id="pdaWarehouseTag">WH</strong></span>
+        <div class="pda-bar-menu">
+          <button type="button" class="pda-bar-menu-btn" id="pda-menu-btn">菜单</button>
+          <ul class="pda-bar-dd" id="pda-menu-list" hidden>
+            <li><a href="productInfo.html">产品信息管理</a></li>
+            <li><a href="deliveryAppointment.html">预约送仓管理</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="pda-main">
+      <section class="pda-page">
+        <h1 class="pda-page-title">产品拍照</h1>
+
+        <table class="pda-ris-table">
+          <tr>
+            <td class="pda-ris-label">入库单:</td>
+            <td>
+              <input type="text" id="inboundInput" class="pda-ris-input" autocomplete="off"
+                enterkeyhint="search" placeholder="扫描或输入入库单号（选填）">
+            </td>
+          </tr>
+          <tr>
+            <td class="pda-ris-label"><span class="pda-ris-req">*</span>SKU编码:</td>
+            <td>
+              <input type="text" id="skuInput" class="pda-ris-input" autocomplete="off"
+                enterkeyhint="search" placeholder="扫描或输入 SKU" autofocus>
+            </td>
+          </tr>
+          <tr>
+            <td class="pda-ris-label">选择图片:</td>
+            <td>
+              <button type="button" class="pda-upload-btn" id="btnPickPhoto" disabled>拍照/选择</button>
+              <input type="file" id="photoFile" class="pda-photo-input" accept="image/*" capture="environment" multiple>
+            </td>
+          </tr>
+        </table>
+
+        <div class="pda-ris-mstatus" id="scanStatus"></div>
+
+        <div id="inboundPanel" class="pda-info-panel pda-hidden">
+          <div class="pda-info-panel-title">入库单信息</div>
+          <dl class="pda-info-dl">
+            <dt>用户编号</dt>
+            <dd id="infoInboundUserCode">-</dd>
+            <dt>收货仓</dt>
+            <dd id="infoInboundWarehouse">-</dd>
+            <dt>状态</dt>
+            <dd id="infoInboundStatus">-</dd>
+          </dl>
+        </div>
+
+        <div id="productPanel" class="pda-info-panel pda-hidden">
+          <div class="pda-info-panel-title">中台产品信息</div>
+          <dl class="pda-info-dl">
+            <dt>产品名称</dt>
+            <dd id="infoProductName">-</dd>
+            <dt>用户编号</dt>
+            <dd id="infoUserCode">-</dd>
+            <dt>审核状态</dt>
+            <dd id="infoAuditStatus">-</dd>
+          </dl>
+        </div>
+
+        <div id="photoPanel" class="pda-photo-section pda-hidden">
+          <div class="pda-photo-section-title">当前 SKU 图片</div>
+          <div class="pda-photo-list" id="photoList"><span class="pda-photo-empty">未选择</span></div>
+          <div class="pda-actions" style="margin-top:10px;">
+            <button type="button" class="pda-ris-btn-footer" id="btnAddToQueue">加入待提交</button>
+            <button type="button" class="pda-ris-btn-footer" id="btnClearPhotos">清空图片</button>
+          </div>
+        </div>
+
+        <div id="queuePanel" class="pda-register-section pda-hidden">
+          <div class="pda-photo-section-title">待提交清单（<span id="queueCount">0</span>）</div>
+          <div id="queueList" class="pda-queue-list"></div>
+        </div>
+
+        <div class="pda-actions">
+          <button type="button" class="pda-ris-btn-footer pda-ris-btn-primary" id="btnSubmit">提交</button>
+          <button type="button" class="pda-ris-btn-footer" id="btnReset">重置</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="pda-alert-modal-backdrop pda-hidden" id="pdaAlertModal" aria-hidden="true">
+    <div class="pda-alert-modal" role="alertdialog" aria-labelledby="pdaAlertModalText">
+      <p class="pda-alert-modal-body" id="pdaAlertModalText"></p>
+      <button type="button" class="pda-ris-btn-footer pda-ris-btn-primary" id="pdaAlertModalOk">确定</button>
+    </div>
+  </div>
+
+  <script src="../mock_data/warehouses.js"></script>
+  <script src="../us/js/pda-core.js"></script>
+  <script src="js/pda-product-photo.js"></script>
+</body>
+</html>

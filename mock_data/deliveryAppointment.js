@@ -94,6 +94,92 @@ function mockArrivalPhotosFromSampleIds(ids) {
 
 var MOCK_DELIVERY_APPOINTMENT_LIST = [
   {
+    id: 'appt-1780652364602-588',
+    customerCode: 'CN0000438',
+    appointmentNo: 'YY20260605101',
+    deliveryCode: 'SCTSZV',
+    bookingLink: '/fg/index.html?code=SCTSZV',
+    warehouse: '美东南仓(GA-31302)',
+    status: '仓库待审核',
+    deliveryType: '散货',
+    expectedInboundTime: '2026-06-05',
+    warehouseConfirmedInboundTime: '',
+    actualDeliveryTime: '',
+    arrivalPhotos: [],
+    isPalletized: true,
+    totalPallets: 1,
+    estimatedCartons: 11,
+    totalVolume: '',
+    totalWeight: '',
+    submitTime: '2026-06-05 17:39:24',
+    containerNo: '',
+    containerType: '',
+    containerSeq: '',
+    primaryEmail: 'liuyongmeib@sailvan.com',
+    emails: [
+      'liuyongmeib@sailvan.com',
+      'sunxuexuan@sailvan.com'
+    ],
+    inboundOrders: [
+      {
+        inOrderId: '28',
+        sourceType: '入库单',
+        orderNo: 'RD462100306',
+        status: '运输在途',
+        warehouse: '美东南仓(GA-31302)',
+        shippingMethod: '客户自发头程',
+        createDate: '2026-06-03 10:07:26',
+        cartons: 11,
+        deliveryCartons: 11,
+        grossWeight: 29.8,
+        volume: 0.34
+      }
+    ],
+    remark: '222',
+    operationLogs: [
+      {
+        time: '2026-06-05 17:40:40',
+        operator: 'CN0000438',
+        action: '提交预约，状态变更为「仓库待审核」',
+        audience: 'all',
+        logKind: 'official_submit',
+        customerSummary: '预约信息已提交，等待仓库确认。',
+        customerRole: '您'
+      },
+      {
+        time: '2026-06-05 17:42:00',
+        operator: 'CN0000438',
+        action: '取消预约，状态变更为「待预约」',
+        audience: 'all',
+        logKind: 'official_cancel',
+        customerSummary: '您已取消本次预约。',
+        customerRole: '您'
+      },
+      {
+        time: '2026-06-05 17:42:21',
+        operator: 'CN0000438',
+        action: '提交预约，状态变更为「仓库待审核」',
+        audience: 'all',
+        logKind: 'official_submit',
+        customerSummary: '预约信息已提交，等待仓库确认。',
+        customerRole: '您'
+      }
+    ],
+    expectedInboundDates: [
+      '2026-06-05'
+    ],
+    contactPhone: '',
+    confirmedWarehouse: '',
+    negotiatedSlotStart: '',
+    negotiatedSlotEnd: '',
+    auditRemark: '',
+    rejectRemark: '',
+    warehouseConfirmedAddress: '',
+    receivedPallets: '',
+    receivedCartons: '',
+    wPodUrl: ''
+  },
+  {
     id: 'appt-1779959448524-765',
     customerCode: 'CN0000438',
     appointmentNo: 'YY20260528102',
@@ -120,7 +206,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-28 17:10:48',
     containerNo: '',
     containerSeq: '',
-    forwarder: '',
     emails: [
       'zhengjianfengb@sailvan.com'
     ],
@@ -250,7 +335,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     containerNo: '',
     containerSeq: '',
     containerType: '',
-    forwarder: '德迅货代',
     totalPallets: '',
     estimatedCartons: 56,
     emails: [
@@ -322,7 +406,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     containerNo: '',
     containerSeq: '',
     containerType: '',
-    forwarder: '',
     remark: '',
     totalPallets: 2,
     warehouseConfirmedAddress: '',
@@ -366,7 +449,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     containerNo: 'MSKU1234567',
     containerSeq: '1',
     containerType: '40HQ',
-    forwarder: '德迅货代',
     remark: '也可以 5/30、6/1多个地址',
     totalPallets: 5,
     warehouseConfirmedAddress: '',
@@ -464,7 +546,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     containerNo: 'OCR7487',
     containerSeq: '1',
     containerType: '40HQ',
-    forwarder: '海运大发整柜',
     remark: '888888',
     totalPallets: 10,
     warehouseConfirmedAddress: '11200 E Washington Blvd, Los Angeles, CA 90640, USA',
@@ -571,7 +652,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-15 09:15:00',
     containerNo: 'COSU9876543',
     containerSeq: '2',
-    forwarder: '中外运',
     emails: [
       'demo@wedo.com'
     ],
@@ -600,7 +680,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-16 11:22:00',
     containerNo: '',
     containerSeq: '',
-    forwarder: '顺丰国际',
     emails: [
       'demo@wedo.com'
     ],
@@ -629,7 +708,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-01 08:45:00',
     containerNo: 'OOLU5566778',
     containerSeq: '1',
-    forwarder: '',
     emails: [
       'demo@wedo.com'
     ],
@@ -673,7 +751,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-04-20 14:35:00',
     containerNo: '',
     containerSeq: '',
-    forwarder: '',
     emails: [
       'demo@wedo.com'
     ],
@@ -702,7 +779,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-04-15 10:00:00',
     containerNo: '',
     containerSeq: '',
-    forwarder: '',
     emails: [
       'demo@wedo.com'
     ],
@@ -731,7 +807,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-18 09:00:00',
     containerNo: '',
     containerSeq: '',
-    forwarder: '马士基货代',
     emails: [
       'other@example.com'
     ],
@@ -760,7 +835,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-19 15:30:00',
     containerNo: 'HLCU1122334',
     containerSeq: '1',
-    forwarder: '',
     emails: [
       'other@example.com'
     ],
@@ -800,7 +874,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-25 14:19:43',
     containerNo: 'MATUS2313',
     containerSeq: '26JUN-23',
-    forwarder: '',
     emails: [
       'zhengjianfengb@sailvan.com'
     ],
@@ -847,7 +920,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-25 17:12:55',
     containerNo: '',
     containerSeq: '',
-    forwarder: '',
     emails: [
       'zhengjianfengb@sailvan.com'
     ],
@@ -950,7 +1022,6 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     submitTime: '2026-05-25 17:59:04',
     containerNo: 'ZGFY-916',
     containerSeq: '',
-    forwarder: '',
     emails: [
       'zhengjianfengb@sailvan.com'
     ],
@@ -1155,7 +1226,6 @@ var MOCK_DELIVERY_TYPES = ['整柜', '散货'];
     containerNo: '',
     containerSeq: '',
     containerType: '',
-    forwarder: '德迅货代',
     totalPallets: '',
     estimatedCartons: 56,
     emails: ['demo@wedo.com', 'ops@wedo.com'],

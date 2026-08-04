@@ -25,7 +25,15 @@
       <div class="menu-section">
         <div class="menu-section-title">主菜单</div>
         <div class="menu-item"><div class="menu-label">🏠 首页</div></div>
-        <div class="menu-item"><div class="menu-label">📦 产品管理</div></div>
+        <div class="menu-item" id="productManageBtn">
+          <div class="menu-label">📦 产品管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu" id="productManageSubmenu">
+          <div class="menu-item"><a href="productList.html">产品列表</a></div>
+          <div class="menu-item"><a href="productCreate.html">新增产品</a></div>
+          <div class="menu-item">批量导入</div>
+        </div>
         <div class="menu-item" id="docManageBtn">
           <div class="menu-label">📑 单据管理</div>
           <span>▾</span>
@@ -47,7 +55,7 @@
       <div class="panel">
         <div class="form-section-title">预约信息</div>
         <div class="form-section-body form-grid">
-          <div class="form-item"><label class="field-required">目的仓</label>
+          <div class="form-item full-width"><label class="field-required">预约仓</label>
             <select class="select" id="warehouse"><option value="">请选择</option></select></div>
           <div class="form-item full-width"><label class="field-required">送仓类型</label>
             <div class="radio-group">
@@ -58,10 +66,18 @@
             <div class="form-item"><label class="field-required">集装箱号</label>
               <input class="input" id="containerNo" type="text" /></div>
             <div class="form-item"><label class="field-required">柜型</label>
-              <input class="input" id="containerType" type="text" placeholder="如 40HQ" /></div>
+              <div class="combo-select" id="containerTypeCombo">
+                <input class="input combo-input" id="containerType" type="text" autocomplete="off" placeholder="请选择" />
+                <button type="button" class="combo-toggle" id="containerTypeToggle" aria-label="展开柜型选项">▾</button>
+                <ul class="combo-dropdown" id="containerTypeDropdown" hidden></ul>
+              </div></div>
           </div>
           <div class="form-item"><label class="field-required">送仓总箱数</label>
             <input class="input" id="estimatedCartons" type="number" min="1" step="1" placeholder="请输入送仓总箱数" /></div>
+          <div class="form-item"><label>总体积（m³）</label>
+            <input class="input" id="totalVolume" type="number" min="0.0001" step="0.0001" placeholder="选填" /></div>
+          <div class="form-item"><label>总重量（kg）</label>
+            <input class="input" id="totalWeight" type="number" min="0.0001" step="0.0001" placeholder="选填" /></div>
           <div class="form-item"><label class="field-required">是否打托</label>
             <div class="radio-group">
               <label><input type="radio" name="isPalletized" value="yes" /> 是</label>
@@ -71,19 +87,14 @@
             <div class="form-item"><label class="field-required">送仓总托数</label>
               <input class="input" id="totalPallets" type="number" min="1" step="1" placeholder="请输入送仓总托数" /></div>
           </div>
-          <div class="form-item"><label>货代公司</label>
-            <input class="input" id="forwarder" type="text" placeholder="选填" /></div>
-          <div class="form-item full-width"><label class="field-required">联系邮箱（主邮箱）</label>
-            <input class="input" id="primaryEmail" type="email" placeholder="请输入主邮箱" />
-            <p class="email-primary-hint">该邮箱将作为货代端主邮箱，生成预约链接后不可由货代修改；货代可追加备用邮箱接收通知。</p></div>
         </div>
       </div>
       <div class="panel">
         <div class="form-section-title">货物明细</div>
         <div class="form-section-body">
-          <p class="search-hint">仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=目的仓</p>
+          <p class="search-hint">仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=预约仓</p>
           <div class="inorder-search-bar">
-            <input class="input" id="inOrderSearch" type="text" placeholder="输入入库单号搜索添加" />
+            <input class="input" id="inOrderSearch" type="text" placeholder="入库单号模糊搜索，多个用逗号分隔，回车添加" />
             <button type="button" class="btn btn-primary" id="btnAddInOrder">添加</button>
           </div>
           <div class="sub-table-wrap">
@@ -114,8 +125,10 @@
     </div>
   </div>
 
+  <script src="../mock_data/warehouses.js"></script>
   <script src="../mock_data/inOrder.js"></script>
   <script src="../mock_data/deliveryAppointment.js"></script>
+  <script src="js/product-common.js"></script>
   <script src="js/deliveryAppointment-common.js"></script>
   <script src="js/deliveryAppointmentCreate.js"></script>
 </body>

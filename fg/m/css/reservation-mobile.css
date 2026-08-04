@@ -45,6 +45,7 @@ body.m-official-page {
   z-index: 100;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 14px 20px;
   background: var(--md-surface-container);
   box-shadow: var(--md-elevation-1);
@@ -423,6 +424,45 @@ textarea.md-outlined-input {
   color: var(--md-primary);
   font-weight: 500;
   text-decoration: none;
+}
+
+.m-official-expected-date-list .date-row,
+.m-official-email-list .email-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.m-official-expected-date-list .date-row input[type="date"] {
+  flex: 1;
+  min-width: 0;
+}
+
+.m-official-readonly-dates {
+  margin: 0;
+  color: #262626;
+}
+
+.m-official-btn-add-date,
+.m-official-btn-remove-date {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.m-official-btn-add-date {
+  color: #1890ff;
+}
+
+.m-official-btn-remove-date {
+  color: #ff4d4f;
 }
 
 .m-official-email-list .email-row {

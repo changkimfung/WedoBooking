@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产品信息 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/delivery-appointment-list.css" rel="stylesheet" type="text/css">
+  <link href="css/product-info-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="fourvar order-fourvar product-info-fourvar" style="height:auto;">
+  <table class="table-h25">
+    <tr>
+      <td style="padding-left:17px;">用户编号：</td>
+      <td>
+        <input id="q_user_code" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">产品编号：</td>
+      <td>
+        <input id="q_product_code" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">运德编号：</td>
+      <td>
+        <input id="q_yunde_no" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">产品名称：</td>
+      <td>
+        <input id="q_product_name" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">UPC编码：</td>
+      <td>
+        <input id="q_upc" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">一级品类：</td>
+      <td>
+        <select id="q_category_l1" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">二级品类：</td>
+      <td>
+        <select id="q_category_l2" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">三级品类：</td>
+      <td>
+        <select id="q_category_l3" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">测量状态：</td>
+      <td>
+        <select id="q_measure_status" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">特殊属性：</td>
+      <td>
+        <select id="q_special_attr" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">涉腾标识：</td>
+      <td>
+        <select id="q_sensitive_mark" style="width:157px">
+          <option value="">全部</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">
+        <button type="button" id="btn_product_query" class="order-fourvar-submit" style="margin:5px;">查询</button>
+      </td>
+      <td colspan="7">
+        <button type="button" id="btn_product_reset">重置查询条件</button>
+        <button type="button" id="btn_batch_import_sensitive" class="product-toolbar-btn">批量导入涉腾标识</button>
+        <button type="button" id="btn_export" class="product-toolbar-btn">导出</button>
+        <button type="button" id="btn_export_measure" class="product-toolbar-btn">导出测量记录</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="main product-info-main">
+  <p id="product-result-hint" class="product-result-hint"></p>
+  <div class="product-table-scroll">
+    <table cellspacing="0" width="100%">
+      <thead>
+        <tr class="title">
+          <td>用户编号</td>
+          <td>产品编号</td>
+          <td>运德编号</td>
+          <td>产品名称</td>
+          <td>涉及品牌</td>
+          <td>类别</td>
+          <td>产品型号</td>
+          <td>重量(Kg)</td>
+          <td>计费重量(Kg)</td>
+          <td>体积(m³)</td>
+          <td>计费体积(m³)</td>
+          <td>包装规格(cm)</td>
+          <td>计费规格(cm)</td>
+          <td>特殊属性</td>
+          <td>中文名称</td>
+          <td>英文名称</td>
+          <td>申报单价(CNY)</td>
+          <td>UPC编码</td>
+          <td>海关编码</td>
+          <td>UN码</td>
+          <td>尺寸类型</td>
+          <td>审核情况</td>
+          <td>状态</td>
+          <td>尺寸标准</td>
+          <td>图片</td>
+          <td>查验图片</td>
+          <td class="product-brand-auth-code-head">授权品牌</td>
+          <td>授权有效期</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody id="product-list-tbody"></tbody>
+    </table>
+  </div>
+  <div class="pagination pagination-prototype-nav" id="product-pagination"></div>
+</div>
+
+<div class="product-edit-modal-backdrop" id="productLogModalBackdrop" style="display:none;">
+  <div class="product-edit-modal product-log-modal" role="dialog" aria-labelledby="productLogModalTitle">
+    <div class="product-edit-modal-header">
+      <h3 id="productLogModalTitle">操作日志</h3>
+      <button type="button" class="close" id="productLogModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="product-edit-modal-body product-log-body">
+      <p class="product-log-subtitle" id="productLogSubtitle"></p>
+      <div class="product-log-table-wrap">
+        <table cellspacing="0" width="100%" class="product-log-table">
+          <thead>
+            <tr class="title">
+              <td>操作时间</td>
+              <td>操作人</td>
+              <td>操作类型</td>
+              <td>数据变更记录</td>
+            </tr>
+          </thead>
+          <tbody id="productLogTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="product-edit-modal-footer">
+      <button type="button" class="order-fourvar-submit" id="productLogModalOk">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="product-edit-modal-backdrop" id="productEditModalBackdrop" style="display:none;">
+  <div class="product-edit-modal" role="dialog" aria-labelledby="productEditModalTitle">
+    <div class="product-edit-modal-header">
+      <h3 id="productEditModalTitle">编辑产品的明细</h3>
+      <button type="button" class="close" id="productEditModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="product-edit-modal-body">
+      <div class="product-edit-field">
+        <label>英文申报名称</label>
+        <input type="text" id="edit_name_en" class="text-input product-edit-input" maxlength="50" />
+      </div>
+      <div class="product-edit-field product-edit-field-top">
+        <label>特殊属性</label>
+        <div class="product-edit-checkbox-grid" id="edit_special_attrs"></div>
+      </div>
+      <div class="product-edit-field product-edit-field-top">
+        <label>查验图片</label>
+        <div class="product-edit-file-wrap">
+          <input type="file" id="edit_inspection_file_input" multiple accept=".jpg,.jpeg,.png,.gif,.webp,image/jpeg,image/png,image/gif,image/webp" />
+          <span class="product-edit-file-hint">支持 jpg、png、gif、webp，可多张上传</span>
+          <div class="product-edit-file-tags" id="edit_inspection_file_tags"></div>
+        </div>
+      </div>
+      <div class="product-edit-field">
+        <label>品牌类别</label>
+        <select id="edit_brand_category" class="product-edit-input"></select>
+      </div>
+      <div class="product-edit-field">
+        <label>涉及品牌</label>
+        <input type="text" id="edit_brand" class="text-input product-edit-input" maxlength="50" />
+      </div>
+      <div class="product-edit-field" id="edit_brand_auth_row" style="display:none;">
+        <label>品牌授权绑定</label>
+        <div class="product-brand-auth-combobox" id="edit_brand_auth_combobox">
+          <input type="text" id="edit_brand_auth_query" class="text-input product-edit-input" placeholder="输入品牌代号或名称查询" autocomplete="off" />
+          <input type="hidden" id="edit_brand_auth_bind" value="" />
+          <ul class="product-brand-auth-dropdown" id="edit_brand_auth_dropdown" style="display:none;"></ul>
+        </div>
+        <p class="product-edit-tip">仅展示当前客户下的品牌授权，输入关键字筛选后选择</p>
+      </div>
+      <div class="product-edit-field" id="edit_synced_expire_row" style="display:none;">
+        <label>授权有效期</label>
+        <input type="text" id="edit_file_expire" class="text-input product-edit-input product-edit-readonly" readonly />
+        <p class="product-edit-tip">来自品牌授权绑定，自动同步</p>
+      </div>
+      <div class="product-edit-field">
+        <label>产品状态</label>
+        <select id="edit_product_status" class="product-edit-input"></select>
+      </div>
+      <p class="product-edit-error" id="productEditError" style="display:none;"></p>
+    </div>
+    <div class="product-edit-modal-footer">
+      <button type="button" class="btn" id="productEditCancel">取消</button>
+      <button type="button" class="order-fourvar-submit" id="productEditSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德仓储中台原型
+  <a href="#" onclick="return false;">演示页</a>
+</footer>
+
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'products',
+    activeSecondMenu: 'productInfo',
+    userName: '演示用户'
+  });
+</script>
+<script src="../mock_data/productInfo.js"></script>
+<script src="../mock_data/brandAuthorization.js"></script>
+<script src="js/productInfo.js"></script>
+</body>
+</html>

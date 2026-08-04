@@ -1,8 +1,8 @@
 (function () {
   var C = DeliveryAppointmentCommon;
   var selectedOrders = [];
-  var primaryEmail = '';
   var editingItem = null;
+  var CONTAINER_TYPE_OPTIONS = ['20-GP', '40-gp', '40hq', '45-hq'];
 
   function getQueryId() {
     var m = window.location.search.match(/[?&]id=([^&]+)/);
@@ -18,6 +18,125 @@
     return r ? r.value : '散货';
   }
 
+  function getContainerType() {
+    var el = document.getElementById('containerType');
+    return el ? el.value.trim() : '';
+  }
+
+  function normalizeContainerTypeValue(raw) {
+    var val = String(raw || '').trim();
+    if (!val) return '';
+    for (var i = 0; i < CONTAINER_TYPE_OPTIONS.length; i++) {
+      if (CONTAINER_TYPE_OPTIONS[i].toLowerCase() === val.toLowerCase()) {
+        return CONTAINER_TYPE_OPTIONS[i];
+      }
+    }
+    return val;
+  }
+
+  function isAllowedContainerType(val) {
+    return CONTAINER_TYPE_OPTIONS.indexOf(val) !== -1;
+  }
+
+  function setContainerTypeValue(raw) {
+    var input = document.getElementById('containerType');
+    if (!input) return;
+    input.value = normalizeContainerTypeValue(raw);
+  }
+
+  function renderContainerTypeDropdown(filterText) {
+    var dropdown = document.getElementById('containerTypeDropdown');
+    if (!dropdown) return;
+    var kw = String(filterText || '').trim().toLowerCase();
+    var matched = CONTAINER_TYPE_OPTIONS.filter(function (opt) {
+      return !kw || opt.toLowerCase().indexOf(kw) !== -1;
+    });
+    if (!matched.length) {
+      dropdown.innerHTML = '<li class="is-empty">无匹配项</li>';
+      return;
+    }
+    dropdown.innerHTML = matched.map(function (opt) {
+      return '<li data-value="' + opt + '">' + opt + '</li>';
+    }).join('');
+  }
+
+  function openContainerTypeDropdown() {
+    var dropdown = document.getElementById('containerTypeDropdown');
+    var input = document.getElementById('containerType');
+    if (!dropdown || !input) return;
+    renderContainerTypeDropdown(input.value);
+    dropdown.removeAttribute('hidden');
+  }
+
+  function closeContainerTypeDropdown() {
+    var dropdown = document.getElementById('containerTypeDropdown');
+    if (!dropdown) return;
+    dropdown.setAttribute('hidden', '');
+  }
+
+  function initContainerTypeCombo() {
+    var wrap = document.getElementById('containerTypeCombo');
+    var input = document.getElementById('containerType');
+    var dropdown = document.getElementById('containerTypeDropdown');
+    var toggle = document.getElementById('containerTypeToggle');
+    if (!wrap || !input || !dropdown) return;
+
+    function pickOption(value) {
+      input.value = value;
+      closeContainerTypeDropdown();
+      input.blur();
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (dropdown.hasAttribute('hidden')) openContainerTypeDropdown();
+      else closeContainerTypeDropdown();
+    });
+
+    input.addEventListener('focus', function () {
+      openContainerTypeDropdown();
+    });
+
+    input.addEventListener('input', function () {
+      openContainerTypeDropdown();
+    });
+
+    dropdown.addEventListener('mousedown', function (e) {
+      var li = e.target.closest('li[data-value]');
+      if (!li) return;
+      e.preventDefault();
+      pickOption(li.getAttribute('data-value'));
+    });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeContainerTypeDropdown();
+        return;
+      }
+      if (e.key === 'Enter') {
+        var first = dropdown.querySelector('li[data-value]');
+        if (first) {
+          e.preventDefault();
+          pickOption(first.getAttribute('data-value'));
+        }
+      }
+    });
+
+    input.addEventListener('blur', function () {
+      window.setTimeout(function () {
+        var normalized = normalizeContainerTypeValue(input.value);
+        if (normalized && isAllowedContainerType(normalized)) input.value = normalized;
+        else if (input.value.trim()) input.value = '';
+        closeContainerTypeDropdown();
+      }, 120);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) closeContainerTypeDropdown();
+    });
+  }
+
   function getIsPalletized() {
     var r = document.querySelector('input[name="isPalletized"]:checked');
     return r ? r.value === 'yes' : false;
@@ -31,6 +150,22 @@
   function getEstimatedCartons() {
     var el = document.getElementById('estimatedCartons');
     return el ? el.value.trim() : '';
+  }
+
+  function getTotalVolumeInput() {
+    var el = document.getElementById('totalVolume');
+    return el ? el.value.trim() : '';
+  }
+
+  function getTotalWeightInput() {
+    var el = document.getElementById('totalWeight');
+    return el ? el.value.trim() : '';
+  }
+
+  function isPositiveDecimal(val) {
+    if (!val) return false;
+    if (!/^\d+(\.\d+)?$/.test(val)) return false;
+    return Number(val) > 0;
   }
 
   function setRadioValue(name, value) {
@@ -55,21 +190,6 @@
       block.classList.remove('show');
       if (input) input.value = '';
     }
-  }
-
-  function getPrimaryEmail() {
-    var el = document.getElementById('primaryEmail');
-    return el ? el.value.trim() : '';
-  }
-
-  function resolvePrimaryEmail(item) {
-    var emails = (item && item.emails) || [];
-    return (item && item.primaryEmail) || emails[0] || '';
-  }
-
-  function renderPrimaryEmail() {
-    var input = document.getElementById('primaryEmail');
-    if (input) input.value = primaryEmail || '';
   }
 
   function renderSelectedTable() {
@@ -114,38 +234,47 @@
     });
   }
 
-  function validateAndFindInOrder(keyword) {
+  function orderNoMatches(orderNo, keyword) {
+    return C.normSearchText(orderNo).indexOf(C.normSearchText(keyword)) !== -1;
+  }
+
+  function validateAndFindInOrder(keyword, silent) {
     var kw = keyword.trim();
     if (!kw) {
-      window.alert('请输入入库单号');
-      return null;
+      if (!silent) window.alert('请输入入库单号');
+      return { ok: false, error: '请输入入库单号' };
     }
     var warehouse = getWarehouse();
     if (!warehouse) {
-      window.alert('请先选择目的仓');
-      return null;
+      if (!silent) window.alert('请先选择预约仓');
+      return { ok: false, error: '请先选择预约仓' };
     }
     var eligible = C.getEligibleInOrders(warehouse);
     var found = null;
+    var exactFound = null;
     for (var i = 0; i < eligible.length; i++) {
-      if (eligible[i].orderNo.indexOf(kw) !== -1) found = eligible[i];
+      if (orderNoMatches(eligible[i].orderNo, kw)) {
+        if (C.normSearchText(eligible[i].orderNo) === C.normSearchText(kw)) exactFound = eligible[i];
+        if (!found) found = eligible[i];
+      }
     }
+    if (exactFound) found = exactFound;
     if (!found) {
       var inList = typeof MOCK_IN_ORDER_LIST !== 'undefined' ? MOCK_IN_ORDER_LIST : [];
       for (var j = 0; j < inList.length; j++) {
-        if (inList[j].orderNo.indexOf(kw) !== -1) {
+        if (orderNoMatches(inList[j].orderNo, kw)) {
           var o = inList[j];
           if (o.status !== '运输在途') {
-            window.alert('仅可添加状态为「运输在途」的入库单');
-            return null;
+            if (!silent) window.alert('仅可添加状态为「运输在途」的入库单');
+            return { ok: false, error: '「' + kw + '」状态非运输在途' };
           }
           if (o.shippingMethod !== '客户自发头程') {
-            window.alert('仅可添加发货方式为「客户自发头程」的入库单');
-            return null;
+            if (!silent) window.alert('仅可添加发货方式为「客户自发头程」的入库单');
+            return { ok: false, error: '「' + kw + '」发货方式不符' };
           }
-          if (o.warehouse !== warehouse) {
-            window.alert('入库单收货仓须与目的仓一致');
-            return null;
+          if (!C.isSameWarehouse(o.warehouse, warehouse)) {
+            if (!silent) window.alert('入库单收货仓须与预约仓一致');
+            return { ok: false, error: '「' + kw + '」收货仓与预约仓不一致' };
           }
           found = o;
           break;
@@ -153,30 +282,57 @@
       }
     }
     if (!found) {
-      window.alert('未找到符合条件的入库单');
-      return null;
+      if (!silent) window.alert('未找到符合条件的入库单');
+      return { ok: false, error: '「' + kw + '」未找到或不符合条件' };
     }
     for (var k = 0; k < selectedOrders.length; k++) {
       if (selectedOrders[k].inOrderId === found.id) {
-        window.alert('该入库单已添加');
-        return null;
+        if (!silent) window.alert('该入库单已添加');
+        return { ok: false, error: '「' + kw + '」已添加' };
       }
     }
-    return found;
+    return { ok: true, found: found };
   }
 
-  function addInOrder() {
-    var kw = document.getElementById('inOrderSearch').value;
-    var found = validateAndFindInOrder(kw);
-    if (!found) return;
-    selectedOrders.push(C.snapshotInOrder(found));
+  function addInOrderByKeyword(keyword) {
+    var result = validateAndFindInOrder(keyword, true);
+    if (!result.ok) return result;
+    selectedOrders.push(C.snapshotInOrder(result.found));
+    return { ok: true };
+  }
+
+  function addInOrders() {
+    if (!getWarehouse()) {
+      window.alert('请先选择预约仓');
+      return;
+    }
+    var raw = document.getElementById('inOrderSearch').value;
+    var keys = raw.split(/[,，]/).map(function (s) { return s.trim(); }).filter(Boolean);
+    if (!keys.length) {
+      window.alert('请输入入库单号');
+      return;
+    }
+    var added = 0;
+    var errors = [];
+    keys.forEach(function (kw) {
+      var result = addInOrderByKeyword(kw);
+      if (result.ok) added++;
+      else if (result.error) errors.push(result.error);
+    });
     document.getElementById('inOrderSearch').value = '';
     renderSelectedTable();
+    if (errors.length) {
+      var msg = '成功添加 ' + added + ' 条';
+      if (added < keys.length) msg += '，以下未添加：\n' + errors.join('\n');
+      window.alert(msg);
+    } else if (added > 1) {
+      window.alert('已成功添加 ' + added + ' 条入库单');
+    }
   }
 
   function validateForm(isSubmit) {
     if (!getWarehouse()) {
-      window.alert('请选择目的仓');
+      window.alert('请选择预约仓');
       return false;
     }
     if (getDeliveryType() === '整柜') {
@@ -184,8 +340,13 @@
         window.alert('请填写集装箱号');
         return false;
       }
-      if (!document.getElementById('containerType').value.trim()) {
-        window.alert('请填写柜型');
+      var containerType = getContainerType();
+      if (!containerType) {
+        window.alert('请选择柜型');
+        return false;
+      }
+      if (!isAllowedContainerType(normalizeContainerTypeValue(containerType))) {
+        window.alert('请从下拉列表中选择柜型');
         return false;
       }
     }
@@ -209,13 +370,14 @@
         return false;
       }
     }
-    var mainEmail = getPrimaryEmail();
-    if (!mainEmail) {
-      window.alert('请填写联系邮箱（主邮箱）');
+    var volume = getTotalVolumeInput();
+    if (volume && !isPositiveDecimal(volume)) {
+      window.alert('总体积须为大于 0 的数字');
       return false;
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mainEmail)) {
-      window.alert('邮箱格式不正确');
+    var weight = getTotalWeightInput();
+    if (weight && !isPositiveDecimal(weight)) {
+      window.alert('总重量须为大于 0 的数字');
       return false;
     }
     if (isSubmit && !selectedOrders.length) {
@@ -226,15 +388,21 @@
   }
 
   function buildPayload(status) {
-    var totals = C.calcTotals(selectedOrders);
     var isPalletized = getIsPalletized();
     var original = editingItem ? JSON.parse(JSON.stringify(editingItem)) : {};
     var record = original;
     record.id = original.id || C.genId();
     record.customerCode = original.customerCode || C.getCurrentCustomerCode();
     record.appointmentNo = status === '待预约' ? (original.appointmentNo || C.genAppointmentNo()) : (original.appointmentNo || '');
-    record.deliveryCode = status === '待预约' ? (original.deliveryCode || C.genDeliveryCode()) : (original.deliveryCode || '');
-    record.warehouse = getWarehouse();
+    if (status === '待预约') {
+      record.deliveryCode = original.deliveryCode || C.genDeliveryCode();
+      record.bookingLink = original.bookingLink ||
+        ('/fg/index.html?code=' + encodeURIComponent(record.deliveryCode));
+    } else {
+      record.deliveryCode = '';
+      record.bookingLink = '';
+    }
+    record.warehouse = C.normalizeWarehouseName(getWarehouse());
     record.status = status;
     record.deliveryType = getDeliveryType();
     record.expectedInboundTime = original.expectedInboundTime || '';
@@ -244,16 +412,16 @@
     record.isPalletized = isPalletized;
     record.totalPallets = isPalletized ? Number(getTotalPallets()) : '';
     record.estimatedCartons = Number(getEstimatedCartons());
-    record.totalVolume = totals.totalVolume;
-    record.totalWeight = totals.totalWeight;
+    var volumeVal = getTotalVolumeInput();
+    var weightVal = getTotalWeightInput();
+    record.totalVolume = volumeVal ? Number(volumeVal) : '';
+    record.totalWeight = weightVal ? Number(weightVal) : '';
     record.submitTime = status === '待预约' ? (original.submitTime || C.formatNow()) : (original.submitTime || '');
     record.containerNo = document.getElementById('containerNo').value.trim();
-    record.containerType = document.getElementById('containerType').value.trim();
+    record.containerType = normalizeContainerTypeValue(getContainerType());
     record.containerSeq = record.containerType;
-    record.forwarder = document.getElementById('forwarder').value.trim();
-    primaryEmail = getPrimaryEmail();
-    record.primaryEmail = primaryEmail;
-    record.emails = primaryEmail ? [primaryEmail] : [];
+    record.primaryEmail = original.primaryEmail || '';
+    record.emails = Array.isArray(original.emails) ? original.emails.slice() : [];
     record.inboundOrders = selectedOrders.slice();
     return record;
   }
@@ -326,19 +494,20 @@
     if (breadcrumb) breadcrumb.innerHTML = '单据管理 &gt;&gt; 预约送仓 &gt;&gt; 编辑';
     var title = document.querySelector('.form-section-title');
     if (title) title.textContent = '预约信息（编辑）';
-    document.getElementById('warehouse').value = item.warehouse || '';
+    document.getElementById('warehouse').value = C.normalizeWarehouseName(item.warehouse || '');
     setRadioValue('deliveryType', item.deliveryType || '散货');
     setRadioValue('isPalletized', C.isPalletized(item) ? 'yes' : 'no');
     document.getElementById('totalPallets').value = C.isPalletized(item) && item.totalPallets ? item.totalPallets : '';
     document.getElementById('estimatedCartons').value = C.formatEstimatedCartons(item) === '-' ? '' : C.formatEstimatedCartons(item);
+    document.getElementById('totalVolume').value =
+      item.totalVolume != null && item.totalVolume !== '' ? item.totalVolume : '';
+    document.getElementById('totalWeight').value =
+      item.totalWeight != null && item.totalWeight !== '' ? item.totalWeight : '';
     document.getElementById('containerNo').value = item.containerNo || '';
-    document.getElementById('containerType').value = item.containerType || item.containerSeq || '';
-    document.getElementById('forwarder').value = item.forwarder || '';
-    primaryEmail = resolvePrimaryEmail(item);
+    setContainerTypeValue(item.containerType || item.containerSeq || '');
     selectedOrders = (item.inboundOrders || []).slice();
     document.getElementById('btnSaveDraft').textContent = '保存修改';
     document.getElementById('btnSubmit').style.display = item.status === '待预约' ? 'none' : '';
-    renderPrimaryEmail();
     renderSelectedTable();
     toggleFclFields();
     togglePalletFields();
@@ -365,9 +534,9 @@
   function onWarehouseChange() {
     if (!selectedOrders.length) return;
     var wh = getWarehouse();
-    var bad = selectedOrders.some(function (o) { return o.warehouse !== wh; });
+    var bad = selectedOrders.some(function (o) { return !C.isSameWarehouse(o.warehouse, wh); });
     if (bad) {
-      window.alert('目的仓已变更，已清空货物明细');
+      window.alert('预约仓已变更，已清空货物明细');
       selectedOrders = [];
       renderSelectedTable();
     }
@@ -385,6 +554,10 @@
   }
 
   function initMenu() {
+    if (typeof ProductCommon !== 'undefined') {
+      ProductCommon.initSidebarMenus();
+      return;
+    }
     document.getElementById('docManageBtn').addEventListener('click', function () {
       document.getElementById('docManageSubmenu').classList.toggle('show');
     });
@@ -393,7 +566,7 @@
   function init() {
     initMenu();
     initWarehouseSelect();
-    renderPrimaryEmail();
+    initContainerTypeCombo();
     renderSelectedTable();
     document.querySelectorAll('input[name="deliveryType"]').forEach(function (r) {
       r.addEventListener('change', toggleFclFields);
@@ -402,12 +575,9 @@
       r.addEventListener('change', togglePalletFields);
     });
     document.getElementById('warehouse').addEventListener('change', onWarehouseChange);
-    document.getElementById('primaryEmail').addEventListener('input', function () {
-      primaryEmail = getPrimaryEmail();
-    });
-    document.getElementById('btnAddInOrder').addEventListener('click', addInOrder);
+    document.getElementById('btnAddInOrder').addEventListener('click', addInOrders);
     document.getElementById('inOrderSearch').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') { e.preventDefault(); addInOrder(); }
+      if (e.key === 'Enter') { e.preventDefault(); addInOrders(); }
     });
     document.getElementById('btnSaveDraft').addEventListener('click', function () {
       save(editingItem && editingItem.status === '待预约' ? '待预约' : '待提交');

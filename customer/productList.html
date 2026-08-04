@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>产品列表 - 客户前台</title>
+  <link rel="stylesheet" href="css/customer-common.css" />
+  <link rel="stylesheet" href="css/product-manage.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo"><div class="logo-icon">仓</div><span>运德仓储系统</span></div>
+    </div>
+    <div class="topbar-right">
+      <span class="top-icon">🔔 消息</span>
+      <span class="top-icon">⚙ 设置</span>
+      <span class="top-icon">Hello！郑乔俊</span>
+      <span class="top-icon">退出</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="menu-section">
+        <div class="menu-section-title">主菜单</div>
+        <div class="menu-item"><div class="menu-label">🏠 首页</div></div>
+        <div class="menu-item" id="productManageBtn">
+          <div class="menu-label">📦 产品管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu show" id="productManageSubmenu">
+          <div class="menu-item active"><a href="productList.html">产品列表</a></div>
+          <div class="menu-item"><a href="productCreate.html">新增产品</a></div>
+          <div class="menu-item">批量导入</div>
+        </div>
+        <div class="menu-item" id="docManageBtn">
+          <div class="menu-label">📑 单据管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu" id="docManageSubmenu">
+          <div class="menu-item"><a href="inOrder.html">入库单</a></div>
+          <div class="menu-item"><a href="deliveryAppointment.html">预约送仓</a></div>
+          <div class="menu-item">出库单</div>
+          <div class="menu-item">调拨单</div>
+        </div>
+        <div class="menu-item"><div class="menu-label">🛠 服务工单</div></div>
+        <div class="menu-item"><div class="menu-label">📊 数据统计</div></div>
+        <div class="menu-item"><div class="menu-label">👤 用户中心</div></div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="breadcrumb">产品管理 &gt;&gt; 产品列表</div>
+
+      <div class="panel filter-panel">
+        <div class="filter-row">
+          <div class="form-item">
+            <label>SKU编码：</label>
+            <textarea class="product-filter-textarea" id="filterSku" placeholder="多个换行或空格分隔"></textarea>
+          </div>
+          <div class="form-item">
+            <label>产品编码：</label>
+            <textarea class="product-filter-textarea" id="filterProductCode" placeholder="多个换行或空格分隔"></textarea>
+          </div>
+          <div class="form-item">
+            <label>产品名称：</label>
+            <input class="input" id="filterProductName" type="text" placeholder="模糊搜索" />
+          </div>
+          <div class="form-item">
+            <label>UPC条码：</label>
+            <input class="input" id="filterUpc" type="text" placeholder="模糊搜索" />
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="form-item">
+            <label>特殊属性：</label>
+            <select class="select" id="filterSpecialAttr">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>产品类别：</label>
+            <select class="select" id="filterCategory">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>尺寸类别：</label>
+            <select class="select" id="filterSizeType">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div class="form-item">
+            <label>审核状态：</label>
+            <select class="select" id="filterAuditStatus">
+              <option value="">全部</option>
+              <option value="待审核">待审核</option>
+              <option value="已审核">已审核</option>
+              <option value="已驳回">已驳回</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="form-item">
+            <label>重量大于：</label>
+            <input class="input" id="filterWeightGt" type="number" min="0" step="0.01" style="min-width:100px;width:100px;" />
+            <span>kg</span>
+          </div>
+          <div class="form-item">
+            <label>尺寸差异：</label>
+            <input class="input" id="filterSizeDiff" type="number" min="0" step="0.1" style="min-width:100px;width:100px;" />
+            <span>cm</span>
+          </div>
+          <div class="form-item">
+            <label><input type="checkbox" id="filterShowImage" /> 显示图片</label>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-search" id="searchBtn" type="button">查询</button>
+            <button class="btn btn-reset" id="resetBtn" type="button">重置</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel tab-panel">
+        <div class="tabs" id="tabs"></div>
+      </div>
+
+      <div class="panel">
+        <div class="product-toolbar">
+          <a href="productCreate.html" class="btn btn-success">新增</a>
+          <button type="button" class="btn btn-success" id="btnBatchImport">批量导入</button>
+          <button type="button" class="btn btn-success" id="btnBatchExport">批量导出</button>
+          <button type="button" class="btn btn-success" id="btnBatchDelete">批量删除</button>
+          <button type="button" class="btn btn-success" id="btnSizeDiffConfirm">尺寸差异确认</button>
+          <button type="button" class="btn btn-success" id="btnBatchUpdateImport">批量更新信息导入</button>
+        </div>
+
+        <p class="sync-hint" id="syncHint">
+          数据同步：<strong>客户前台创建/提交</strong> 后写入源文件，并同步至 <strong>企业微信智能表格</strong>（需 <code>npm run dev</code> 且配置 <code>WECOM_SMARTSHEET_WEBHOOK</code>）。
+        </p>
+
+        <div class="table-wrap product-table-wrap">
+          <table id="productTable">
+            <thead>
+              <tr>
+                <th><input type="checkbox" class="checkbox" id="checkAll" /></th>
+                <th>产品编码</th>
+                <th>SKU编码</th>
+                <th>产品名称</th>
+                <th>产品类别</th>
+                <th>产品款式</th>
+                <th>重量(kg)</th>
+                <th>计费重量(kg)</th>
+                <th>包装规格(cm)</th>
+                <th>计费规格(cm)</th>
+                <th>特殊属性</th>
+                <th>中文申报名</th>
+                <th>英文申报名</th>
+                <th>UPC</th>
+                <th>申报价格</th>
+                <th>规格</th>
+                <th>海关编码</th>
+                <th>涉腾标识</th>
+                <th>品牌文件</th>
+                <th>文件到期时间</th>
+                <th>状态</th>
+                <th>子箱号</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../mock_data/productInfo.js"></script>
+  <script src="js/product-common.js"></script>
+  <script src="js/productList.js"></script>
+</body>
+</html>

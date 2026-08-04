@@ -12,16 +12,20 @@
 
 <div id="wedo-wh-mid-chrome-header"></div>
 
-<div class="fourvar order-fourvar" style="height:auto;">
+<div class="fourvar order-fourvar wh-appt-filter-panel" id="whApptFilterPanel" style="height:auto;">
   <table class="table-h25">
     <tr>
       <td style="padding-left:17px;">客户编号：</td>
       <td>
-        <input id="q_customer_code" class="text-input w150" type="text" placeholder="支持模糊" />
+        <input id="q_customer_code" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
       </td>
       <td style="padding-left:17px;">预约单号：</td>
       <td>
-        <input id="q_appointment_no" class="text-input w150" type="text" placeholder="支持模糊" />
+        <input id="q_appointment_no" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">送仓码：</td>
+      <td>
+        <input id="q_delivery_code" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
       </td>
       <td style="padding-left:17px;">预约仓库：</td>
       <td>
@@ -29,6 +33,8 @@
           <option value="">全部</option>
         </select>
       </td>
+    </tr>
+    <tr>
       <td style="padding-left:17px;">送仓类型：</td>
       <td>
         <select id="q_delivery_type" style="width:157px">
@@ -37,52 +43,180 @@
           <option value="散货">散货</option>
         </select>
       </td>
-    </tr>
-    <tr>
       <td style="padding-left:17px;">状态：</td>
       <td>
         <select id="q_status" style="width:157px">
           <option value="">全部</option>
         </select>
       </td>
+      <td style="padding-left:17px;">入库单号：</td>
+      <td>
+        <input id="q_inbound_detail" class="text-input w150 wh-filter-input" type="text" placeholder="支持逗号分隔" />
+      </td>
+      <td style="padding-left:17px;">是否打托：</td>
+      <td>
+        <select id="q_palletized" style="width:157px">
+          <option value="">全部</option>
+          <option value="yes">是</option>
+          <option value="no">否</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">送仓总箱数：</td>
+      <td>
+        <input id="q_estimated_cartons" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">集装箱号：</td>
+      <td>
+        <input id="q_container_no" class="text-input w150 wh-filter-input" type="text" placeholder="整柜模糊搜索" />
+      </td>
+      <td style="padding-left:17px;">总体积（m³）：</td>
+      <td>
+        <input id="q_total_volume" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">总重量（kg）：</td>
+      <td>
+        <input id="q_total_weight" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">货代联系邮箱：</td>
+      <td>
+        <input id="q_email" class="text-input w150 wh-filter-input" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">提交时间：</td>
+      <td colspan="3">
+        <span class="wh-filter-date-range">
+          <input id="q_submit_time_start" class="text-input wh-filter-date wh-filter-input" type="date" />
+          <span class="wh-filter-date-sep">至</span>
+          <input id="q_submit_time_end" class="text-input wh-filter-date wh-filter-input" type="date" />
+        </span>
+      </td>
       <td style="padding-left:17px;">
         <button type="button" id="btn_appt_query" class="order-fourvar-submit" style="margin:5px;">查询</button>
-      </td>
-      <td colspan="5">
         <button type="button" id="btn_appt_reset">重置查询</button>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">期望送仓日期：</td>
+      <td colspan="3">
+        <span class="wh-filter-date-range">
+          <input id="q_expected_time_start" class="text-input wh-filter-date wh-filter-input" type="date" />
+          <span class="wh-filter-date-sep">至</span>
+          <input id="q_expected_time_end" class="text-input wh-filter-date wh-filter-input" type="date" />
+        </span>
+      </td>
+      <td style="padding-left:17px;">实际到仓时间：</td>
+      <td colspan="3">
+        <span class="wh-filter-date-range">
+          <input id="q_actual_time_start" class="text-input wh-filter-date wh-filter-input" type="date" />
+          <span class="wh-filter-date-sep">至</span>
+          <input id="q_actual_time_end" class="text-input wh-filter-date wh-filter-input" type="date" />
+        </span>
       </td>
     </tr>
   </table>
 </div>
 
 <div class="main inorder-main">
-  <div class="wh-create-toolbar">
-    <a href="deliveryAppointmentCreate.html" class="order-fourvar-submit wh-create-link">新建入库单预约</a>
+  <div class="wh-appt-tab-panel">
+    <div class="wh-appt-tabs" id="apptStatusTabs" role="tablist" aria-label="预约单状态"></div>
+  </div>
+  <div class="wh-create-toolbar wh-list-toolbar">
+    <div class="wh-list-toolbar-actions">
+      <div class="wh-table-col-picker" id="colPickerWrap">
+        <button type="button" id="btnColSettings" class="order-fourvar-submit wh-col-settings-btn" aria-expanded="false" aria-haspopup="true">列设置</button>
+        <div class="wh-col-picker-dropdown" id="colPickerDropdown" hidden></div>
+      </div>
+      <a href="deliveryAppointmentCreate.html" class="order-fourvar-submit wh-create-link">新建入库单预约</a>
+      <button type="button" id="btn_wh_force_signoff" class="order-fourvar-submit wh-force-signoff-btn">强制签收</button>
+    </div>
   </div>
   <p id="appt-result-hint" style="margin:8px 0 0;font-size:12px;color:#878787;"></p>
-  <table cellspacing="0" width="100%">
+  <table id="appt-list-table" cellspacing="0" width="100%">
     <thead>
       <tr class="title">
-        <td>预约方</td>
-        <td>预约仓库</td>
-        <td>预约单号</td>
-        <td>送仓码</td>
-        <td>状态</td>
-        <td>送仓类型</td>
-        <td>送仓总箱数</td>
-        <td>收货总箱数</td>
-        <td>是否打托</td>
-        <td>送仓总托数</td>
-        <td>期望送仓日期</td>
-        <td>仓库确认时段</td>
-        <td>实际送仓时间</td>
-        <td>提交时间</td>
-        <td>操作</td>
+        <td data-col-key="select" class="appt-col-select"><input type="checkbox" id="appt-select-all" title="全选本页" aria-label="全选本页" /></td>
+        <td data-col-key="bookerParty" class="col-toggleable">预约方</td>
+        <td data-col-key="warehouse" class="col-toggleable">预约仓库</td>
+        <td data-col-key="appointmentNo" class="col-toggleable">预约单号</td>
+        <td data-col-key="deliveryCode" class="col-toggleable">送仓码</td>
+        <td data-col-key="inboundDetail" class="col-toggleable">货物明细</td>
+        <td data-col-key="status" class="col-toggleable">状态</td>
+        <td data-col-key="deliveryType" class="col-toggleable">送仓类型</td>
+        <td data-col-key="estimatedCartons" class="col-toggleable">送仓总箱数</td>
+        <td data-col-key="containerNo" class="col-toggleable">集装箱号</td>
+        <td data-col-key="totalVolume" class="col-toggleable">总体积（m³）</td>
+        <td data-col-key="totalWeight" class="col-toggleable">总重量（kg）</td>
+        <td data-col-key="receivedCartons" class="col-toggleable">收货总箱数</td>
+        <td data-col-key="isPalletized" class="col-toggleable">是否打托</td>
+        <td data-col-key="totalPallets" class="col-toggleable">送仓总托数</td>
+        <td data-col-key="expectedInboundTime" class="col-toggleable">期望送仓日期</td>
+        <td data-col-key="warehouseConfirmedInboundTime" class="col-toggleable">仓库确认时段</td>
+        <td data-col-key="actualDeliveryTime" class="col-toggleable">实际送仓时间</td>
+        <td data-col-key="submitTime" class="col-toggleable">提交时间</td>
+        <td data-col-key="ops">操作</td>
       </tr>
     </thead>
     <tbody id="appt-list-tbody"></tbody>
   </table>
   <div class="pagination pagination-prototype-nav" id="appt-pagination"></div>
+</div>
+
+<div class="wh-signoff-modal-backdrop" id="whInboundDetailModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal wh-inbound-detail-modal" role="dialog" aria-labelledby="whInboundDetailModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="whInboundDetailModalTitle">货物明细</h3>
+      <button type="button" class="close" id="whInboundDetailModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body">
+      <p class="wh-inbound-detail-subtitle" id="whInboundDetailSubtitle"></p>
+      <table cellspacing="0" width="100%" class="wh-inbound-detail-table">
+        <thead>
+          <tr class="title">
+            <td>入库单号</td>
+            <td>订单状态</td>
+            <td>收货仓</td>
+            <td>发货方式</td>
+            <td>订单箱数</td>
+            <td>送仓箱数</td>
+            <td>提交时间</td>
+          </tr>
+        </thead>
+        <tbody id="whInboundDetailBody"></tbody>
+      </table>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="order-fourvar-submit" id="whInboundDetailModalOk">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="wh-signoff-modal-backdrop" id="whForceSignModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal" role="dialog" aria-labelledby="whForceSignModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="whForceSignModalTitle">强制签收</h3>
+      <button type="button" class="close" id="whForceSignModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body">
+      <p class="wh-signoff-tip">将所选预约单状态更新为「已送仓」，并同步至客户前台与海外仓。仅支持待送仓、客户待确认、已超时状态。</p>
+      <p class="wh-signoff-summary" id="whForceSignSummary">-</p>
+      <div class="wh-signoff-field">
+        <label><span class="req">*</span>实际送仓时间</label>
+        <input type="datetime-local" id="whForceActualTime" step="60" />
+      </div>
+      <div class="wh-signoff-field">
+        <label>备注</label>
+        <textarea id="whForceRemark" rows="2" maxlength="200" placeholder="选填"></textarea>
+      </div>
+      <p class="wh-signoff-error" id="whForceSignError" style="display:none;"></p>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="btn" id="whForceSignModalCancel">取消</button>
+      <button type="button" class="order-fourvar-submit" id="whForceSignModalSubmit">确认签收</button>
+    </div>
+  </div>
 </div>
 
 <footer class="wh-mid-footer">
@@ -98,6 +232,7 @@
     userName: '演示用户'
   });
 </script>
+<script src="../mock_data/warehouses.js"></script>
 <script src="../mock_data/deliveryAppointment.js"></script>
 <script src="../mock_data/inOrder.js"></script>
 <script src="../customer/js/deliveryAppointment-common.js"></script>

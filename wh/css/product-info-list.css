@@ -1,0 +1,376 @@
+/* 产品信息管理 · 页面扩展 */
+
+.product-info-fourvar .product-toolbar-btn {
+  margin-left: 8px;
+}
+
+.product-result-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #878787;
+  text-align: right;
+}
+
+.main.product-info-main {
+  padding: 0 10px 20px;
+}
+
+.product-table-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.main.product-info-main thead tr.title td {
+  white-space: nowrap;
+}
+
+.main.product-info-main tbody td {
+  white-space: nowrap;
+}
+
+.main.product-info-main tbody td.td-left {
+  text-align: left;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-audit-status {
+  color: #1a7f37;
+  font-weight: bold;
+}
+
+.product-audit-status-pending {
+  color: #d9822b;
+}
+
+.product-audit-status-measuring {
+  color: #0066cc;
+}
+
+.product-link {
+  color: #0092dc;
+  cursor: pointer;
+}
+
+.product-link:hover {
+  text-decoration: underline;
+}
+
+.product-link-muted {
+  color: #999;
+}
+
+.product-op-link {
+  color: #0092dc;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.product-op-link:hover {
+  text-decoration: underline;
+}
+
+.main.product-info-main td.button {
+  white-space: nowrap;
+}
+
+/* 编辑产品明细弹窗 */
+.product-edit-modal-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.product-edit-modal {
+  width: 100%;
+  max-width: 640px;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.product-edit-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: #0092dc;
+  color: #fff;
+}
+
+.product-edit-modal-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.product-edit-modal-header .close {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  line-height: 1;
+}
+
+.product-edit-modal-body {
+  padding: 16px 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.product-edit-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 12px;
+}
+
+.product-edit-field-top {
+  align-items: flex-start;
+}
+
+.product-edit-field > label {
+  width: 110px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 12px;
+  color: #333;
+  line-height: 28px;
+}
+
+.product-edit-field-top > label {
+  line-height: 22px;
+  padding-top: 2px;
+}
+
+.product-edit-input {
+  flex: 1;
+  max-width: 420px;
+  font-size: 12px;
+}
+
+.product-edit-checkbox-grid {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  max-width: 420px;
+}
+
+.product-edit-checkbox-grid label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 22px;
+}
+
+.product-edit-file-wrap {
+  flex: 1;
+  max-width: 420px;
+}
+
+.product-edit-file-wrap input[type="file"] {
+  font-size: 12px;
+  max-width: 100%;
+}
+
+.product-edit-file-hint {
+  display: block;
+  margin-top: 4px;
+  color: #666;
+  font-size: 12px;
+}
+
+.product-edit-file-tags {
+  margin-top: 6px;
+}
+
+.product-edit-file-tag {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px 6px 2px 0;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  font-size: 11px;
+}
+
+.product-edit-file-tag a {
+  color: #0092dc;
+  text-decoration: none;
+}
+
+.product-edit-file-tag a:hover {
+  text-decoration: underline;
+}
+
+.product-edit-file-tag-remove {
+  margin-left: 6px;
+  border: none;
+  background: none;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+
+.product-edit-readonly {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.product-edit-synced-readonly {
+  flex: 1;
+  max-width: 420px;
+  min-height: 28px;
+  padding: 6px 8px;
+  background: #f9f9f9;
+  border: 1px solid #e8e8e8;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.product-edit-synced-readonly a {
+  color: #0092dc;
+}
+
+.product-edit-synced-empty {
+  color: #999;
+}
+
+.product-edit-tip {
+  margin: 6px 0 0;
+  color: #999;
+  font-size: 11px;
+}
+
+.product-brand-auth-combobox {
+  position: relative;
+}
+
+.product-brand-auth-dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 20;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.product-brand-auth-dropdown-item {
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.product-brand-auth-dropdown-item:hover {
+  background: #f0f8ff;
+}
+
+.product-brand-auth-dropdown-empty {
+  padding: 8px 10px;
+  font-size: 12px;
+  color: #999;
+}
+
+.product-edit-error {
+  margin: 8px 0 0 122px;
+  color: #c0392b;
+  font-size: 12px;
+}
+
+.product-brand-auth-code-head,
+.product-brand-auth-code {
+  color: #1677ff;
+  font-weight: 500;
+}
+
+.product-edit-input.product-brand-auth-code {
+  color: #1677ff;
+  font-weight: 500;
+}
+
+.product-edit-modal-footer {
+  padding: 10px 16px;
+  border-top: 1px solid #e1e1e1;
+  text-align: right;
+}
+
+.product-edit-modal-footer button {
+  margin-left: 8px;
+}
+
+.product-log-modal {
+  max-width: 860px;
+}
+
+.product-log-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.product-log-subtitle {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.product-log-table-wrap {
+  overflow-x: auto;
+}
+
+.product-log-table td {
+  padding: 8px;
+  font-size: 12px;
+  vertical-align: top;
+  border-bottom: 1px solid #eee;
+}
+
+.product-log-table thead td {
+  white-space: nowrap;
+  background: #f5f5f5;
+}
+
+.product-log-changes {
+  margin: 0;
+  padding-left: 16px;
+  line-height: 1.6;
+}
+
+.product-log-changes li {
+  margin: 2px 0;
+}
+
+.product-log-relation {
+  margin: 0 0 6px;
+  font-size: 11px;
+  color: #007fbf;
+}
+
+.product-log-empty {
+  color: #999;
+  text-align: center;
+  padding: 16px 0;
+}

@@ -1,5 +1,1263 @@
 [
   {
+    "id": "mail-1780652542696-913",
+    "sentAt": "2026-06-05T09:42:22.696Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com,liuyongmeib@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260605101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260605101\n预约方：CN0000438\n送仓类型：散货\n目的地：美东南仓(GA-31302) (US West Warehouse)\n预约仓库地址：600 Bloomingdale Rd, Bloomingdale, GA 31302\n预计派送日期：2026-06-05（美东时间）\n联系电话：-\n当前状态：待仓库审核（Pending Review）\n备注：222\n货量：11 cartons / 1 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ga31302-a@demo.wedo、wh-ga31302-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ga31302-a@demo.wedo、wh-ga31302-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ga31302-a@demo.wedo、wh-ga31302-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美东南仓(GA-31302)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260605101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美东南仓(GA-31302) (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "600 Bloomingdale Rd, Bloomingdale, GA 31302"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-05（美东时间）"
+      },
+      {
+        "label": "联系电话",
+        "value": "-"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "222"
+      },
+      {
+        "label": "货量",
+        "value": "11 cartons / 1 pallets"
+      }
+    ],
+    "appointmentId": "appt-1780652364602-588",
+    "appointmentNo": "YY20260605101",
+    "deliveryCode": "SCTSZV",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<fc7ad97a-0282-88b5-ff19-22ae9a6e0e5f@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780652441460-348",
+    "sentAt": "2026-06-05T09:40:41.460Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com,liuyongmeib@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260605101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260605101\n预约方：CN0000438\n送仓类型：散货\n目的地：美东南仓(GA-31302) (US West Warehouse)\n预约仓库地址：600 Bloomingdale Rd, Bloomingdale, GA 31302\n预计派送日期：2026-06-05（美东时间）\n联系电话：-\n当前状态：待仓库审核（Pending Review）\n备注：222\n货量：11 cartons / 1 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ga31302-a@demo.wedo、wh-ga31302-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ga31302-a@demo.wedo、wh-ga31302-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ga31302-a@demo.wedo、wh-ga31302-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美东南仓(GA-31302)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260605101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美东南仓(GA-31302) (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "600 Bloomingdale Rd, Bloomingdale, GA 31302"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-05（美东时间）"
+      },
+      {
+        "label": "联系电话",
+        "value": "-"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "222"
+      },
+      {
+        "label": "货量",
+        "value": "11 cartons / 1 pallets"
+      }
+    ],
+    "appointmentId": "appt-1780652364602-588",
+    "appointmentNo": "YY20260605101",
+    "deliveryCode": "SCTSZV",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<b8525289-18e7-3b9d-616c-bd101fb701ae@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780644499004-692",
+    "sentAt": "2026-06-05T07:28:19.004Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com,liuyongmeib@sailvan.com",
+    "subject": "PICKUP NOTICE-SCMDZJ-MATUS2313-CA-91761",
+    "body": "Wedo Warehouse (CA-91761) has released the empty container below for pickup.\nNotification time: Jun 5, 2026, 3:28 PM\nPlease arrange empty container pickup within 48 hours.\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\nWedo Booking System\n[WEDO EXPRESS]\n\nThis is an automated message. Please do not reply.",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "Empty Container Pickup Notice",
+    "intro": "Wedo Warehouse (CA-91761) has released the empty container below for pickup.\nNotification time: Jun 5, 2026, 3:28 PM\nPlease arrange empty container pickup within 48 hours.",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "Wedo Booking System\n[WEDO EXPRESS]\n\nThis is an automated message. Please do not reply.\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "Appt. No.",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "Booking Code",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "Container No.",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "Notification Time",
+        "value": "Jun 5, 2026, 3:28 PM"
+      },
+      {
+        "label": "Warehouse Code",
+        "value": "CA-91761"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<6ccadfc4-8359-ceed-a40c-d93f3f81341c@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780644455894-205",
+    "sentAt": "2026-06-05T07:27:35.894Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com,liuyongmeib@sailvan.com",
+    "subject": "PICKUP NOTICE-SCMDZJ-MATUS2313-CA-91761",
+    "body": "Wedo Warehouse (CA-91761) has released the empty container below for pickup.\nNotification time: Jun 5, 2026, 3:27 PM\nPlease arrange empty container pickup within 48 hours.\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\nWedo Booking System\n[WEDO EXPRESS]\n\nThis is an automated message. Please do not reply.",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "Empty Container Pickup Notice",
+    "intro": "Wedo Warehouse (CA-91761) has released the empty container below for pickup.\nNotification time: Jun 5, 2026, 3:27 PM\nPlease arrange empty container pickup within 48 hours.",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "Wedo Booking System\n[WEDO EXPRESS]\n\nThis is an automated message. Please do not reply.\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "Appt. No.",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "Booking Code",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "Container No.",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "Notification Time",
+        "value": "Jun 5, 2026, 3:27 PM"
+      },
+      {
+        "label": "Warehouse Code",
+        "value": "CA-91761"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<b205375c-cbc2-44bb-f4b9-1c0b2f2a43bb@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780643970610-591",
+    "sentAt": "2026-06-05T07:19:30.610Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com,liuyongmeib@sailvan.com",
+    "subject": "PICKUP NOTICE-SCMDZJ-MATUS2313-CA-91761",
+    "body": "EMPTY CONTAINER PICKUP NOTICE\n\nWedo Warehouse (CA-91761) has released the empty container below for pickup.\nNotification time: Jun 5, 2026, 3:19 PM\nPlease arrange empty container pickup within 48 hours.\n\n---\n\n最新消息\n运德海外仓（CA-91761）还空通知时间：26年6月5日15:19\n请在48小时内回收空柜\n\nFor questions, please contact: wh-ca91761-a@demo.wedo, wh-ca91761-b@demo.wedo (CC: booking-demo@demo.wedo)\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\nWedo Booking System\n[WEDO EXPRESS]\n\nThis is an automated message. Please do not reply.",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "Empty Container Pickup Notice",
+    "intro": "EMPTY CONTAINER PICKUP NOTICE\n\nWedo Warehouse (CA-91761) has released the empty container below for pickup.\nNotification time: Jun 5, 2026, 3:19 PM\nPlease arrange empty container pickup within 48 hours.\n\n---\n\n最新消息\n运德海外仓（CA-91761）还空通知时间：26年6月5日15:19\n请在48小时内回收空柜",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "Wedo Booking System\n[WEDO EXPRESS]\n\nThis is an automated message. Please do not reply.\n\nFor questions, please contact: wh-ca91761-a@demo.wedo, wh-ca91761-b@demo.wedo (CC: booking-demo@demo.wedo)\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "For questions, please contact: wh-ca91761-a@demo.wedo, wh-ca91761-b@demo.wedo (CC: booking-demo@demo.wedo)",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "Appt. No.",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "Booking Code",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "Container No.",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "Notification Time",
+        "value": "Jun 5, 2026, 3:19 PM"
+      },
+      {
+        "label": "Warehouse Code",
+        "value": "CA-91761"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<05bde6c2-ea59-e30b-5afd-d0e86c557a1a@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574455665-542",
+    "sentAt": "2026-06-04T12:00:55.665Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "WedoSCM 还柜通知",
+    "body": "【Latest News】\nWedoWarehouse(CA-91761) submitted the date to pick up the empty container: 2026-06-04 20:00:54\nPlease pick up the empty within 48 hours\n\n最新消息\n运德海外仓（CA-91761）还空通知时间：26年6月4日20:00\n请在48小时内回收空柜\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "WedoSCM 还柜通知",
+    "intro": "【Latest News】\nWedoWarehouse(CA-91761) submitted the date to pick up the empty container: 2026-06-04 20:00:54\nPlease pick up the empty within 48 hours\n\n最新消息\n运德海外仓（CA-91761）还空通知时间：26年6月4日20:00\n请在48小时内回收空柜",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "还空通知时间",
+        "value": "2026-06-04 20:00:54"
+      },
+      {
+        "label": "仓库代码",
+        "value": "CA-91761"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<2f21f1be-0d12-338a-c076-6d6e9635548c@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574433164-874",
+    "sentAt": "2026-06-04T12:00:33.164Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "WedoSCM 还柜通知",
+    "body": "【Latest News】\nYUNDEUSAHOU submitted the date to pick up the empty container: 2026-06-04 20:00:32\nPlease pick up the empty within 48 hours\n\n最新消息\n运德休斯顿仓已提交还空通知时间：26年6月4日20:00\n请在48小时内回收空柜\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "WedoSCM 还柜通知",
+    "intro": "【Latest News】\nYUNDEUSAHOU submitted the date to pick up the empty container: 2026-06-04 20:00:32\nPlease pick up the empty within 48 hours\n\n最新消息\n运德休斯顿仓已提交还空通知时间：26年6月4日20:00\n请在48小时内回收空柜",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "还空通知时间",
+        "value": "2026-06-04 20:00:32"
+      },
+      {
+        "label": "仓库代码",
+        "value": "USAHOU-K001"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<6786ae4c-f9d4-1c42-ca68-65542381409a@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574231875-827",
+    "sentAt": "2026-06-04T11:57:11.875Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "WedoSCM 还柜通知",
+    "body": "【Latest News】\nYUNDEUSAHOU submitted the date to pick up the empty container: 2026-06-04 19:57:11\nPlease pick up the empty within 48 hours\n\n最新消息\n运德休斯顿仓已提交还空通知时间：26年6月4日19:57\n请在48小时内回收空柜\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "WedoSCM 还柜通知",
+    "intro": "【Latest News】\nYUNDEUSAHOU submitted the date to pick up the empty container: 2026-06-04 19:57:11\nPlease pick up the empty within 48 hours\n\n最新消息\n运德休斯顿仓已提交还空通知时间：26年6月4日19:57\n请在48小时内回收空柜",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "还空通知时间",
+        "value": "2026-06-04 19:57:11"
+      },
+      {
+        "label": "仓库代码",
+        "value": "USAHOU-K001"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<4aaccb90-ea49-c038-b936-e0af79cec681@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574081113-373",
+    "sentAt": "2026-06-04T11:54:41.113Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "WedoSCM 还柜通知",
+    "body": "【Latest News】\nYUNDEUSAHOU submitted the date to pick up the empty container: 2026-06-04 19:54:40\nPlease pick up the empty within 48 hours\n\n最新消息\n运德休斯顿仓已提交还空通知时间：26年6月4日19:54\n请在48小时内回收空柜\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "empty_container_return_notify",
+    "recipientRole": "货代",
+    "title": "WedoSCM 还柜通知",
+    "intro": "【Latest News】\nYUNDEUSAHOU submitted the date to pick up the empty container: 2026-06-04 19:54:40\nPlease pick up the empty within 48 hours\n\n最新消息\n运德休斯顿仓已提交还空通知时间：26年6月4日19:54\n请在48小时内回收空柜",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "还空通知时间",
+        "value": "2026-06-04 19:54:40"
+      },
+      {
+        "label": "仓库代码",
+        "value": "USAHOU-K001"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "已送仓",
+    "newStatus": "已送仓",
+    "messageId": "<83ae242f-b212-22ea-c790-dc6be244b5fa@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574024478-51",
+    "sentAt": "2026-06-04T11:53:44.478Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约已确认】客户已接受送仓安排 YY20260525101",
+    "body": "客户/货代已确认接受仓库安排，请仓库按确认时段做好收货准备。\n\n预约单号：YY20260525101\n送仓码：SCMDZJ\n客户编号：CN0000438\n预约仓库：美西仓库(CA-91761)\n原状态：客户待确认\n新状态：待送仓\n变更时间：2026-06-04 19:53:43\n\n请按确认时段准备收货，并在送仓完成后按流程登记到仓信息。\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "appointment_confirmed_warehouse",
+    "recipientRole": "仓库",
+    "title": "客户已接受送仓安排",
+    "intro": "客户/货代已确认接受仓库安排，请仓库按确认时段做好收货准备。",
+    "actionUrl": "http://localhost:3847/us/receiving-appointment-detail.html?id=appt-1779689983708-193",
+    "actionLabel": "查看预约详情",
+    "footerNote": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "",
+    "hideRecipientRole": false,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "整柜"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "客户编号",
+        "value": "CN0000438"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西仓库(CA-91761)"
+      },
+      {
+        "label": "原状态",
+        "value": "客户待确认"
+      },
+      {
+        "label": "新状态",
+        "value": "待送仓"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "核定入仓时段",
+        "value": "2026-06-26 09:00--12:00（美西时间）"
+      },
+      {
+        "label": "送仓码",
+        "value": "SCMDZJ"
+      },
+      {
+        "label": "货物概要",
+        "value": "总箱数 18，总托数 8"
+      },
+      {
+        "label": "仓库备注",
+        "value": "-"
+      },
+      {
+        "label": "W.BOL 下载",
+        "value": "http://localhost:3847/fg/w.pod整柜模板.html?code=SCMDZJ"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "客户待确认",
+    "newStatus": "待送仓",
+    "messageId": "<724bc839-0b9b-7b0a-50c7-4c58f618a736@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574024335-334",
+    "sentAt": "2026-06-04T11:53:44.335Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约成功】恭喜，您的入仓申请已确认 - 单号：YY20260525101",
+    "body": "[系统自动通知]\n\n您好！\n\n恭喜，您的入仓预约申请已审核成功。系统已为您锁定以下入仓时段：\n\n【预约信息】\n\n预约单号：YY20260525101\n预约方：CN0000438\n送仓类型：整柜\n集装箱号：MATUS2313\n目的地：美西仓库(CA-91761) (US West Warehouse)\n详细地址：2281 S Haven Ave, Ontario, CA 91761\n入仓日期：2026-06-26\n入仓时段：09:00 - 12:00（当地时间）\nW.BOL 下载：http://localhost:3847/fg/w.pod整柜模板.html?code=SCMDZJ\n\n【入仓指引】\n\n请确保所有货物满足入库标准，包括包装和贴标。详细信息请参阅《运德入库货物要求说明》。\n感谢您的配合。\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "appointment_confirmed_forwarder",
+    "recipientRole": "货代",
+    "title": "入仓申请已确认",
+    "intro": "[系统自动通知]\n\n您好！\n\n恭喜，您的入仓预约申请已审核成功。系统已为您锁定以下入仓时段：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "整柜"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "目的地",
+        "value": "美西仓库(CA-91761) (US West Warehouse)"
+      },
+      {
+        "label": "详细地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "入仓日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "入仓时段",
+        "value": "09:00 - 12:00（当地时间）"
+      },
+      {
+        "label": "W.BOL 下载",
+        "value": "http://localhost:3847/fg/w.pod整柜模板.html?code=SCMDZJ"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "客户待确认",
+    "newStatus": "待送仓",
+    "messageId": "<d1fa7571-de68-3586-d9b0-b6d7fa128216@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780574003165-779",
+    "sentAt": "2026-06-04T11:53:23.165Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "您的入仓预约已审核通过，请点击确认最终时段 - 单号：YY20260525101",
+    "body": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260525101）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：\n\n预约单号：YY20260525101\n预约方：CN0000438\n送仓类型：整柜\n集装箱号：MATUS2313\n预约仓库：美西仓库(CA-91761) (US West Warehouse)\n仓库确认地址：2281 S Haven Ave, Ontario, CA 91761\n核定入仓时段：2026-06-26 09:00--12:00（美西时间）\n\n【必须操作】\n请点击下方链接进入系统，确认上述分配的时段。逾期未确认，该时段可能会重新释放给其他预约。\n\n[点击此处：确认是否接受预约]\n\n温馨提示：\n\n确认后，系统将生成最终的“入仓二维码/凭证”，请交由司机随货携带。\n请确保司机在核定时间内到达，如需取消或变更，请至少提前12小时在系统处理。\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "warehouse_slot_pending_customer_confirm",
+    "recipientRole": "货代",
+    "title": "入仓预约已审核通过",
+    "intro": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260525101）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：",
+    "actionUrl": "http://localhost:3847/fg/reservationDetail.html?code=SCMDZJ",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "点击此处：确认是否接受预约",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "整柜"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西仓库(CA-91761) (US West Warehouse)"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "核定入仓时段",
+        "value": "2026-06-26 09:00--12:00（美西时间）"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "仓库待审核",
+    "newStatus": "客户待确认",
+    "messageId": "<cb2195b6-03cb-2272-5384-abe77255a276@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780569813837-19",
+    "sentAt": "2026-06-04T10:43:33.837Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260604101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260604101\n预约方：CN0000438\n送仓类型：散货\n目的地：美西仓库(CA-91761) (US West Warehouse)\n预约仓库地址：2281 S Haven Ave, Ontario, CA 91761\n预计派送日期：2026-06-25、2026-06-18、2026-06-16（美西时间）\n联系电话：231233123123\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：62 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260604101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美西仓库(CA-91761) (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-25、2026-06-18、2026-06-16（美西时间）"
+      },
+      {
+        "label": "联系电话",
+        "value": "231233123123"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "62 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1780541337914-203",
+    "appointmentNo": "YY20260604101",
+    "deliveryCode": "SCME2B",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<cff77e38-5f78-2ebf-7b80-ca0a5f5aa4d3@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780568270677-530",
+    "sentAt": "2026-06-04T10:17:50.677Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约已确认】客户已接受送仓安排 YY20260604101",
+    "body": "客户/货代已确认接受仓库安排，请仓库按确认时段做好收货准备。\n\n预约单号：YY20260604101\n送仓码：SC9QCZ\n客户编号：CN0000438\n预约仓库：美西仓库(CA-91761)\n原状态：客户待确认\n新状态：待送仓\n变更时间：2026-06-04 18:17:49\n\n请按确认时段准备收货，并在送仓完成后按流程登记到仓信息。\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "appointment_confirmed_warehouse",
+    "recipientRole": "仓库",
+    "title": "客户已接受送仓安排",
+    "intro": "客户/货代已确认接受仓库安排，请仓库按确认时段做好收货准备。",
+    "actionUrl": "http://localhost:3847/us/receiving-appointment-detail.html?id=appt-1780568201113-394",
+    "actionLabel": "查看预约详情",
+    "footerNote": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "",
+    "hideRecipientRole": false,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260604101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "送仓码",
+        "value": "SC9QCZ"
+      },
+      {
+        "label": "客户编号",
+        "value": "CN0000438"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西仓库(CA-91761)"
+      },
+      {
+        "label": "原状态",
+        "value": "客户待确认"
+      },
+      {
+        "label": "新状态",
+        "value": "待送仓"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "仓库确认时段",
+        "value": "2026-06-18 09:00--12:00"
+      },
+      {
+        "label": "送仓码",
+        "value": "SC9QCZ"
+      },
+      {
+        "label": "货物概要",
+        "value": "总箱数 2，总托数 -"
+      },
+      {
+        "label": "仓库备注",
+        "value": "-"
+      }
+    ],
+    "appointmentId": "appt-1780568201113-394",
+    "appointmentNo": "YY20260604101",
+    "deliveryCode": "SC9QCZ",
+    "oldStatus": "客户待确认",
+    "newStatus": "待送仓",
+    "messageId": "<c895acf1-90ea-1233-4f24-a80857c2a732@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780568270606-509",
+    "sentAt": "2026-06-04T10:17:50.606Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【预约成功】恭喜，您的入仓申请已确认 - 单号：YY20260604101",
+    "body": "[系统自动通知]\n\n您好！\n\n恭喜，您的入仓预约申请已审核成功。系统已为您锁定以下入仓时段：\n\n【预约信息】\n\n预约单号：YY20260604101\n预约方：CN0000438\n送仓类型：散货\n目的地：美西仓库(CA-91761) (US West Warehouse)\n详细地址：2281 S Haven Ave, Ontario, CA 91761\n入仓日期：2026-06-18\n入仓时段：09:00 - 12:00（当地时间）\n\n【入仓指引】\n\n请确保所有货物满足入库标准，包括包装和贴标。详细信息请参阅《运德入库货物要求说明》。\n感谢您的配合。\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "appointment_confirmed_forwarder",
+    "recipientRole": "货代",
+    "title": "入仓申请已确认",
+    "intro": "[系统自动通知]\n\n您好！\n\n恭喜，您的入仓预约申请已审核成功。系统已为您锁定以下入仓时段：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260604101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美西仓库(CA-91761) (US West Warehouse)"
+      },
+      {
+        "label": "详细地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "入仓日期",
+        "value": "2026-06-18"
+      },
+      {
+        "label": "入仓时段",
+        "value": "09:00 - 12:00（当地时间）"
+      }
+    ],
+    "appointmentId": "appt-1780568201113-394",
+    "appointmentNo": "YY20260604101",
+    "deliveryCode": "SC9QCZ",
+    "oldStatus": "客户待确认",
+    "newStatus": "待送仓",
+    "messageId": "<52fd1d0e-4245-4d7d-6eba-ad61e5b66052@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780568253821-982",
+    "sentAt": "2026-06-04T10:17:33.821Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "您的入仓预约已审核通过，请点击确认最终时段 - 单号：YY20260604101",
+    "body": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260604101）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：\n\n预约单号：YY20260604101\n预约方：CN0000438\n送仓类型：散货\n预约仓库：美西仓库(CA-91761) (US West Warehouse)\n仓库确认地址：2281 S Haven Ave, Ontario, CA 91761\n核定入仓时段：2026-06-18 09:00--12:00（当地时间）\n\n【必须操作】\n请点击下方链接进入系统，确认上述分配的时段。逾期未确认，该时段可能会重新释放给其他预约。\n\n[点击此处：确认是否接受预约]\n\n温馨提示：\n\n确认后，系统将生成最终的“入仓二维码/凭证”，请交由司机随货携带。\n请确保司机在核定时间内到达，如需取消或变更，请至少提前12小时在系统处理。\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "warehouse_slot_pending_customer_confirm",
+    "recipientRole": "货代",
+    "title": "入仓预约已审核通过",
+    "intro": "您好！\n\n好消息！您提交的入仓预约申请（单号：YY20260604101）已通过仓库审核。\n\n为了确保您的货物能准时入仓，请您在 48小时内 完成最后的确认操作：",
+    "actionUrl": "http://localhost:3847/fg/reservationDetail.html?code=SC9QCZ",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": true,
+    "inlineActionLinkLabel": "点击此处：确认是否接受预约",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260604101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "预约仓库",
+        "value": "美西仓库(CA-91761) (US West Warehouse)"
+      },
+      {
+        "label": "仓库确认地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "核定入仓时段",
+        "value": "2026-06-18 09:00--12:00（当地时间）"
+      }
+    ],
+    "appointmentId": "appt-1780568201113-394",
+    "appointmentNo": "YY20260604101",
+    "deliveryCode": "SC9QCZ",
+    "oldStatus": "仓库待审核",
+    "newStatus": "客户待确认",
+    "messageId": "<168cddd0-959b-4ad0-c15c-5ed7eef70f11@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780568221223-689",
+    "sentAt": "2026-06-04T10:17:01.224Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260604101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260604101\n预约方：CN0000438\n送仓类型：散货\n目的地：美东六仓(NJ-08807) (US West Warehouse)\n预约仓库地址：1120 US 22 Building 2, Bridgewater, NJ 08807\n预计派送日期：2026-06-18\n当前状态：待仓库审核（Pending Review）\n备注：123123122131231\n货量：2 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-nj08807-a@demo.wedo、wh-nj08807-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-nj08807-a@demo.wedo、wh-nj08807-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-nj08807-a@demo.wedo、wh-nj08807-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美东六仓(NJ-08807)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260604101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美东六仓(NJ-08807) (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "1120 US 22 Building 2, Bridgewater, NJ 08807"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-18"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "123123122131231"
+      },
+      {
+        "label": "货量",
+        "value": "2 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1780568201113-394",
+    "appointmentNo": "YY20260604101",
+    "deliveryCode": "SC9QCZ",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<1d302959-a2e1-2e70-03ce-81569c52dbb6@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780551677829-358",
+    "sentAt": "2026-06-04T05:41:17.829Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260525101 / [Submission Confirmed] Inbound Appointment Received - YY20260525101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260525101\n预约方：CN0000438\n送仓类型：整柜\n集装箱号：MATUS2313\n目的地：深圳A仓 (US West Warehouse)\n预约仓库地址：广东省深圳市（演示地址）\n预计派送日期：2026-06-26\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：18 cartons / 8 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-sz-a@demo.wedo（抄送 booking-demo@demo.wedo）\n\nFor any questions, please email wh-sz-a@demo.wedo(CC: booking-demo@demo.wedo)\n\n--- English / 英文 ---\n\nHello!\n\nWe have successfully received your inbound appointment request. Details are as follows:\n\nAppointment No.: YY20260525101\nBooked By: CN0000438\nDelivery Type: 整柜\nDestination: 深圳A仓\nWarehouse Address: 广东省深圳市（演示地址）\nExpected Delivery Date: 2026-06-26\nCurrent Status: Pending Warehouse Review (Pending Review)\nRemarks: -\nCargo Volume: 18 cartons / 8 pallets",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到 / Appointment Request Received",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\nHello!\n\nWe have successfully received your inbound appointment request. Details are as follows:",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\nWarehouse Appointment System\n[WEDO EXPRESS]\n\n(This is an automated message. Please do not reply.)\n\n如有特殊疑问，请发送邮件至邮箱 wh-sz-a@demo.wedo（抄送 booking-demo@demo.wedo）\n\nFor any questions, please email wh-sz-a@demo.wedo(CC: booking-demo@demo.wedo)",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-sz-a@demo.wedo（抄送 booking-demo@demo.wedo）\n\nFor any questions, please email wh-sz-a@demo.wedo(CC: booking-demo@demo.wedo)",
+    "warehouse": "深圳A仓",
+    "fields": [
+      {
+        "label": "预约单号 / Appointment No.",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "预约方 / Booked By",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型 / Delivery Type",
+        "value": "整柜"
+      },
+      {
+        "label": "集装箱号 / Container No.",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "目的地 / Destination",
+        "value": "深圳A仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址 / Warehouse Address",
+        "value": "广东省深圳市（演示地址）"
+      },
+      {
+        "label": "预计派送日期 / Expected Delivery Date",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "当前状态 / Current Status",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注 / Remarks",
+        "value": "-"
+      },
+      {
+        "label": "货量 / Cargo Volume",
+        "value": "18 cartons / 8 pallets"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<5cee54d7-fa74-704d-a853-e5a02a605373@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780541357007-125",
+    "sentAt": "2026-06-04T02:49:17.007Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260604101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260604101\n预约方：CN0000438\n送仓类型：散货\n目的地：美西仓库(CA-91761) (US West Warehouse)\n预约仓库地址：2281 S Haven Ave, Ontario, CA 91761\n预计派送日期：2026-06-25\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：62 cartons / - pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）\n\n如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "warehouseContactFooter": "如有特殊疑问，请发送邮件至邮箱 wh-ca91761-a@demo.wedo、wh-ca91761-b@demo.wedo（抄送 booking-demo@demo.wedo）",
+    "warehouse": "美西仓库(CA-91761)",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260604101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "散货"
+      },
+      {
+        "label": "目的地",
+        "value": "美西仓库(CA-91761) (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "2281 S Haven Ave, Ontario, CA 91761"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-25"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "62 cartons / - pallets"
+      }
+    ],
+    "appointmentId": "appt-1780541337914-203",
+    "appointmentNo": "YY20260604101",
+    "deliveryCode": "SCME2B",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<4d748679-8d8d-5b00-df8e-45005bca81cc@qq.com>",
+    "error": ""
+  },
+  {
+    "id": "mail-1780540323684-291",
+    "sentAt": "2026-06-04T02:32:03.684Z",
+    "channel": "smtp",
+    "status": "sent",
+    "to": "zhengjianfengb@sailvan.com",
+    "subject": "【提交成功通知】预约申请已收到 - YY20260525101",
+    "body": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：\n\n预约单号：YY20260525101\n预约方：CN0000438\n送仓类型：整柜\n集装箱号：MATUS2313\n目的地：深圳A仓 (US West Warehouse)\n预约仓库地址：-\n预计派送日期：2026-06-26\n当前状态：待仓库审核（Pending Review）\n备注：-\n货量：18 cartons / 8 pallets\n\n我们的仓库管理员将在 72小时内 完成审核。\n审核通过后，系统将自动向您发送包含最终确认时间和详细卸货地址的邮件。\n请注意：在收到最终确认邮件前，请勿安排司机提前派送。\n\n祝工作顺利！\n\n仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "templateKey": "submit_success_forwarder",
+    "recipientRole": "货代",
+    "title": "预约申请已收到",
+    "intro": "您好！\n\n我们已成功收到您提交的入仓预约申请，相关信息如下：",
+    "actionUrl": "",
+    "actionLabel": "",
+    "footerNote": "仓库预约系统\n[WEDO EXPRESS]\n\n（当前为系统邮件，请勿回复）",
+    "footerColor": "#1f5f9f",
+    "hideRecipientRole": true,
+    "hideActionButton": false,
+    "inlineActionLinkLabel": "",
+    "fields": [
+      {
+        "label": "预约单号",
+        "value": "YY20260525101"
+      },
+      {
+        "label": "预约方",
+        "value": "CN0000438"
+      },
+      {
+        "label": "送仓类型",
+        "value": "整柜"
+      },
+      {
+        "label": "集装箱号",
+        "value": "MATUS2313"
+      },
+      {
+        "label": "目的地",
+        "value": "深圳A仓 (US West Warehouse)"
+      },
+      {
+        "label": "预约仓库地址",
+        "value": "-"
+      },
+      {
+        "label": "预计派送日期",
+        "value": "2026-06-26"
+      },
+      {
+        "label": "当前状态",
+        "value": "待仓库审核（Pending Review）"
+      },
+      {
+        "label": "备注",
+        "value": "-"
+      },
+      {
+        "label": "货量",
+        "value": "18 cartons / 8 pallets"
+      }
+    ],
+    "appointmentId": "appt-1779689983708-193",
+    "appointmentNo": "YY20260525101",
+    "deliveryCode": "SCMDZJ",
+    "oldStatus": "待预约",
+    "newStatus": "仓库待审核",
+    "messageId": "<5db2dafc-c2e2-bd00-39bf-18d2b62ef434@qq.com>",
+    "error": ""
+  },
+  {
     "id": "mail-1780298389888-208",
     "sentAt": "2026-06-01T07:19:49.888Z",
     "channel": "smtp",
@@ -185,7 +1443,7 @@
     "appointmentId": "appt-1779959448524-765",
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "客户待确认",
     "messageId": "<db7ae40f-ab60-fc69-f422-dd487934da8e@qq.com>",
     "error": ""
@@ -251,7 +1509,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<7a6c9de2-c047-ad4a-3ba5-ff1d02fe332f@qq.com>",
     "error": ""
   },
@@ -291,7 +1549,7 @@
     "appointmentId": "appt-1779959448524-765",
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "预约失败",
     "messageId": "<03b046b4-b394-dd28-d4b1-8f33c660b3e6@qq.com>",
     "error": ""
@@ -344,7 +1602,7 @@
     "appointmentId": "appt-1779959448524-765",
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "客户待确认",
     "messageId": "<a77e7c8c-aa95-6c33-681c-7b4a62913bcc@qq.com>",
     "error": ""
@@ -414,7 +1672,7 @@
     "appointmentNo": "YY20260512002",
     "deliveryCode": "SC9P3N",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<acd079c0-0698-995b-84d0-48e6c3aeca45@qq.com>",
     "error": ""
   },
@@ -458,7 +1716,7 @@
     "appointmentId": "appt-1779700375787-845",
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "客户待确认",
     "messageId": "<59468533-0a68-47ef-c288-a2eaa03097d2@qq.com>",
     "error": ""
@@ -516,7 +1774,7 @@
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<c9d51531-db83-e18e-a74b-4c2ddafb1862@qq.com>",
     "error": ""
   },
@@ -548,7 +1806,7 @@
     "appointmentId": "appt-1779700375787-845",
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "预约失败",
     "messageId": "<5bde6d8f-8033-53f3-d84a-45946ba55c92@qq.com>",
     "error": ""
@@ -606,7 +1864,7 @@
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<3e06d9ee-ec9e-1c36-baf8-82cdd16275c9@qq.com>",
     "error": ""
   },
@@ -636,7 +1894,7 @@
     "appointmentId": "appt-1779700375787-845",
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "预约失败",
     "messageId": "<b284a2a2-0f66-ccdb-4af5-50981e8c318a@qq.com>",
     "error": ""
@@ -692,7 +1950,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<82c5d102-f38c-a81d-d672-870dc004b4bf@qq.com>",
     "error": ""
   },
@@ -745,7 +2003,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<ad5d157e-3227-87d1-b931-588a963f282b@qq.com>",
     "error": ""
   },
@@ -798,7 +2056,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<c28dbd6f-62c9-86e2-0362-124b25b40559@qq.com>",
     "error": ""
   },
@@ -809,7 +2067,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【待审核】CN0000438提交送仓预约 YY20260528102",
-    "body": "CN0000438已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-29 10:25:21\n\n请确认可接收时段；如无法接收，请在审核页填写明确拒收原因。",
+    "body": "CN0000438已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-29 10:25:21\n\n请确认可接收时段；如无法接收，请在审核页填写明确拒收原因。",
     "templateKey": "submit_pending_warehouse",
     "recipientRole": "仓库",
     "title": "CN0000438已提交送仓预约",
@@ -839,7 +2097,7 @@
       },
       {
         "label": "新状态",
-        "value": "仓库待确认"
+        "value": "仓库待审核"
       },
       {
         "label": "预约方",
@@ -882,7 +2140,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<e548da04-88f8-7437-7980-70db80369206@qq.com>",
     "error": ""
   },
@@ -893,7 +2151,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【提交成功】送仓预约已提交 YY20260528102",
-    "body": "您的送仓预约已提交成功，当前等待仓库审核确认。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-29 10:25:21\n\n仓库审核后会反馈确认地址和送仓时段，请留意待确认通知。",
+    "body": "您的送仓预约已提交成功，当前等待仓库审核确认。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-29 10:25:21\n\n仓库审核后会反馈确认地址和送仓时段，请留意待确认通知。",
     "templateKey": "submit_success_forwarder",
     "recipientRole": "货代",
     "title": "送仓预约已提交成功",
@@ -923,7 +2181,7 @@
       },
       {
         "label": "新状态",
-        "value": "仓库待确认"
+        "value": "仓库待审核"
       },
       {
         "label": "目的仓",
@@ -950,7 +2208,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<3e87c1ef-951a-2006-54e7-de7cbd341412@qq.com>",
     "error": ""
   },
@@ -961,7 +2219,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【待确认】仓库已反馈送仓安排，请确认 YY20260525101",
-    "body": "仓库已反馈本次送仓的确认地址和时段，但预约尚未最终生效。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美西4仓\n原状态：仓库待确认\n新状态：客户待确认\n变更时间：2026-05-28 21:22:26\n\n如接受该安排，请点击确认并完成预约；如不接受，请进入页面重新预约。",
+    "body": "仓库已反馈本次送仓的确认地址和时段，但预约尚未最终生效。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美西4仓\n原状态：仓库待审核\n新状态：客户待确认\n变更时间：2026-05-28 21:22:26\n\n如接受该安排，请点击确认并完成预约；如不接受，请进入页面重新预约。",
     "templateKey": "warehouse_slot_pending_customer_confirm",
     "recipientRole": "货代",
     "title": "仓库已反馈送仓安排",
@@ -987,7 +2245,7 @@
       },
       {
         "label": "原状态",
-        "value": "仓库待确认"
+        "value": "仓库待审核"
       },
       {
         "label": "新状态",
@@ -1021,7 +2279,7 @@
     "appointmentId": "appt-1779700375787-845",
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "客户待确认",
     "messageId": "<534615d8-867c-1b3f-6cb1-efe629045035@qq.com>",
     "error": ""
@@ -1033,7 +2291,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【待审核】运德船务提交送仓预约 YY20260525101",
-    "body": "运德船务已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 21:21:37\n\n请确认可接收时段；如无法接收，请在审核页填写明确拒收原因。",
+    "body": "运德船务已提交一笔送仓预约，请仓库根据期望时间、货量和备注判断是否可接收。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-28 21:21:37\n\n请确认可接收时段；如无法接收，请在审核页填写明确拒收原因。",
     "templateKey": "submit_pending_warehouse",
     "recipientRole": "仓库",
     "title": "运德船务已提交送仓预约",
@@ -1063,7 +2321,7 @@
       },
       {
         "label": "新状态",
-        "value": "仓库待确认"
+        "value": "仓库待审核"
       },
       {
         "label": "预约方",
@@ -1106,7 +2364,7 @@
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<634d4b8f-945f-d3ba-de98-67921e80a94b@qq.com>",
     "error": ""
   },
@@ -1117,7 +2375,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【提交成功】送仓预约已提交 YY20260525101",
-    "body": "您的送仓预约已提交成功，当前等待仓库审核确认。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 21:21:37\n\n仓库审核后会反馈确认地址和送仓时段，请留意待确认通知。",
+    "body": "您的送仓预约已提交成功，当前等待仓库审核确认。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-28 21:21:37\n\n仓库审核后会反馈确认地址和送仓时段，请留意待确认通知。",
     "templateKey": "submit_success_forwarder",
     "recipientRole": "货代",
     "title": "送仓预约已提交成功",
@@ -1147,7 +2405,7 @@
       },
       {
         "label": "新状态",
-        "value": "仓库待确认"
+        "value": "仓库待审核"
       },
       {
         "label": "目的仓",
@@ -1174,7 +2432,7 @@
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<1fa95131-2648-76ad-56c6-e01ce7b4fc5c@qq.com>",
     "error": ""
   },
@@ -1185,7 +2443,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约未通过】送仓预约审核未通过 YY20260525101",
-    "body": "很抱歉，本次送仓预约未通过仓库审核。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：仓库待确认\n新状态：预约失败\n变更时间：2026-05-28 21:20:51\n\n请根据拒收原因修改预约信息后重新提交。",
+    "body": "很抱歉，本次送仓预约未通过仓库审核。\n\n预约单号：YY20260525101\n送仓码：SC6TPW\n客户编号：运德船务\n预约仓库：美东仓\n原状态：仓库待审核\n新状态：预约失败\n变更时间：2026-05-28 21:20:51\n\n请根据拒收原因修改预约信息后重新提交。",
     "templateKey": "appointment_rejected_forwarder",
     "recipientRole": "货代",
     "title": "预约审核未通过",
@@ -1211,7 +2469,7 @@
       },
       {
         "label": "原状态",
-        "value": "仓库待确认"
+        "value": "仓库待审核"
       },
       {
         "label": "新状态",
@@ -1233,7 +2491,7 @@
     "appointmentId": "appt-1779700375787-845",
     "appointmentNo": "YY20260525101",
     "deliveryCode": "SC6TPW",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "预约失败",
     "messageId": "<a887c85f-103d-c257-7205-985c0cfa5c0b@qq.com>",
     "error": ""
@@ -1245,7 +2503,7 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】状态变更通知 YY20260528102",
-    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 21:11:24",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260528102\n送仓码：SCVLKD\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-28 21:11:24",
     "templateKey": "",
     "recipientRole": "",
     "title": "",
@@ -1257,7 +2515,7 @@
     "appointmentNo": "YY20260528102",
     "deliveryCode": "SCVLKD",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<2b78fbb0-a338-9e26-f740-12a3c5209faa@qq.com>",
     "error": ""
   },
@@ -1364,11 +2622,11 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】状态变更通知 YY20260512002",
-    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：仓库待确认\n新状态：客户待确认\n变更时间：2026-05-28 14:58:36",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：美西4仓\n原状态：仓库待审核\n新状态：客户待确认\n变更时间：2026-05-28 14:58:36",
     "appointmentId": "appt-002",
     "appointmentNo": "YY20260512002",
     "deliveryCode": "SC9P3N",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "客户待确认",
     "messageId": "<561388e3-0f60-7c5c-32fe-7e78e5cb76d9@qq.com>",
     "error": ""
@@ -1380,12 +2638,12 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】状态变更通知 YY20260512002",
-    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 14:58:18",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-28 14:58:18",
     "appointmentId": "appt-002",
     "appointmentNo": "YY20260512002",
     "deliveryCode": "SC9P3N",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<4e4dd803-b4d1-4f5c-7a7c-ac3fdd1ee996@qq.com>",
     "error": ""
   },
@@ -1396,11 +2654,11 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】状态变更通知 YY20260512002",
-    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：仓库待确认\n新状态：待预约\n变更时间：2026-05-28 14:58:08",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：仓库待审核\n新状态：待预约\n变更时间：2026-05-28 14:58:08",
     "appointmentId": "appt-002",
     "appointmentNo": "YY20260512002",
     "deliveryCode": "SC9P3N",
-    "oldStatus": "仓库待确认",
+    "oldStatus": "仓库待审核",
     "newStatus": "待预约",
     "messageId": "<9656e356-5f97-cbcc-0715-48419a887865@qq.com>",
     "error": ""
@@ -1412,12 +2670,12 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】状态变更通知 YY20260512002",
-    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-28 14:51:35",
+    "body": "预约单状态已发生变化，请及时关注。\n\n预约单号：YY20260512002\n送仓码：SC9P3N\n客户编号：CN0000438\n预约仓库：深圳A仓\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-28 14:51:35",
     "appointmentId": "appt-002",
     "appointmentNo": "YY20260512002",
     "deliveryCode": "SC9P3N",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<a3d54bd9-8337-8ae4-b2c4-4ed7f42f0e7d@qq.com>",
     "error": ""
   },
@@ -1428,12 +2686,12 @@
     "status": "sent",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】SMTP 连通性测试",
-    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:09:43.537Z",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-20T12:09:43.537Z",
     "appointmentId": "test",
     "appointmentNo": "TEST-001",
     "deliveryCode": "SC0000",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<0eb32db5-70c1-8dd6-2784-c629e6b2e4cc@qq.com>",
     "error": ""
   },
@@ -1444,12 +2702,12 @@
     "status": "sent",
     "to": "297278324@qq.com",
     "subject": "【预约送仓】SMTP 连通性测试",
-    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:08:10.496Z",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-20T12:08:10.496Z",
     "appointmentId": "test",
     "appointmentNo": "TEST-001",
     "deliveryCode": "SC0000",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "<e7f97405-e952-d90c-ed6d-c1401ee334cc@qq.com>",
     "error": ""
   },
@@ -1460,12 +2718,12 @@
     "status": "failed",
     "to": "297278324@qq.com",
     "subject": "【预约送仓】SMTP 连通性测试",
-    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:07:39.402Z",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-20T12:07:39.402Z",
     "appointmentId": "test",
     "appointmentNo": "TEST-001",
     "deliveryCode": "SC0000",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "",
     "error": "connect ENETUNREACH 240e:97c:2f:201d::c9:465"
   },
@@ -1476,12 +2734,12 @@
     "status": "failed",
     "to": "297278324@qq.com",
     "subject": "【预约送仓】SMTP 连通性测试",
-    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:07:30.133Z",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-20T12:07:30.133Z",
     "appointmentId": "test",
     "appointmentNo": "TEST-001",
     "deliveryCode": "SC0000",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "",
     "error": "connect ENETUNREACH 240e:97c:2f:4::3f:465"
   },
@@ -1492,12 +2750,12 @@
     "status": "skipped",
     "to": "zhengjianfengb@sailvan.com",
     "subject": "【预约送仓】SMTP 连通性测试",
-    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待确认\n变更时间：2026-05-20T12:04:41.792Z",
+    "body": "这是一封 SMTP 连通性测试邮件。\n\n预约单号：TEST-001\n送仓码：SC0000\n原状态：待预约\n新状态：仓库待审核\n变更时间：2026-05-20T12:04:41.792Z",
     "appointmentId": "test",
     "appointmentNo": "TEST-001",
     "deliveryCode": "SC0000",
     "oldStatus": "待预约",
-    "newStatus": "仓库待确认",
+    "newStatus": "仓库待审核",
     "messageId": "",
     "error": "未配置 SMTP（请在 .env 中设置 SMTP_HOST / SMTP_USER / SMTP_PASS）"
   }

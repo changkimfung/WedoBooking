@@ -16,6 +16,7 @@
           <ul class="pda-bar-dd" id="pda-menu-list" hidden>
             <li><a href="receiving-appointment.html">入库预约管理</a></li>
             <li><a href="receiving-appointment-detail.html?id=appt-003">预约详情示例</a></li>
+            <li><a href="pda-ship-check.html">PDA发货复核</a></li>
           </ul>
         </div>
       </div>
@@ -59,8 +60,9 @@
         <h1 class="pda-page-title" id="confirmPageTitle">预约单号：-</h1>
 
         <div class="pda-photo-section">
-          <div class="pda-photo-section-title">到仓拍照</div>
-          <button type="button" class="pda-upload-btn" id="btnUploadPhoto">到仓拍照（支持多张）</button>
+          <div class="pda-photo-section-title"><span class="pda-ris-req">*</span>送仓文件（到仓拍照）</div>
+          <p class="pda-photo-hint">请上传送仓文件</p>
+          <button type="button" class="pda-upload-btn" id="btnUploadPhoto">上传送仓文件（支持多张）</button>
           <input type="file" id="photoFile" class="pda-photo-input" accept="image/*" capture="environment" multiple>
           <div class="pda-photo-list" id="photoList"><span class="pda-photo-empty">未上传</span></div>
         </div>
@@ -83,7 +85,7 @@
             </tr>
           </table>
           <div class="pda-inbound-preview" id="inboundDetailPreview"></div>
-          <p class="pda-register-hint">到仓文件与收货总箱数至少填写一项；收货总托数非必填。</p>
+          <p class="pda-register-hint">收货总箱数、收货总托数为选填；填写时须为正整数。</p>
         </div>
 
         <div class="pda-ris-mstatus" id="confirmStatus"></div>
@@ -103,6 +105,7 @@
     </div>
   </div>
 
+  <script src="../mock_data/warehouses.js"></script>
   <script src="../mock_data/deliveryAppointment.js"></script>
   <script src="../customer/js/deliveryAppointment-common.js"></script>
   <script src="js/pda-core.js"></script>

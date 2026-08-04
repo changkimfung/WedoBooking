@@ -54,7 +54,15 @@
     state.filteredList = MOCK_IN_ORDER_LIST.filter(function (item) {
       if (tabKey && item.status !== tabKey) return false;
       if (filters.orderNo && item.orderNo.indexOf(filters.orderNo) === -1) return false;
-      if (filters.warehouse && item.warehouse !== filters.warehouse) return false;
+      if (filters.warehouse) {
+        var rowWh = typeof normalizeWarehouseName === 'function'
+          ? normalizeWarehouseName(item.warehouse)
+          : item.warehouse;
+        var filterWh = typeof normalizeWarehouseName === 'function'
+          ? normalizeWarehouseName(filters.warehouse)
+          : filters.warehouse;
+        if (rowWh !== filterWh) return false;
+      }
       if (filters.shippingType && item.shippingMethod !== filters.shippingType) return false;
       if (filters.expressNo && (!item.trackingNo || item.trackingNo.indexOf(filters.expressNo) === -1)) {
         return false;
@@ -234,6 +242,10 @@
   }
 
   function initMenu() {
+    if (typeof ProductCommon !== "undefined") {
+      ProductCommon.initSidebarMenus();
+      return;
+    }
     var docManageBtn = document.getElementById("docManageBtn");
     var docManageSubmenu = document.getElementById("docManageSubmenu");
     docManageBtn.addEventListener("click", function () {

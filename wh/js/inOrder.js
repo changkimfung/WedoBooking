@@ -89,7 +89,15 @@
 
   function rowMatches(f, row) {
     if (!includesNormalized(row.orderNo, f.orderNo)) return false;
-    if (f.warehouse && row.warehouse !== f.warehouse) return false;
+    if (f.warehouse) {
+      var rowWh = typeof normalizeWarehouseName === 'function'
+        ? normalizeWarehouseName(row.warehouse)
+        : row.warehouse;
+      var filterWh = typeof normalizeWarehouseName === 'function'
+        ? normalizeWarehouseName(f.warehouse)
+        : f.warehouse;
+      if (rowWh !== filterWh) return false;
+    }
     if (f.shippingMethod && row.shippingMethod !== f.shippingMethod) return false;
     if (f.trackingNo && !includesNormalized(row.trackingNo, f.trackingNo)) return false;
     if (f.status && row.status !== f.status) return false;

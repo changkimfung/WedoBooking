@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>品牌授权文件管理 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet" type="text/css">
+  <link href="css/delivery-appointment-list.css" rel="stylesheet" type="text/css">
+  <link href="css/brand-authorization.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-wh-mid-chrome-header"></div>
+
+<div class="fourvar order-fourvar brand-auth-fourvar" style="height:auto;">
+  <table class="table-h25">
+    <tr>
+      <td style="padding-left:17px;">客户编码：</td>
+      <td>
+        <input id="q_customer_code" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">品牌名称：</td>
+      <td>
+        <input id="q_brand_name" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+      <td style="padding-left:17px;">产品编码：</td>
+      <td>
+        <input id="q_yunde_no" class="text-input w150" type="text" placeholder="支持模糊" />
+      </td>
+    </tr>
+    <tr>
+      <td style="padding-left:17px;">授权有效期：</td>
+      <td>
+        <select id="q_expire_status" style="width:157px">
+          <option value="">全部</option>
+          <option value="expired">已过有效期</option>
+          <option value="expiring">30天内过有效期</option>
+        </select>
+      </td>
+      <td style="padding-left:17px;">
+        <button type="button" id="btn_brand_query" class="order-fourvar-submit" style="margin:5px;">查询</button>
+      </td>
+      <td colspan="3">
+        <button type="button" id="btn_brand_reset">重置查询条件</button>
+        <button type="button" id="btn_brand_import" class="brand-toolbar-btn">批量导入</button>
+        <button type="button" id="btn_brand_template" class="brand-toolbar-btn">下载导入模板</button>
+        <button type="button" id="btn_brand_export" class="brand-toolbar-btn">批量导出</button>
+        <button type="button" id="btn_brand_add" class="brand-toolbar-btn">新增</button>
+        <button type="button" id="btn_brand_edit" class="brand-toolbar-btn" disabled>编辑</button>
+        <button type="button" id="btn_brand_delete" class="brand-toolbar-btn" disabled>删除</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="main brand-auth-main">
+  <p id="brand-result-hint" class="brand-result-hint"></p>
+  <div class="brand-table-scroll">
+    <table cellspacing="0" width="100%">
+      <thead>
+        <tr class="title">
+          <td class="brand-col-check"><input type="checkbox" id="brand-select-all" title="全选本页" aria-label="全选本页" /></td>
+          <td>品牌代号</td>
+          <td>客户编码</td>
+          <td>品牌名称</td>
+          <td>授权书文件</td>
+          <td>授权产品</td>
+          <td>授权有效期</td>
+          <td>备注</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody id="brand-list-tbody"></tbody>
+    </table>
+  </div>
+  <div class="pagination pagination-prototype-nav" id="brand-pagination"></div>
+</div>
+
+<div class="wh-signoff-modal-backdrop brand-auth-modal-backdrop" id="brandAuthModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal brand-auth-modal" role="dialog" aria-labelledby="brandAuthModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="brandAuthModalTitle">新增品牌授权</h3>
+      <button type="button" class="close" id="brandAuthModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body brand-auth-modal-body">
+      <div class="brand-auth-modal-table-wrap">
+        <table cellspacing="0" width="100%" class="brand-auth-modal-table">
+          <thead>
+            <tr class="title">
+              <td><span class="req">*</span>客户编码</td>
+              <td><span class="req">*</span>品牌名称</td>
+              <td>备注</td>
+              <td>授权书文件</td>
+              <td>授权产品（产品编码）</td>
+              <td>授权有效期</td>
+              <td>操作</td>
+            </tr>
+          </thead>
+          <tbody id="brandAuthModalTbody"></tbody>
+        </table>
+      </div>
+      <button type="button" id="btn_brand_add_row" class="brand-add-row-btn">+ 添加一行</button>
+      <p class="wh-signoff-error brand-auth-modal-error" id="brandAuthModalError" style="display:none;"></p>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="btn" id="brandAuthModalCancel">取消</button>
+      <button type="button" class="order-fourvar-submit" id="brandAuthModalSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="wh-signoff-modal-backdrop brand-auth-modal-backdrop" id="brandFileListModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal brand-auth-file-modal" role="dialog" aria-labelledby="brandFileListModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="brandFileListModalTitle">授权书文件</h3>
+      <button type="button" class="close" id="brandFileListModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body">
+      <p id="brandFileListTip" class="brand-file-list-tip"></p>
+      <ul id="brandFileListBody" class="brand-file-list"></ul>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="order-fourvar-submit" id="brandFileListModalOk">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="wh-signoff-modal-backdrop brand-auth-modal-backdrop" id="brandProductModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal brand-auth-product-modal" role="dialog" aria-labelledby="brandProductModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="brandProductModalTitle">授权产品集合</h3>
+      <button type="button" class="close" id="brandProductModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body brand-auth-product-body">
+      <p class="brand-log-subtitle" id="brandProductSubtitle"></p>
+      <p class="brand-product-readonly-tip">由产品管理编辑绑定后自动同步，此处仅可查看</p>
+      <div class="brand-product-table-wrap">
+        <table cellspacing="0" width="100%" class="brand-product-table">
+          <thead>
+            <tr class="title">
+              <td style="width:48px;">序号</td>
+              <td>产品编码</td>
+            </tr>
+          </thead>
+          <tbody id="brandProductTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="order-fourvar-submit" id="brandProductModalOk">关闭</button>
+    </div>
+  </div>
+</div>
+
+<div class="wh-signoff-modal-backdrop brand-auth-modal-backdrop" id="brandImportModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal brand-auth-import-modal" role="dialog" aria-labelledby="brandImportModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="brandImportModalTitle">批量导入品牌授权</h3>
+      <button type="button" class="close" id="brandImportModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body">
+      <p class="brand-import-tip">请上传 .xlsx 文件。品牌代号为空视为新增，非空视为编辑。授权书文件列可填 http(s) 链接，多个用分号分隔；编辑行留空表示不更新授权书。任一行有误则整批不导入。</p>
+      <input type="file" id="brandImportFileInput" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+      <p class="brand-import-status" id="brandImportStatus" style="display:none;"></p>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="btn" id="brandImportModalCancel">取消</button>
+      <button type="button" class="order-fourvar-submit" id="brandImportModalStart">开始导入</button>
+    </div>
+  </div>
+</div>
+
+<div class="wh-signoff-modal-backdrop brand-auth-modal-backdrop" id="brandImportFailModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal brand-auth-import-fail-modal" role="dialog" aria-labelledby="brandImportFailModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="brandImportFailModalTitle">批量导入失败</h3>
+      <button type="button" class="close" id="brandImportFailModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body">
+      <p id="brandImportFailSummary" class="brand-import-fail-summary"></p>
+      <p class="brand-import-fail-preview-title">错误预览（最多显示 10 条，完整内容请下载失败报告）</p>
+      <ul id="brandImportFailPreview" class="brand-import-fail-preview"></ul>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="btn" id="brandImportFailModalDismiss">关闭</button>
+      <button type="button" class="order-fourvar-submit" id="brandImportFailDownload">下载失败报告</button>
+    </div>
+  </div>
+</div>
+
+<div class="wh-signoff-modal-backdrop brand-auth-modal-backdrop" id="brandLogModalBackdrop" style="display:none;">
+  <div class="wh-signoff-modal brand-auth-log-modal" role="dialog" aria-labelledby="brandLogModalTitle">
+    <div class="wh-signoff-modal-header">
+      <h3 id="brandLogModalTitle">操作日志</h3>
+      <button type="button" class="close" id="brandLogModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="wh-signoff-modal-body brand-auth-log-body">
+      <p class="brand-log-subtitle" id="brandLogSubtitle"></p>
+      <div class="brand-log-table-wrap">
+        <table cellspacing="0" width="100%" class="brand-log-table">
+          <thead>
+            <tr class="title">
+              <td>操作时间</td>
+              <td>操作人</td>
+              <td>操作类型</td>
+              <td>数据变更记录</td>
+            </tr>
+          </thead>
+          <tbody id="brandLogTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="wh-signoff-modal-footer">
+      <button type="button" class="order-fourvar-submit" id="brandLogModalOk">关闭</button>
+    </div>
+  </div>
+</div>
+
+<footer class="wh-mid-footer">
+  Copyright © 运德仓储中台原型
+  <a href="#" onclick="return false;">演示页</a>
+</footer>
+
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header', {
+    activeTopModule: 'products',
+    activeSecondMenu: 'brandAuthorization',
+    userName: '演示用户'
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="../mock_data/brandAuthorization.js"></script>
+<script src="js/brandAuthImportExport.js"></script>
+<script src="js/brandAuthorization.js"></script>
+</body>
+</html>

@@ -29,8 +29,14 @@
         <div class="menu-item">
           <div class="menu-label">🏠 首页</div>
         </div>
-        <div class="menu-item">
+        <div class="menu-item" id="productManageBtn">
           <div class="menu-label">📦 产品管理</div>
+          <span>▾</span>
+        </div>
+        <div class="submenu" id="productManageSubmenu">
+          <div class="menu-item"><a href="productList.html">产品列表</a></div>
+          <div class="menu-item"><a href="productCreate.html">新增产品</a></div>
+          <div class="menu-item">批量导入</div>
         </div>
 
         <div class="menu-item" id="docManageBtn">
@@ -134,7 +140,9 @@
     </main>
   </div>
 
+  <script src="../mock_data/warehouses.js"></script>
   <script src="../mock_data/inOrder.js"></script>
+  <script src="js/product-common.js"></script>
   <script src="inOrder.js"></script>
 </body>
 </html>

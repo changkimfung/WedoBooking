@@ -17,14 +17,14 @@ var payload = {
     '预约单号：TEST-001',
     '送仓码：SC0000',
     '原状态：待预约',
-    '新状态：仓库待确认',
+    '新状态：仓库待审核',
     '变更时间：' + new Date().toISOString()
   ].join('\n'),
   appointmentId: 'test',
   appointmentNo: 'TEST-001',
   deliveryCode: 'SC0000',
   oldStatus: '待预约',
-  newStatus: '仓库待确认'
+  newStatus: '仓库待审核'
 };
 
 console.log('SMTP 状态:', notifyMail.getSmtpStatus());

@@ -17,8 +17,34 @@ body.official-page {
 .official-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 16px 40px;
   border-bottom: 1px solid #f0f0f0;
+}
+
+.fg-lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.fg-lang-switch__btn {
+  border: none;
+  background: transparent;
+  color: #8c8c8c;
+  cursor: pointer;
+  padding: 4px 6px;
+  font-size: 13px;
+}
+
+.fg-lang-switch__btn.is-active {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.fg-lang-switch__sep {
+  color: #d9d9d9;
 }
 
 .official-logo {
@@ -371,6 +397,53 @@ body.official-page {
   color: #cf1322;
 }
 
+.official-expected-date-list .date-row,
+.official-email-list .email-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.official-expected-date-list .date-row input[type="date"] {
+  flex: 1;
+  min-width: 0;
+}
+
+.official-readonly-dates {
+  margin: 0;
+  color: #262626;
+}
+
+.official-btn-add-date,
+.official-btn-remove-date {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.official-btn-add-date {
+  color: #1890ff;
+}
+
+.official-btn-add-date:hover {
+  border-color: #1890ff;
+}
+
+.official-btn-remove-date {
+  color: #ff4d4f;
+}
+
+.official-btn-remove-date:hover {
+  border-color: #ff4d4f;
+}
+
 .official-email-list .email-row {
   display: flex;
   align-items: center;
@@ -380,12 +453,6 @@ body.official-page {
 
 .official-email-list .email-row input {
   flex: 1;
-}
-
-.official-email-list .email-row-primary input {
-  background: #f5f5f5;
-  color: #595959;
-  cursor: not-allowed;
 }
 
 .official-btn-add-email,

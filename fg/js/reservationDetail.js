@@ -1,10 +1,10 @@
-﻿(function () {
+(function () {
   var OR = OfficialReservation;
   var C = DeliveryAppointmentCommon;
   var currentItem = null;
 
   var S = {
-    WH_PENDING: '\u4ed3\u5e93\u5f85\u786e\u8ba4',
+    WH_PENDING: '\u4ed3\u5e93\u5f85\u5ba1\u6838',
     PENDING_SUBMIT: '\u5f85\u63d0\u4ea4',
     PENDING_BOOK: '\u5f85\u9884\u7ea6',
     CUSTOMER_PENDING: '\u5ba2\u6237\u5f85\u786e\u8ba4',
@@ -52,7 +52,7 @@
   function renderCargoTable(cargoRows) {
     if (!cargoRows.length) {
       $('cargoBody').innerHTML =
-        '<tr><td colspan="4" style="color:#bfbfbf;">\u6682\u65e0\u5173\u8054\u5165\u5e93\u5355</td></tr>';
+        '<tr><td colspan="4" style="color:#bfbfbf;">' + escapeHtml(FgI18n.t('noCargo')) + '</td></tr>';
       return;
     }
     $('cargoBody').innerHTML = cargoRows.map(function (row) {
@@ -66,7 +66,14 @@
   }
 
   function isPostAuditPassStatus(status) {
-    return status === S.CUSTOMER_PENDING || status === S.PENDING_DELIVERY || status === S.DELIVERED;
+    return C.shouldShowFgWarehouseConfirmFields
+      ? C.shouldShowFgWarehouseConfirmFields(status)
+      : (status === S.CUSTOMER_PENDING || status === S.PENDING_DELIVERY || status === S.DELIVERED);
+  }
+
+  function toggleFgFieldRow(rowId, visible) {
+    var row = $(rowId);
+    if (row) row.style.display = visible ? '' : 'none';
   }
 
   function renderWarehouseFeedback(item) {
@@ -90,54 +97,176 @@
 
     if (isPostAuditPassStatus(item.status)) {
       var auditRemark = String(item.auditRemark || '').trim();
-      auditRow.style.display = '';
-      auditEl.textContent = auditRemark || '\u2014';
+      if (auditRemark) {
+        auditRow.style.display = '';
+        auditEl.textContent = auditRemark;
+      }
     }
   }
 
   function renderPlaceholders(item) {
-    var whTime = item.warehouseConfirmedInboundTime;
-    var whAddr = item.warehouseConfirmedAddress;
-    var actual = item.actualDeliveryTime;
-    var phWh = '\u2014 \u5f85\u4ed3\u5e93\u786e\u8ba4\u540e\u5c55\u793a \u2014';
-    var phDone = '\u2014 \u9001\u4ed3\u5b8c\u6210\u540e\u5c55\u793a \u2014';
-    var phDownload = '\u2014 \u5f85\u9001\u4ed3\u540e\u53ef\u4e0b\u8f7d W.BOL \u2014';
-    var wPodHref = OR.getWPodDocumentUrl(item);
+    var status = item.status;
+    var showWh = C.shouldShowFgWarehouseConfirmFields(status);
+    var showWPod = C.shouldShowFgWPodDownload(status);
+    var showActual = C.shouldShowFgActualDeliveryTime(status);
+    var wh = item.confirmedWarehouse || item.warehouse;
 
-    $('whConfirmedTime').textContent = whTime || phWh;
-    $('whConfirmedTime').className = whTime ? 'official-value-confirmed' : 'official-placeholder';
-    $('whConfirmedAddress').textContent = whAddr || phWh;
-    $('whConfirmedAddress').className = whAddr ? 'official-value-confirmed' : 'official-placeholder';
-    $('actualDeliveryTime').textContent = actual || phDone;
-    $('actualDeliveryTime').className = actual ? '' : 'official-placeholder';
+    toggleFgFieldRow('rowWhConfirmedTime', showWh);
+    toggleFgFieldRow('rowWhConfirmedAddress', showWh);
+    toggleFgFieldRow('rowWPodDownload', showWPod);
+    toggleFgFieldRow('rowActualDeliveryTime', showActual);
+
+    if (showWh) {
+      var whTime = item.warehouseConfirmedInboundTime;
+      var whAddr = item.warehouseConfirmedAddress;
+      var whTimeText = C.formatFgWarehouseTime ? C.formatFgWarehouseTime(whTime, wh) : (whTime || '-');
+      var whAddrText = C.formatFgEmptyDisplay ? C.formatFgEmptyDisplay(whAddr) : (whAddr || '-');
+      $('whConfirmedTime').textContent = whTimeText;
+      $('whConfirmedTime').className = String(whTime || '').trim() ? 'official-value-confirmed' : '';
+      $('whConfirmedAddress').textContent = whAddrText;
+      $('whConfirmedAddress').className = String(whAddr || '').trim() ? 'official-value-confirmed' : '';
+    }
+
+    if (showActual) {
+      var actual = item.actualDeliveryTime;
+      var actualText = C.formatFgWarehouseTime ? C.formatFgWarehouseTime(actual, wh) : (actual || '-');
+      $('actualDeliveryTime').textContent = actualText;
+      $('actualDeliveryTime').className = String(actual || '').trim() ? 'official-value-confirmed' : '';
+    }
 
     renderWarehouseFeedback(item);
 
-    if (wPodHref) {
-      $('wPodDownload').innerHTML =
-        '<a href="' + escapeHtml(wPodHref) + '" target="_blank" rel="noopener">\u4e0b\u8f7d W.BOL</a>';
-      $('wPodDownload').className = '';
-    } else {
-      $('wPodDownload').textContent = phDownload;
-      $('wPodDownload').className = 'official-placeholder';
+    if (showWPod) {
+      var wPodHref = OR.getWPodDocumentUrl(item);
+      if (wPodHref) {
+        $('wPodDownload').innerHTML =
+          '<a href="' + escapeHtml(wPodHref) + '" target="_blank" rel="noopener">' + escapeHtml(FgI18n.t('downloadWPod')) + '</a>';
+        $('wPodDownload').className = '';
+      } else {
+        $('wPodDownload').textContent = '-';
+        $('wPodDownload').className = '';
+      }
     }
   }
 
   function renderForm(item) {
     applyLocalTimeLabels(item);
-    $('expectedDate').value = OR.parseExpectedDate(item.expectedInboundTime);
+    renderExpectedDateList(item);
     $('remark').value = item.remark || '';
+    var phoneEl = $('contactPhone');
+    if (phoneEl) phoneEl.value = item.contactPhone || '';
     renderEmailList(item);
     renderPlaceholders(item);
+  }
+
+  function countDateRows() {
+    return document.querySelectorAll('[data-primary-date],[data-backup-date]').length;
+  }
+
+  function createDateRow(value, options) {
+    options = options || {};
+    var maxDates = C.MAX_EXPECTED_INBOUND_DATES || 3;
+    var row = document.createElement('div');
+    row.className = 'date-row' + (options.primary ? ' date-row-primary' : '');
+    var input = document.createElement('input');
+    input.type = 'date';
+    input.value = value || '';
+    input.setAttribute(options.primary ? 'data-primary-date' : 'data-backup-date', '1');
+    if (options.primary) {
+      input.setAttribute('aria-label', FgI18n.t('labelExpectedDate'));
+    }
+    row.appendChild(input);
+    if (options.showAdd) {
+      var addBtn = document.createElement('button');
+      addBtn.type = 'button';
+      addBtn.className = 'official-btn-add-date';
+      addBtn.title = FgI18n.t('addBackupDate');
+      addBtn.textContent = '+';
+      addBtn.addEventListener('click', function () {
+        if (countDateRows() >= maxDates) {
+          window.alert(FgI18n.t('valMaxExpectedDates'));
+          return;
+        }
+        var backupInputs = document.querySelectorAll('[data-backup-date]');
+        var lastBackup = backupInputs[backupInputs.length - 1];
+        if (lastBackup && !(lastBackup.value || '').trim()) {
+          window.alert(FgI18n.t('valSelectAltDate'));
+          lastBackup.focus();
+          return;
+        }
+        $('expectedDateList').appendChild(createDateRow('', { primary: false, showAdd: false }));
+        updateDateAddButtonVisibility();
+      });
+      row.appendChild(addBtn);
+    }
+    if (!options.primary) {
+      var removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'official-btn-remove-date';
+      removeBtn.title = FgI18n.t('removeBackupDate');
+      removeBtn.textContent = '\u00d7';
+      removeBtn.addEventListener('click', function () {
+        row.parentNode.removeChild(row);
+        updateDateAddButtonVisibility();
+      });
+      row.appendChild(removeBtn);
+    }
+    return row;
+  }
+
+  function updateDateAddButtonVisibility() {
+    var maxDates = C.MAX_EXPECTED_INBOUND_DATES || 3;
+    var addBtn = document.querySelector('.official-btn-add-date');
+    if (addBtn) addBtn.style.display = countDateRows() >= maxDates ? 'none' : '';
+  }
+
+  function renderExpectedDateList(item) {
+    var container = $('expectedDateList');
+    if (!container) return;
+    container.innerHTML = '';
+    var editable = isFormEditable(item.status);
+    if (!editable) {
+      var p = document.createElement('p');
+      p.className = 'official-readonly-dates';
+      p.textContent = C.formatExpectedInboundDatesDisplay
+        ? C.formatExpectedInboundDatesDisplay(item, item.warehouse)
+        : (item.expectedInboundTime || '-');
+      container.appendChild(p);
+      return;
+    }
+    var dates = C.getExpectedInboundDates ? C.getExpectedInboundDates(item) : [];
+    if (!dates.length) dates = [''];
+    dates.forEach(function (d, idx) {
+      container.appendChild(createDateRow(d, {
+        primary: idx === 0,
+        showAdd: idx === 0
+      }));
+    });
+    updateDateAddButtonVisibility();
+  }
+
+  function collectExpectedDates() {
+    var primaryInput = document.querySelector('[data-primary-date]');
+    var backupInputs = document.querySelectorAll('[data-backup-date]');
+    var dates = [];
+    var primary = primaryInput ? (primaryInput.value || '').trim() : '';
+    if (primary) dates.push(primary);
+    backupInputs.forEach(function (inp) {
+      var v = (inp.value || '').trim();
+      if (v) dates.push(v);
+    });
+    return dates;
   }
 
   function renderHistoryLogs(item) {
     var logList = $('historyLogList');
     if (!logList) return;
     logList.innerHTML = C.buildOperationLogListHtml(item, {
+      portal: 'warehouse',
+      sort: 'asc',
       emptyClass: 'official-log-empty',
       timeClass: 'official-log-time',
-      emptyText: '\u6682\u65e0\u534f\u5546\u8bb0\u5f55'
+      emptyText: FgI18n.t('noHistory')
     });
   }
 
@@ -174,16 +303,15 @@
     row.className = 'email-row' + (options.primary ? ' email-row-primary' : '');
     var input = document.createElement('input');
     input.type = 'email';
-    input.placeholder = 'name@example.com';
+    input.placeholder = options.primary ? 'name@example.com' : 'name@example.com';
     input.value = value || '';
     input.setAttribute(options.primary ? 'data-primary-email' : 'data-backup-email', '1');
-    if (options.primary) input.readOnly = true;
     row.appendChild(input);
     if (options.showAdd) {
       var addBtn = document.createElement('button');
       addBtn.type = 'button';
       addBtn.className = 'official-btn-add-email';
-      addBtn.title = '\u6dfb\u52a0\u5907\u7528\u90ae\u7bb1';
+      addBtn.title = FgI18n.t('addBackupEmail');
       addBtn.textContent = '+';
       addBtn.addEventListener('click', function () {
         $('emailList').appendChild(createEmailRow('', {
@@ -197,7 +325,7 @@
       var removeBtn = document.createElement('button');
       removeBtn.type = 'button';
       removeBtn.className = 'official-btn-remove-email';
-      removeBtn.title = '\u79fb\u9664\u5907\u7528\u90ae\u7bb1';
+      removeBtn.title = FgI18n.t('removeBackupEmail');
       removeBtn.textContent = '\u00d7';
       removeBtn.addEventListener('click', function () {
         row.parentNode.removeChild(row);
@@ -229,29 +357,44 @@
   }
 
   function validateForm() {
-    var date = $('expectedDate').value;
-    if (!date) {
-      window.alert('\u8bf7\u9009\u62e9\u671f\u671b\u9001\u4ed3\u65e5\u671f');
-      $('expectedDate').focus();
+    var dates = collectExpectedDates();
+    if (!dates.length) {
+      window.alert(FgI18n.t('valSelectExpectedDate'));
+      var primaryInput = document.querySelector('[data-primary-date]');
+      if (primaryInput) primaryInput.focus();
       return false;
     }
     var today = new Date();
     var todayStr = today.getFullYear() + '-' +
       (today.getMonth() + 1 < 10 ? '0' : '') + (today.getMonth() + 1) + '-' +
       (today.getDate() < 10 ? '0' : '') + today.getDate();
-    if (date < todayStr) {
-      window.alert('\u671f\u671b\u9001\u4ed3\u65e5\u671f\u4e0d\u80fd\u65e9\u4e8e\u4eca\u5929');
-      $('expectedDate').focus();
-      return false;
+    var seen = {};
+    for (var di = 0; di < dates.length; di++) {
+      var date = dates[di];
+      if (seen[date]) {
+        window.alert(FgI18n.t('valDupExpectedDate') + date);
+        return false;
+      }
+      seen[date] = true;
+      if (date < todayStr) {
+        window.alert(FgI18n.t('valDatePast'));
+        return false;
+      }
+      if (isWeekendDateStr(date)) {
+        window.alert(FgI18n.t('valWeekend'));
+        return false;
+      }
     }
-    if (isWeekendDateStr(date)) {
-      window.alert('\u4ed3\u5e93\u5468\u672b\uff08\u5468\u516d\u3001\u5468\u65e5\uff09\u4e0d\u6536\u8d27\uff0c\u8bf7\u9009\u62e9\u5de5\u4f5c\u65e5');
-      $('expectedDate').focus();
+    var phoneEl = $('contactPhone');
+    var phone = phoneEl ? (phoneEl.value || '').trim() : '';
+    if (phone && !/^[\d\s+\-()]{6,32}$/.test(phone)) {
+      window.alert(FgI18n.t('valContactPhone'));
+      phoneEl.focus();
       return false;
     }
     var remark = ($('remark').value || '').trim();
     if (remark.length > 500) {
-      window.alert('\u5907\u6ce8\u957f\u5ea6\u4e0d\u80fd\u8d85\u8fc7 500 \u5b57\u7b26');
+      window.alert(FgI18n.t('valRemarkLen'));
       $('remark').focus();
       return false;
     }
@@ -259,13 +402,13 @@
     var primaryInput = document.querySelector('[data-primary-email]');
     var primaryEmail = primaryInput ? (primaryInput.value || '').trim() : '';
     if (!primaryEmail) {
-      window.alert('\u4e3b\u90ae\u7bb1\u4e0d\u80fd\u4e3a\u7a7a');
+      window.alert(FgI18n.t('valPrimaryEmail'));
       return false;
     }
     var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     for (var i = 0; i < emails.length; i++) {
       if (!emailRe.test(emails[i])) {
-        window.alert('\u90ae\u7bb1\u683c\u5f0f\u4e0d\u6b63\u786e\uff1a' + emails[i]);
+        window.alert(FgI18n.t('valEmailFormat') + emails[i]);
         return false;
       }
     }
@@ -274,8 +417,14 @@
 
   function readFormIntoItem(item) {
     var copy = JSON.parse(JSON.stringify(item));
-    copy.expectedInboundTime = OR.formatExpectedDate($('expectedDate').value);
+    if (C.applyExpectedInboundDates) {
+      C.applyExpectedInboundDates(copy, collectExpectedDates());
+    } else {
+      copy.expectedInboundTime = OR.formatExpectedDate(collectExpectedDates()[0] || '');
+    }
     copy.remark = ($('remark').value || '').trim();
+    var phoneEl = $('contactPhone');
+    copy.contactPhone = phoneEl ? (phoneEl.value || '').trim() : '';
     copy.emails = collectEmails();
     copy.primaryEmail = copy.emails[0] || '';
     return copy;
@@ -291,12 +440,14 @@
   }
 
   function applyLocalTimeLabels(item) {
-    if (!item || !C.getWarehouseLocalTimeLabel) return;
-    var lt = C.getWarehouseLocalTimeLabel(item.warehouse);
+    if (!item) return;
+    var lt = C.getFgWarehouseLocalTimeLabel
+      ? C.getFgWarehouseLocalTimeLabel(item.warehouse)
+      : (C.getWarehouseLocalTimeLabel ? C.getWarehouseLocalTimeLabel(item.warehouse) : '\u7f8e\u897f\u65f6\u95f4');
     var pairs = [
-      ['labelExpectedDate', '\u671f\u671b\u9001\u4ed3\u65e5\u671f'],
-      ['labelWhConfirmedTime', '\u4ed3\u5e93\u786e\u8ba4\u9001\u4ed3\u65f6\u6bb5'],
-      ['labelActualDeliveryTime', '\u5b9e\u9645\u9001\u4ed3\u65f6\u6bb5']
+      ['labelExpectedDate', FgI18n.t('labelExpectedDate')],
+      ['labelWhConfirmedTime', FgI18n.t('labelWhConfirmedTime')],
+      ['labelActualDeliveryTime', FgI18n.t('labelActualDeliveryTime')]
     ];
     pairs.forEach(function (p) {
       var el = $(p[0]);
@@ -304,8 +455,7 @@
     });
     var hint = $('hintExpectedDate');
     if (hint) {
-      hint.innerHTML = '\u8bf7\u9009\u62e9\u671f\u671b\u9001\u4ed3\u65e5\u671f\uff08' + lt +
-        '\uff09\uff0c<strong>\u5468\u672b\uff08\u5468\u516d\u3001\u5468\u65e5\uff09\u4e0d\u6536\u8d27</strong>\u3002\u591a\u4e2a\u5019\u9009\u65e5\u671f\u6216\u7279\u6b8a\u65f6\u6bb5\u8bf7\u5728\u5907\u6ce8\u4e2d\u8bf4\u660e\u3002';
+      hint.innerHTML = FgI18n.t('hintExpectedHtml').replace('{lt}', lt);
     }
   }
 
@@ -325,14 +475,22 @@
   }
 
   function setFormEditable(editable) {
-    $('expectedDate').disabled = !editable;
     $('remark').disabled = !editable;
+    var phoneEl = $('contactPhone');
+    if (phoneEl) phoneEl.disabled = !editable;
+    document.querySelectorAll('[data-primary-date],[data-backup-date]').forEach(function (inp) {
+      inp.disabled = !editable;
+    });
     document.querySelectorAll('[data-primary-email],[data-backup-email]').forEach(function (inp) {
       inp.disabled = !editable;
     });
-    document.querySelectorAll('.official-btn-add-email').forEach(function (btn) {
+    document.querySelectorAll('.official-btn-add-email,.official-btn-remove-email').forEach(function (btn) {
       btn.style.display = editable ? '' : 'none';
     });
+    document.querySelectorAll('.official-btn-add-date,.official-btn-remove-date').forEach(function (btn) {
+      btn.style.display = editable ? '' : 'none';
+    });
+    if (editable) updateDateAddButtonVisibility();
   }
 
   function showBtn(id, visible) {
@@ -534,14 +692,14 @@
         window.alert('\u5f53\u524d\u72b6\u6001\u65e0\u6cd5\u63d0\u4ea4\u9884\u7ea6');
         return;
       }
-      persistAndRefresh(updated, '\u63d0\u4ea4\u6210\u529f\uff0c\u72b6\u6001\u5df2\u66f4\u65b0\u4e3a\u4ed3\u5e93\u5f85\u786e\u8ba4');
+      persistAndRefresh(updated, '\u63d0\u4ea4\u6210\u529f\uff0c\u72b6\u6001\u5df2\u66f4\u65b0\u4e3a\u4ed3\u5e93\u5f85\u5ba1\u6838');
     });
 
     $('btnCancel').addEventListener('click', function () {
       if (currentItem && currentItem.status === S.CUSTOMER_PENDING) {
         openCustomerCancelModal();
       } else {
-        openWithdrawModal('\u5b98\u7f51\u53d6\u6d88\u9884\u7ea6\uff0c\u72b6\u6001\u53d8\u66f4\u4e3a\u5f85\u9884\u7ea6');
+        openWithdrawModal('official_cancel');
       }
     });
 
@@ -550,7 +708,7 @@
     });
 
     $('btnRebook').addEventListener('click', function () {
-      openWithdrawModal('\u5b98\u7f51\u91cd\u65b0\u9884\u7ea6\uff0c\u72b6\u6001\u53d8\u66f4\u4e3a\u5f85\u9884\u7ea6');
+      openWithdrawModal('official_rebook');
     });
 
     $('btnAccept').addEventListener('click', function () {
@@ -599,6 +757,10 @@
       if (!latest) return;
       currentItem = latest;
       refreshView();
+    });
+    FgI18n.onChange(function () {
+      FgI18n.applyStaticTexts();
+      if (currentItem) refreshView();
     });
   }
 

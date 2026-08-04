@@ -17,18 +17,24 @@
   <div class="wh-create-panel">
     <div class="wh-create-titlebar">
       <div class="wh-create-title">新建入库单预约</div>
-      <p>用于仓储中台代客户或运德船务创建送仓预约，提交后进入仓库待确认。</p>
+      <p>用于仓储中台代客户创建送仓预约，提交后进入仓库待审核。</p>
     </div>
     <table class="table-h25 wh-create-form">
       <tr class="wh-create-section-row"><td colspan="6">预约基础信息</td></tr>
       <tr>
-        <td>目的仓：</td>
-        <td><select id="create_warehouse" style="width:157px"><option value="">请选择</option></select></td>
+        <td>预约仓：</td>
+        <td colspan="5">
+          <div class="wh-warehouse-select-row">
+            <select id="create_warehouse" style="width:220px"><option value="">请选择</option></select>
+            <div id="warehouseAddressTip" class="warehouse-address-tip is-hidden" aria-live="polite"></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
         <td>预约方：</td>
         <td>
-          <select id="create_booker_type" style="width:157px">
-            <option value="customer">用户编号</option>
-            <option value="shipping">运德船务</option>
+          <select id="create_booker_type" style="width:157px" disabled>
+            <option value="customer" selected>用户编号</option>
           </select>
         </td>
         <td>用户编号：</td>
@@ -44,6 +50,12 @@
         </td>
         <td>送仓总箱数：</td>
         <td><input id="create_total_cartons" class="text-input w150" type="number" min="1" step="1" /></td>
+        <td>总体积（m³）：</td>
+        <td><input id="create_total_volume" class="text-input w150" type="number" min="0.0001" step="0.0001" placeholder="选填" /></td>
+        <td>总重量（kg）：</td>
+        <td><input id="create_total_weight" class="text-input w150" type="number" min="0.0001" step="0.0001" placeholder="选填" /></td>
+      </tr>
+      <tr>
         <td>是否打托：</td>
         <td>
           <select id="create_is_palletized" style="width:157px">
@@ -51,6 +63,7 @@
             <option value="yes">是</option>
           </select>
         </td>
+        <td colspan="4"></td>
       </tr>
       <tr id="create_pallet_row" style="display:none;">
         <td>送仓总托数：</td>
@@ -61,22 +74,22 @@
         <td>集装箱号：</td>
         <td><input id="create_container_no" class="text-input w150" type="text" /></td>
         <td>柜型：</td>
-        <td><input id="create_container_type" class="text-input w150" type="text" placeholder="如 40HQ" /></td>
-        <td colspan="2"></td>
-      </tr>
-      <tr class="wh-create-section-row"><td colspan="6">联系与协作信息</td></tr>
-      <tr>
-        <td>联系邮箱：</td>
-        <td><input id="create_email" class="text-input w150" type="text" placeholder="选填" /></td>
-        <td>货代公司：</td>
-        <td><input id="create_forwarder" class="text-input w150" type="text" placeholder="选填" /></td>
+        <td>
+          <select id="create_container_type" style="width:157px">
+            <option value="">请选择</option>
+            <option value="20-GP">20-GP</option>
+            <option value="40-gp">40-gp</option>
+            <option value="40hq">40hq</option>
+            <option value="45-hq">45-hq</option>
+          </select>
+        </td>
         <td colspan="2"></td>
       </tr>
     </table>
     <div class="wh-create-list-head">
       <div>
         <strong>货物明细</strong>
-        <p class="wh-create-hint" id="create_inorder_hint">仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=目的仓</p>
+        <p class="wh-create-hint" id="create_inorder_hint">仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=预约仓</p>
       </div>
       <button type="button" id="btn_create_add_inorder" class="order-fourvar-submit">添加入库单</button>
     </div>
@@ -172,6 +185,7 @@
     userName: '演示用户'
   });
 </script>
+<script src="../mock_data/warehouses.js"></script>
 <script src="../mock_data/deliveryAppointment.js"></script>
 <script src="../mock_data/inOrder.js"></script>
 <script src="../mock_data/containerLoading.js"></script>

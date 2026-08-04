@@ -16,6 +16,7 @@
 
 <div class="container-fluid recv-detail-wrap" id="detailMain">
   <p class="recv-detail-back"><a href="receiving-appointment.html">&lt; 返回列表</a></p>
+  <div class="recv-detail-customer" id="detailCustomer"></div>
 
   <div class="recv-detail-header">
     <div class="recv-detail-header-left">
@@ -25,11 +26,13 @@
     <div class="recv-detail-header-actions">
       <a href="pda-receiving-scan.html" class="btn">PDA收货扫描</a>
       <button type="button" class="btn btn-primary" id="btnAudit" style="display:none;">审核</button>
+      <button type="button" class="btn btn-primary" id="btnAuditUpdate" style="display:none;">更新审核</button>
+      <button type="button" class="btn btn-success" id="btnSignOff" style="display:none;">签收处理</button>
     </div>
   </div>
 
   <section class="recv-detail-section">
-    <h2 class="recv-detail-section-title">预约申请信息</h2>
+    <h2 class="recv-detail-section-title">预约信息</h2>
     <div class="recv-detail-grid" id="applyGrid"></div>
   </section>
 
@@ -45,22 +48,21 @@
 
   <div class="recv-detail-tabs">
     <ul class="recv-detail-tab-nav" id="detailTabs">
-      <li class="active"><a href="#" data-tab="inbound">入库信息</a></li>
-      <li><a href="#" data-tab="logs">日志信息</a></li>
+      <li class="active"><a href="#" data-tab="inbound">货物明细</a></li>
+      <li><a href="#" data-tab="logs">日志明细</a></li>
     </ul>
     <div class="recv-detail-tab-pane active" id="paneInbound">
       <table class="table table-bordered table-hover recv-detail-table">
         <thead>
           <tr class="info">
-            <th>单据号</th>
+            <th>入库单号</th>
+            <th>订单状态</th>
+            <th>收货仓</th>
             <th>发货方式</th>
-            <th>状态</th>
-            <th>目的仓</th>
             <th>订单箱数</th>
             <th>送仓箱数</th>
             <th>收货箱数</th>
-            <th>下单日期</th>
-            <th>处理方式</th>
+            <th>提交时间</th>
           </tr>
         </thead>
         <tbody id="inboundBody"></tbody>
@@ -84,7 +86,7 @@
       <button type="button" class="close" id="auditModalClose" aria-label="关闭">&times;</button>
     </div>
     <div class="recv-audit-modal-body">
-      <p class="recv-audit-tip" style="background:#fffbe6;border:1px solid #ffe58f;color:#874d00;padding:8px 12px;border-radius:4px;margin-bottom:12px;">
+      <p class="recv-audit-tip" id="auditModalTip" style="background:#fffbe6;border:1px solid #ffe58f;color:#874d00;padding:8px 12px;border-radius:4px;margin-bottom:12px;">
         无论确认时段是否与客户期望日期一致，提交后预约单都会回到「客户待确认」由客户最终拍板。
       </p>
       <div class="recv-audit-field">
@@ -95,7 +97,7 @@
         <label>客户备注</label>
         <p class="recv-audit-readonly" id="auditCustomerRemark" style="white-space:pre-wrap;">-</p>
       </div>
-      <div class="recv-audit-field">
+      <div class="recv-audit-field" id="auditPanelDecision">
         <label>审核结论</label>
         <div class="recv-audit-radio-group">
           <label class="radio inline"><input type="radio" name="auditDecision" value="confirm" checked> 确认时段</label>
@@ -139,6 +141,39 @@
   </div>
 </div>
 
+<div class="recv-audit-modal-backdrop" id="signOffModalBackdrop" style="display:none;">
+  <div class="recv-audit-modal recv-signoff-batch-modal" role="dialog" aria-labelledby="signOffModalTitle">
+    <div class="recv-audit-modal-header">
+      <h3 id="signOffModalTitle">签收处理</h3>
+      <button type="button" class="close" id="signOffModalClose" aria-label="关闭">&times;</button>
+    </div>
+    <div class="recv-audit-modal-body">
+      <p class="recv-audit-hint recv-signoff-batch-hint">待送仓为首次签收，已送仓为更新签收内容；请填写实际到仓时间（必填），收货箱数、托数、签收文件选填。</p>
+      <div class="recv-signoff-batch-table-wrap">
+        <table class="recv-signoff-batch-table" id="signOffBatchTable">
+          <thead>
+            <tr>
+              <th>预约单号</th>
+              <th>预约码</th>
+              <th>状态</th>
+              <th>收货箱数</th>
+              <th>托数</th>
+              <th><span class="req">*</span>实际到仓时间</th>
+              <th>签收文件</th>
+            </tr>
+          </thead>
+          <tbody id="signOffBatchBody"></tbody>
+        </table>
+      </div>
+      <p class="recv-audit-error" id="signOffFormError" style="display:none;"></p>
+    </div>
+    <div class="recv-audit-modal-footer">
+      <button type="button" class="btn" id="signOffModalCancel">取消</button>
+      <button type="button" class="btn btn-primary" id="signOffModalSubmit">批量提交签收</button>
+    </div>
+  </div>
+</div>
+
 <footer class="footer">
   <div class="container">
     Copyright &copy; 运德供应链 &middot; 入库预约管理
@@ -156,9 +191,12 @@
     assetsRoot: 'css/vendor/'
   });
 </script>
+<script src="../mock_data/warehouses.js"></script>
 <script src="../mock_data/inOrder.js"></script>
 <script src="../mock_data/deliveryAppointment.js"></script>
 <script src="../customer/js/deliveryAppointment-common.js"></script>
+<script src="js/receiving-appointment-audit.js"></script>
+<script src="js/receiving-sign-off.js"></script>
 <script src="js/receiving-appointment-detail.js"></script>
 </body>
 </html>

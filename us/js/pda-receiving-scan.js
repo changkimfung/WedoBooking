@@ -57,11 +57,6 @@
     return photos && photos.length > 0;
   }
 
-  function hasReceivedCartonsInput() {
-    var cartons = ($('receivedCartons').value || '').trim();
-    return cartons !== '' && /^[1-9]\d*$/.test(cartons);
-  }
-
   function isPositiveIntText(value) {
     return value === '' || /^[1-9]\d*$/.test(value);
   }
@@ -138,7 +133,7 @@
     $('receivedPallets').value = item.receivedPallets != null && item.receivedPallets !== '' ? item.receivedPallets : '';
     photos = [];
     renderPhotos();
-    setConfirmStatus('请上传到仓文件或录入收货总箱数后提交', 'ok');
+    setConfirmStatus('请上传送仓文件后提交', 'ok');
   }
 
   function getReceivingRegisterPayload() {
@@ -154,13 +149,10 @@
     var pallets = ($('receivedPallets').value || '').trim();
     var cartons = ($('receivedCartons').value || '').trim();
 
-    if (!hasUploadedPhotos() && !hasReceivedCartonsInput()) {
-      if (cartons !== '' && !isPositiveIntText(cartons)) {
-        return { ok: false, msg: '收货总箱数需为正整数', focusId: 'receivedCartons' };
-      }
+    if (!hasUploadedPhotos()) {
       return {
         ok: false,
-        msg: '请上传到仓文件 或录入收货总箱数',
+        msg: '请上传送仓文件',
         useModal: true
       };
     }
@@ -311,7 +303,7 @@
     }
     var validation = C.validatePdaReceivingSubmit(currentItem, photos, registerPayload);
     if (!validation.ok) {
-      if (validation.msg.indexOf('\u5230\u4ed3\u6587\u4ef6') >= 0) {
+      if (validation.msg.indexOf('\u9001\u4ed3\u6587\u4ef6') >= 0) {
         showPdaAlertModal(validation.msg);
       } else {
         setConfirmStatus(validation.msg, 'err');

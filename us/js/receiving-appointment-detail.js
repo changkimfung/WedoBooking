@@ -6,7 +6,7 @@
 
   var C = DeliveryAppointmentCommon;
   var currentItem = null;
-  var STATUS_WH_PENDING = '\u4ed3\u5e93\u5f85\u786e\u8ba4';
+  var STATUS_WH_PENDING = '\u4ed3\u5e93\u5f85\u5ba1\u6838';
   var STATUS_FAILED = '\u9884\u7ea6\u5931\u8d25';
 
   function getQueryId() {
@@ -37,42 +37,46 @@
     return '';
   }
 
-  function pickDatePart(str) {
-    if (!str) return '';
-    var m = String(str).trim().match(/^(\d{4})-(\d{2})-(\d{2})/);
-    return m ? (m[1] + '-' + m[2] + '-' + m[3]) : '';
-  }
-
   function renderHeader(item) {
     $('#hdrAppointmentNo').text('#' + (item.appointmentNo || '-'));
     var $st = $('#hdrStatus');
     $st.text(item.status || '-').attr('class', 'recv-detail-status ' + statusClass(item.status));
-    $('#btnAudit').toggle(item.status === STATUS_WH_PENDING);
+    var auditApi = window.UsRecvAppointmentAudit;
+    var whPending = auditApi ? auditApi.STATUS_WH_PENDING : STATUS_WH_PENDING;
+    var customerPending = auditApi ? auditApi.STATUS_CUSTOMER_PENDING : '\u5ba2\u6237\u5f85\u786e\u8ba4';
+    $('#btnAudit').toggle(item.status === whPending);
+    $('#btnAuditUpdate').toggle(item.status === customerPending);
+    $('#btnSignOff').toggle(C.isEligibleForUsSignOff(item));
+  }
+
+  function renderCustomerBanner(item) {
+    $('#detailCustomer').html(
+      '\u5ba2\u6237\u7f16\u53f7\uff1a<strong>' + escapeHtml(item.customerCode || '-') + '</strong>'
+    );
   }
 
   function renderApplyGrid(item) {
     var wh = item.warehouse || '';
-    var link = C.defaultBookingLink(item);
-    var linkHtml = link
-      ? '<a href="' + escapeHtml(link) + '" target="_blank" rel="noopener">' + escapeHtml(link) + '</a>'
-      : '-';
-    var remarkText = String(item.remark || '').trim();
+    var linkHtml = C.isDeliveryCodePublished(item) ? C.buildBookingLinkHtml(item) : '-';
     var fields = [
-      ['预约单号', escapeHtml(item.appointmentNo || '-')],
-      ['预约码', escapeHtml(item.deliveryCode || '-')],
-      ['预约状态', escapeHtml(item.status || '-')],
       ['预约仓库', escapeHtml(item.warehouse || '-')],
+      ['预约单号', escapeHtml(item.appointmentNo || '-')],
+      ['送仓码', escapeHtml(C.formatDeliveryCodeCell(item))],
+      ['状态', escapeHtml(item.status || '-')],
       ['送仓类型', escapeHtml(item.deliveryType || '-')],
       ['送仓总箱数', escapeHtml(C.formatEstimatedCartons(item))],
+      ['总体积（m³）', escapeHtml(C.formatTotalVolume(item))],
+      ['总重量（kg）', escapeHtml(C.formatTotalWeight(item))],
       ['是否打托', escapeHtml(C.formatPalletized(item))],
       ['送仓总托数', escapeHtml(C.formatTotalPallets(item))],
       ['集装箱号', escapeHtml(item.containerNo || '-')],
-      ['柜型', escapeHtml(item.containerType || '-')],
-      ['创建人', escapeHtml(C.getBookerParty(item))],
-      [C.localTimeFieldLabel('期望送仓日期', wh), escapeHtml(C.formatUsWarehouseTime(item.expectedInboundTime, wh))],
-      ['货代备注', remarkText ? escapeHtml(remarkText) : '-'],
-      ['货代公司', escapeHtml(item.forwarder || '-')],
-      ['联系邮箱', escapeHtml((item.emails || []).join('\u3001') || '-')],
+      ['柜型', escapeHtml(item.containerType || item.containerSeq || '-')],
+      ['货代联系邮箱', escapeHtml(C.formatContactEmailsDisplay(item))],
+      ['联系电话', escapeHtml(C.formatFgContactPhone(item))],
+      [C.localTimeFieldLabel('期望送仓日期', wh),
+        escapeHtml(C.formatExpectedInboundDatesDisplay(item, wh))],
+      ['货代备注', escapeHtml(String(item.remark || '').trim() || '-')],
+      ['提交时间', escapeHtml(item.submitTime || '-')],
       ['预约链接', linkHtml]
     ];
     $('#applyGrid').html(fields.map(function (f) {
@@ -80,22 +84,18 @@
     }).join(''));
   }
 
-  function formatWarehousePhone(item) {
-    var phone = item.warehousePhone || item.warehouseConfirmedPhone;
-    return phone && String(phone).trim() ? String(phone).trim() : '(848) 667-1949';
-  }
-
   function renderWhConfirmGrid(item) {
     var wh = item.warehouse || item.confirmedWarehouse || '';
+    var confirmedSlot = C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh);
     var wPod = C.getWPodDocumentUrl(item, '../fg/') || item.wPodUrl;
     var wPodHtml = wPod
       ? '<a href="' + escapeHtml(wPod) + '" target="_blank" rel="noopener">\u4e0b\u8f7d W.BOL</a>'
       : '-';
     var fields = [
       ['仓库确认地址', escapeHtml(item.warehouseConfirmedAddress || '\u5f85\u786e\u8ba4')],
-      ['联系电话', escapeHtml(formatWarehousePhone(item))],
       [C.localTimeFieldLabel('仓库确认时段', wh),
-        escapeHtml(C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) || '\u5f85\u786e\u8ba4')],
+        escapeHtml(confirmedSlot !== '-' ? confirmedSlot : '\u5f85\u786e\u8ba4')],
+      ['仓库审核备注', escapeHtml(String(item.auditRemark || '').trim() || '-')],
       ['W.BOL \u4e0b\u8f7d', wPodHtml]
     ];
     $('#whConfirmGrid').html(fields.map(function (f) {
@@ -120,37 +120,41 @@
   }
 
   function renderInbound(item) {
-    var rows = C.buildInboundDetailRows(item);
+    var orders = item.inboundOrders || [];
     var $body = $('#inboundBody');
-    if (!rows.length) {
-      $body.html('<tr><td colspan="9" class="recv-detail-empty">\u6682\u65e0\u5173\u8054\u5165\u5e93\u5355</td></tr>');
+    if (!orders.length) {
+      $body.html('<tr><td colspan="8" class="recv-detail-empty">\u65e0\u5173\u8054\u5165\u5e93\u5355</td></tr>');
       return;
     }
-    $body.html(rows.map(function (row) {
+    $body.html(orders.map(function (row) {
+      var enriched = C.enrichInboundRow(row);
       return '<tr>' +
         '<td>' + escapeHtml(row.orderNo) + '</td>' +
-        '<td>' + escapeHtml(row.shippingMethod) + '</td>' +
         '<td>' + escapeHtml(row.status) + '</td>' +
         '<td>' + escapeHtml(row.warehouse) + '</td>' +
-        '<td>' + escapeHtml(row.cartons != null ? row.cartons : '-') + '</td>' +
-        '<td>' + escapeHtml(row.deliveryCartons != null ? row.deliveryCartons : '-') + '</td>' +
-        '<td>' + escapeHtml(row.receivedCartons != null ? row.receivedCartons : '-') + '</td>' +
+        '<td>' + escapeHtml(row.shippingMethod) + '</td>' +
+        '<td>' + escapeHtml(enriched.cartons != null ? enriched.cartons : '-') + '</td>' +
+        '<td>' + escapeHtml(enriched.deliveryCartons != null ? enriched.deliveryCartons : '-') + '</td>' +
+        '<td>' + escapeHtml(enriched.receivedCartons != null ? enriched.receivedCartons : '-') + '</td>' +
         '<td>' + escapeHtml(row.createDate) + '</td>' +
-        '<td>' + escapeHtml(row.handleMethod) + '</td>' +
         '</tr>';
     }).join(''));
   }
 
   function renderLogs(item) {
     $('#logList').html(C.buildOperationLogListHtml(item, {
+      portal: 'warehouse',
+      sort: 'desc',
       emptyClass: 'recv-detail-empty',
-      timeClass: 'recv-detail-log-time'
+      timeClass: 'recv-detail-log-time',
+      emptyText: '\u6682\u65e0\u65e5\u5fd7'
     }));
   }
 
   function renderAll(item) {
     currentItem = item;
     renderHeader(item);
+    renderCustomerBanner(item);
     renderApplyGrid(item);
     renderWhConfirmGrid(item);
     renderArrivalUnloadGrid(item);
@@ -171,143 +175,6 @@
         $('#paneInbound').addClass('active');
       }
     });
-  }
-
-  function updateWhAddress() {
-    var wh = C.findUsWarehouseById($('#auditWarehouse').val());
-    $('#auditWhAddress').text(wh ? wh.address : '');
-  }
-
-  function getAuditDecision() {
-    return $('input[name="auditDecision"]:checked').val() || 'confirm';
-  }
-
-  function syncAuditPanels() {
-    var decision = getAuditDecision();
-    if (decision === 'reject') {
-      $('#auditPanelWh').hide();
-      $('#auditPanelReject').show();
-    } else {
-      $('#auditPanelWh').show();
-      $('#auditPanelReject').hide();
-    }
-    $('#auditFormError').hide().text('');
-  }
-
-  function initAuditWarehouseSelect() {
-    var $sel = $('#auditWarehouse').empty();
-    C.getUsWarehouseOptions().forEach(function (wh) {
-      $sel.append($('<option></option>').val(wh.id).text(wh.name));
-    });
-    $sel.val('us-west-4');
-    updateWhAddress();
-  }
-
-  function resetAuditForm(item) {
-    $('input[name="auditDecision"][value="confirm"]').prop('checked', true);
-    $('#auditRemarkOptional,#auditRemarkReject').val('');
-    $('#auditSlotStart,#auditSlotEnd,#auditSlotDate').val('');
-    initAuditWarehouseSelect();
-    var wh = item.warehouse || '';
-    var expected = C.formatUsWarehouseTime(item.expectedInboundTime, wh);
-    $('#auditExpectedTime').text(expected || '-');
-    $('#auditCustomerRemark').text(String(item.remark || '').trim() || '-');
-    var expectedDate = pickDatePart(item.expectedInboundTime);
-    if (expectedDate) {
-      $('#auditSlotDate').val(expectedDate);
-    }
-    $('#auditSlotStart').val('09:00');
-    $('#auditSlotEnd').val('12:00');
-    syncAuditPanels();
-  }
-
-  function openAuditModal() {
-    if (!currentItem || currentItem.status !== STATUS_WH_PENDING) return;
-    resetAuditForm(currentItem);
-    $('#auditModalBackdrop').show();
-  }
-
-  function closeAuditModal() {
-    $('#auditModalBackdrop').hide();
-    $('#auditFormError').hide().text('');
-  }
-
-  function showAuditError(msg) {
-    $('#auditFormError').text(msg).show();
-  }
-
-  function validateAndBuildPayload() {
-    var decision = getAuditDecision();
-    if (decision === 'reject') {
-      var rejectRemark = $('#auditRemarkReject').val().trim();
-      if (rejectRemark.length < 5) {
-        showAuditError('\u62d2\u6536\u539f\u56e0\u9700\u81f3\u5c11 5 \u5b57\u7b26');
-        return null;
-      }
-      return { decision: 'reject', remark: rejectRemark };
-    }
-    var warehouseId = $('#auditWarehouse').val();
-    if (!warehouseId) {
-      showAuditError('\u8bf7\u9009\u62e9\u4ed3\u5e93');
-      return null;
-    }
-    var slotDate = $('#auditSlotDate').val();
-    var slotStart = $('#auditSlotStart').val();
-    var slotEnd = $('#auditSlotEnd').val();
-    if (!slotDate) {
-      showAuditError('\u8bf7\u9009\u62e9\u4ed3\u5e93\u786e\u8ba4\u65e5\u671f');
-      return null;
-    }
-    if (!slotStart || !slotEnd) {
-      showAuditError('\u8bf7\u9009\u62e9\u4ed3\u5e93\u786e\u8ba4\u65f6\u6bb5\u7684\u8d77\u59cb\u4e0e\u7ed3\u675f\u65f6\u95f4');
-      return null;
-    }
-    if (slotStart >= slotEnd) {
-      showAuditError('\u7ed3\u675f\u65f6\u95f4\u987b\u665a\u4e8e\u5f00\u59cb\u65f6\u95f4');
-      return null;
-    }
-    var remark = $('#auditRemarkOptional').val().trim();
-    return {
-      decision: 'confirm',
-      warehouseId: warehouseId,
-      slotDate: slotDate,
-      slotStartHHMM: slotStart,
-      slotEndHHMM: slotEnd,
-      remark: remark
-    };
-  }
-
-  function statusMessage(decision) {
-    if (decision === 'reject') return '\u5df2\u62d2\u6536\uff0c\u72b6\u6001\u5df2\u53d8\u66f4\u4e3a\u9884\u7ea6\u5931\u8d25\u3002';
-    return '\u786e\u8ba4\u65f6\u6bb5\u5df2\u63d0\u4ea4\uff0c\u72b6\u6001\u5df2\u53d8\u66f4\u4e3a\u5ba2\u6237\u5f85\u786e\u8ba4\uff0c\u7b49\u5f85\u5ba2\u6237\u62cd\u677f\u3002';
-  }
-
-  function submitAudit() {
-    var payload = validateAndBuildPayload();
-    if (!payload) return;
-    var $btn = $('#auditModalSubmit').prop('disabled', true);
-    C.submitReceivingAudit(currentItem, payload, function (err, updated) {
-      $btn.prop('disabled', false);
-      if (!updated) {
-        showAuditError('\u63d0\u4ea4\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u5fc5\u586b\u9879\u540e\u91cd\u8bd5\u3002');
-        return;
-      }
-      closeAuditModal();
-      renderAll(updated);
-      var msg = C.persistSuccessMessage(err, statusMessage(payload.decision));
-      window.alert(msg);
-    });
-  }
-
-  function bindAudit() {
-    $('#btnAudit').on('click', openAuditModal);
-    $('#auditModalClose,#auditModalCancel').on('click', closeAuditModal);
-    $('#auditModalBackdrop').on('click', function (e) {
-      if (e.target === this) closeAuditModal();
-    });
-    $('input[name="auditDecision"]').on('change', syncAuditPanels);
-    $('#auditWarehouse').on('change', updateWhAddress);
-    $('#auditModalSubmit').on('click', submitAudit);
   }
 
   function loadAndRender() {
@@ -331,7 +198,27 @@
       return;
     }
     bindTabs();
-    bindAudit();
+    if (window.UsRecvAppointmentAudit) {
+      UsRecvAppointmentAudit.init({
+        detailBtn: '#btnAudit',
+        detailUpdateBtn: '#btnAuditUpdate',
+        getCurrentItem: function () { return currentItem; },
+        onSuccess: function (updated) {
+          currentItem = updated;
+          renderAll(updated);
+        }
+      });
+    }
+    if (window.UsRecvAppointmentSignOff) {
+      UsRecvAppointmentSignOff.init({
+        detailBtn: '#btnSignOff',
+        getCurrentItem: function () { return currentItem; },
+        onSuccess: function (updated) {
+          currentItem = updated;
+          renderAll(updated);
+        }
+      });
+    }
     C.bindAppointmentStorageSync(loadAndRender);
     loadAndRender();
   }

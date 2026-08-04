@@ -1,0 +1,36 @@
+version: 1
+scope:
+  include: []
+  exclude:
+    - "node_modules/**"
+    - "dist/**"
+    - "mock_data/uploads/**"
+repowiki:
+  template: "product_requirement"
+  notes:
+    - text: "本项目为纯前端原型演示（无框架），数据通过 mock_data/*.js 全局变量 + localStorage 持久化，不使用任何构建工具。us 海外仓系统使用 jQuery 1.8.3 + Bootstrap 2.x（vendor/overseawh-legacy）。"
+    - text: "目标页面为 us 海外仓系统：us/receiving-appointment.html（入库预约管理列表页）、us/js/receiving-appointment-list.js（列表逻辑）、customer/js/deliveryAppointment-common.js（公共数据层）、mock_data/deliveryAppointment.js（模拟数据源）。"
+    - text: "新增功能：在海外仓预约列表页右侧增加抽屉式 FullCalendar 3.x 工作日历，展示所有「待送仓」状态预约单为日历事件，并支持手动新增待办。FullCalendar 3.x 兼容 jQuery 1.7.1+（现有 1.8.3 可用），额外需引入 moment.js 2.x。"
+    - text: "日历 UI 风格要求：大尺寸日格子（min-height ≥ 90px）、日期数字加粗居右上角、事件以“蓝色圆点 + 时间 + 标题”形式垂直堆叠、当前日期用蓝色圆形背景高亮、浅灰细线分隔、充足留白，整体简洁现代企业风。"
+    - text: "抽屉支持左右拖拽调整宽度：左边缘有 6px 拖拽手柄（cursor: col-resize），向左拖扩大、向右拖缩小；最小宽度 380px，最大宽度 90vw；日历内容自适应宽度变化。"
+    - text: "日历事件数据映射：预约单 warehouseConfirmedInboundTime（格式如 '2026-06-26 09:00--12:00'）或 expectedInboundTime 作为事件日期，事件须显示具体时间段（如 09:00-12:00）；appointmentNo + deliveryCode + warehouse 作为事件标题，状态为「待送仓」或「已超时」的记录自动上日历。"
+    - text: "超时紧急程度颜色区分规则：事件日期 < 今天且状态为「已超时」或「待送仓」即为超时；超时 1-3 天为黄色警告（#faad14）、3-7 天为橙色紧急（#fa8c16）、7 天以上为红色严重（#f5222d）；未超时事件保持默认蓝色（#2196F3）。"
+    - text: "手动待办数据独立于预约单数据，使用 localStorage 存储（key: pm_demo_calendar_todos），结构包含 id/title/date/customerCode/ticketNo/remark/done 字段。新增待办小表单须包含：标题、日期、客户编码、票号、备注。"
+  documents:
+    - title: "预约送仓工作日历需求文档"
+      goal: "描述 FullCalendar 3.x 抽屉日历的功能需求、交互设计、数据结构与接口约定"
+      parent: ""
+      hints:
+        - "涵盖抽屉 UI 交互、日历事件渲染、手动待办 CRUD、数据持久化方案"
+        - "明确待送仓预约单自动映射规则与手动待办的区别"
+      template: |
+        ## 功能概述
+        ## 用户角色与场景
+        ## 交互设计
+        ## 数据结构
+        ## 接口与依赖
+        ## 验收标准
+knowledgecard:
+  notes:
+    - text: "海外仓预约模块边界：us/receiving-appointment.html + us/js/receiving-appointment-list.js + customer/js/deliveryAppointment-common.js + mock_data/deliveryAppointment.js 构成完整闭环；新增日历功能应作为独立 JS 文件（如 us/js/receiving-calendar.js）挂载，不侵入现有列表逻辑。"
+    - text: "FullCalendar 3.x 兼容现有 jQuery 1.8.3，仅需额外引入 moment.js 2.x；所有 vendor 资源放置在 us/js/vendor/ 或 us/css/vendor/ 目录下，通过 script/link 标签按顺序引入。"

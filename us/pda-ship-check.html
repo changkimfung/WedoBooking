@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>PDA 发货复核 - 海外仓</title>
+  <link rel="stylesheet" href="css/pda.css">
+</head>
+<body class="pda-body pda-theme-scan">
+  <div class="pda-view">
+    <header class="pda-bar">
+      <div class="pda-bar-inner">
+        <span class="pda-bar-user">操作人:郑剑锋<strong class="pda-bar-site">LA</strong></span>
+        <div class="pda-bar-menu">
+          <button type="button" class="pda-bar-menu-btn" id="pda-menu-btn">菜单</button>
+          <ul class="pda-bar-dd" id="pda-menu-list" hidden>
+            <li><a href="outOrder.html">发货复核（PC）</a></li>
+            <li><a href="pda-receiving-scan.html">PDA收货确认</a></li>
+            <li><a href="receiving-appointment.html">入库预约管理</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="pda-main">
+      <!-- 第一页：扫描订单面单号 -->
+      <section id="pageOrder" class="pda-page">
+        <h1 class="pda-page-title">发货复核</h1>
+        <p class="pda-muted">扫描订单面单单号，按 Enter 匹配对应出库单</p>
+
+        <table class="pda-ris-table">
+          <tr>
+            <td class="pda-ris-label"><span class="pda-ris-req">*</span>Order:</td>
+            <td>
+              <div class="pda-sc-cell">
+                <input type="text" id="orderInput" class="pda-ris-input" autocomplete="off"
+                  enterkeyhint="search" placeholder="订单面单号 / 出库单号" autofocus>
+                <button type="button" class="pda-sc-inline-btn" id="btnOrderReset">重置</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="pda-ris-mstatus" id="orderStatus"></div>
+        <div class="pda-sc-hint pda-hidden" id="orderDoneHint">该订单已复核完成，无需重复操作</div>
+      </section>
+
+      <!-- 第二页：扫描SKU料号 -->
+      <section id="pageScan" class="pda-page pda-hidden">
+        <div class="pda-sc-topbar">
+          <div>
+            <div class="pda-sc-topbar-order" id="scOrderNo">-</div>
+            <div class="pda-sc-topbar-status" id="scOrderStatus">-</div>
+          </div>
+          <button type="button" class="pda-sc-submit" id="btnSubmit">提交审核</button>
+        </div>
+
+        <table class="pda-ris-table">
+          <tr>
+            <td class="pda-ris-label"><span class="pda-ris-req">*</span>SKU:</td>
+            <td>
+              <input type="text" id="skuInput" class="pda-ris-input" autocomplete="off"
+                enterkeyhint="search" placeholder="扫描货品料号">
+            </td>
+          </tr>
+        </table>
+
+        <div class="pda-ris-mstatus" id="skuStatus"></div>
+
+        <table class="pda-sc-table">
+          <thead>
+            <tr>
+              <th>料号</th>
+              <th style="text-align:right;">扫描次数/订单数量</th>
+            </tr>
+          </thead>
+          <tbody id="skuTbody"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="pda-alert-modal-backdrop pda-hidden" id="pdaAlertModal" aria-hidden="true">
+    <div class="pda-alert-modal" role="alertdialog" aria-labelledby="pdaAlertModalText">
+      <p class="pda-alert-modal-body" id="pdaAlertModalText"></p>
+      <button type="button" class="pda-ris-btn-footer pda-ris-btn-primary" id="pdaAlertModalOk">确定</button>
+    </div>
+  </div>
+
+  <script src="../mock_data/outOrder.js"></script>
+  <script src="js/ship-check-store.js"></script>
+  <script src="js/pda-core.js"></script>
+  <script src="js/pda-ship-check.js"></script>
+</body>
+</html>

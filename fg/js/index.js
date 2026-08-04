@@ -12,13 +12,13 @@
     e.preventDefault();
     var code = (input.value || '').trim();
     if (!code) {
-      showError('请输入预约码');
+      showError(FgI18n.t('errEmptyCode'));
       input.focus();
       return;
     }
     var item = OfficialReservation.getAppointment(code);
     if (!item) {
-      showError('预约码无效或不存在，请检查后重试');
+      showError(FgI18n.t('errInvalidCode'));
       return;
     }
     showError('');

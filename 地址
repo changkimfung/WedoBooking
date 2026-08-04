@@ -1,7 +1,61 @@
-仓储中台：http://localhost:3847/wh/deliveryAppointment.html
-装柜清单管理：http://localhost:3847/erp/containerLoading.html
+# 线上 · https://wedobooking200.vercel.app/
+首页：https://wedobooking200.vercel.app/
+客户前台：https://wedobooking200.vercel.app/customer/deliveryAppointment.html
+客户产品列表：https://wedobooking200.vercel.app/customer/productList.html
+官网预约：https://wedobooking200.vercel.app/fg/index.html
+货代详情(示例)：https://wedobooking200.vercel.app/fg/reservationDetail.html
+货代移动端：https://wedobooking200.vercel.app/fg/m/reservationDetail.html
+仓储中台：https://wedobooking200.vercel.app/wh/deliveryAppointment.html
+产品信息管理：https://wedobooking200.vercel.app/wh/productInfo.html
+品牌授权文件管理：https://wedobooking200.vercel.app/wh/brandAuthorization.html
+装柜清单管理：https://wedobooking200.vercel.app/erp/containerLoading.html
+收货预约管理(海外仓/us)：https://wedobooking200.vercel.app/us/receiving-appointment.html
+入库预约详情(海外仓/us)：https://wedobooking200.vercel.app/us/receiving-appointment-detail.html?id=appt-003
+PDA收货扫描(海外仓/us)：https://wedobooking200.vercel.app/us/pda-receiving-scan.html
+作品集：https://wedobooking200.vercel.app/portfolio/index.html
+
+# 本地开发 · npm run dev → http://localhost:3847
 客户前台：http://localhost:3847/customer/deliveryAppointment.html
+客户产品列表：http://localhost:3847/customer/productList.html
+客户新增产品：http://localhost:3847/customer/productCreate.html
 官网预约：http://localhost:3847/fg/index.html
+仓储中台：http://localhost:3847/wh/deliveryAppointment.html
+产品信息管理：http://localhost:3847/wh/productInfo.html
+品牌授权文件管理：http://localhost:3847/wh/brandAuthorization.html
+装柜清单管理：http://localhost:3847/erp/containerLoading.html
 收货预约管理(海外仓/us)：http://localhost:3847/us/receiving-appointment.html
 入库预约详情(海外仓/us)：http://localhost:3847/us/receiving-appointment-detail.html?id=appt-003
 PDA收货扫描(海外仓/us)：http://localhost:3847/us/pda-receiving-scan.html
+
+
+
+预约送仓系统 · 初版目标简介
+## 版本范围
+   a.完善自发头程入库单的预约送仓线上化。
+   b.中程转运、运德头程发货预约不在本版范围，纳入二版计划。
+##整体流程
+    a. 客户创建预约送仓单（指定发货计划，选择预约仓库、填写联系邮箱）
+    b. 货代通过官网链接，进行申请具体预约时间（系统邮件推送）
+    c. 海外仓接收并协商时间，邮件推送货代进行确认（预约列表查看、到仓确认、异常处理）
+    d. PDA到仓扫描（收货数量、到仓拍照）
+##需求文档：
+https://doc.weixin.qq.com/doc/w3_AXcAQQZKAGYCNw2XIA5ujQ70tnpNH?scode=AF4AogeVABEfz59h6KAXcAQQZKAGY
+###腾讯云服务器：
+    a.官网货代端（移动端）：提供三方货代移动设备响应式布局
+       地址：https://106.53.68.5:3847/fg/m/reservationDetail.html?code=SC7L1Q
+    b.官网货代端：提供第三方货代与仓库进行具体派送时间沟通沟通
+       地址：http://106.53.68.5:3847/fg/reservationDetail.html?code=SC7L1Q
+    c.客户前台预报：提供客户自发头程创建预约送仓需求的页面
+      地址：http://106.53.68.5:3847/customer/deliveryAppointment.html
+    d.海外仓审核预约管理：提供海外仓审核预约入库的页面
+     地址：http://106.53.68.5:3847/us/receiving-appointment.html
+    e.仓储中台数据管理：支持运德承运订单创建入库预报需求的页面
+     地址：http://106.53.68.5:3847/wh/deliveryAppointment.html
+    f.PDA：支持海外仓进行收货拍照上传BOL的操作系统
+    地址：http://106.53.68.5:3847/us/pda-receiving-scan.html
+
+要确认的点：
+1.流程有没有问题
+2.邮件模板有没有问题
+3.送仓文件字段
+4.邮箱谁来提供

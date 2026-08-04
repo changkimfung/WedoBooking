@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发货复核 - 海外仓</title>
+  <link href="css/vendor/overseawh-legacy/bootstrap.css" rel="stylesheet" type="text/css">
+  <link href="css/vendor/overseawh-legacy/main.css" rel="stylesheet" type="text/css">
+  <link href="css/out-order-list.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div id="wedo-overseas-chrome-header"></div>
+
+<div class="container-fluid conter_menu" id="oor-wrap">
+  <!-- 当日数据指标看板 -->
+  <div class="oor-stats" id="oorStats">
+    <div class="oor-stats-date">统计日期：<strong id="oorStatDate">-</strong>（当日已发货订单）</div>
+    <div class="oor-stats-cards">
+      <div class="oor-stat-card sc-total">
+        <div class="oor-stat-label">当日总发货订单量</div>
+        <div class="oor-stat-value" id="statTotal">0</div>
+      </div>
+      <div class="oor-stat-card sc-met">
+        <div class="oor-stat-label">当日已合规复核订单量</div>
+        <div class="oor-stat-value" id="statMet">0</div>
+      </div>
+      <div class="oor-stat-card sc-none">
+        <div class="oor-stat-label">当日未复核订单量</div>
+        <div class="oor-stat-value" id="statNone">0</div>
+      </div>
+      <div class="oor-stat-card sc-partial">
+        <div class="oor-stat-label">当日部分复核订单量</div>
+        <div class="oor-stat-value" id="statPartial">0</div>
+      </div>
+      <div class="oor-stat-card sc-error">
+        <div class="oor-stat-label">当日复核异常订单量</div>
+        <div class="oor-stat-value" id="statError">0</div>
+      </div>
+      <div class="oor-stat-card sc-rate">
+        <div class="oor-stat-label">复核完成率</div>
+        <div class="oor-stat-value" id="statRate">0.00%</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="enter" class="subnav mywell padding8">
+    <div class="control-group">
+      <form class="form-inline" onsubmit="return false;">
+        <div class="paddleft10">
+          出库单：<input type="text" id="q_order_no" class="span2" style="width:160px;" placeholder="模糊" autocomplete="off">
+          面单号：<input type="text" id="q_tracking_no" class="span2" style="width:160px;" placeholder="模糊" autocomplete="off">
+          复核状态：
+          <select id="q_check_status" class="span2" style="width:130px;">
+            <option value="">全部</option>
+            <option value="未复核">未复核</option>
+            <option value="复核异常">复核异常</option>
+            <option value="部分复核">部分复核</option>
+            <option value="已达标">已达标</option>
+          </select>
+          发货时间：
+          <input type="date" id="q_ship_from" style="width:140px;">
+          ~
+          <input type="date" id="q_ship_to" style="width:140px;">
+          时区：
+          <select id="q_time_zone" class="span2" style="width:110px;">
+            <option value="cn">中国时间</option>
+            <option value="us">美国时间</option>
+          </select>
+          <button type="button" class="btn" id="btn_oor_query">查询</button>
+          <button type="button" class="btn" id="btn_oor_reset">重置</button>
+          <button type="button" class="btn btn-success" id="btn_oor_export" title="按上方发货时间段导出 Excel（订单列表 + 复核日志两个工作表）">导出</button>
+          <a href="pda-ship-check.html" class="btn btn-info" style="margin-left:8px;">PDA发货复核</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="container-fluid padding10 well" style="box-sizing:border-box;overflow-x:auto;">
+    <table class="table table-bordered table-hover" id="oorTable">
+      <thead>
+        <tr class="info">
+          <th>出库单</th>
+          <th>SKU种类数</th>
+          <th>SKU总数(PCS)</th>
+          <th>复核状态</th>
+          <th>复核次数</th>
+          <th>发货时间</th>
+          <th>复核完成时间</th>
+          <th style="width:90px;">操作</th>
+        </tr>
+      </thead>
+      <tbody id="oorBody"></tbody>
+    </table>
+    <p id="oorEmpty" style="display:none;text-align:center;color:#8a97a5;padding:16px 0;">无符合条件的出库单</p>
+    <div class="oor-pager" id="oorPager"></div>
+  </div>
+</div>
+
+<!-- 详情已改为独立页面 outOrderDetail.html -->
+
+<footer class="footer">
+  <div class="container">
+    Copyright &copy; 运德供应链 &middot; 发货复核
+  </div>
+</footer>
+
+<script src="js/vendor/overseawh-legacy/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="js/vendor/overseawh-legacy/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/overseawh-chrome.js" type="text/javascript"></script>
+<script src="js/wedo-time.js" type="text/javascript"></script>
+<script type="text/javascript">
+  WedoOverseasChrome.mountHeader('#wedo-overseas-chrome-header', {
+    activeSecondMenu: 'outOrderList',
+    activeWarehouseIndex: 0,
+    userName: '演示用户',
+    assetsRoot: 'css/vendor/'
+  });
+</script>
+<script src="../mock_data/outOrder.js"></script>
+<script src="js/ship-check-store.js"></script>
+<script src="js/outOrderList.js" type="text/javascript"></script>
+</body>
+</html>

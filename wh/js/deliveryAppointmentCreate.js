@@ -7,6 +7,7 @@
   var prefillLoadingItem = null;
   var pickerRows = [];
   var pickerChecked = {};
+  var CONTAINER_TYPE_OPTIONS = ['20-GP', '40-gp', '40hq', '45-hq'];
 
   function val(id) {
     var el = document.getElementById(id);
@@ -15,6 +16,39 @@
 
   function isPositiveInt(v) {
     return /^[1-9]\d*$/.test(String(v || '').trim());
+  }
+
+  function isPositiveDecimal(v) {
+    if (!v) return false;
+    if (!/^\d+(\.\d+)?$/.test(String(v).trim())) return false;
+    return Number(v) > 0;
+  }
+
+  function normalizeContainerTypeValue(raw) {
+    var val = String(raw || '').trim();
+    if (!val) return '';
+    for (var i = 0; i < CONTAINER_TYPE_OPTIONS.length; i++) {
+      if (CONTAINER_TYPE_OPTIONS[i].toLowerCase() === val.toLowerCase()) {
+        return CONTAINER_TYPE_OPTIONS[i];
+      }
+    }
+    return '';
+  }
+
+  function setContainerTypeValue(raw) {
+    var sel = document.getElementById('create_container_type');
+    if (!sel) return;
+    var normalized = normalizeContainerTypeValue(raw);
+    if (normalized) {
+      sel.value = normalized;
+      return;
+    }
+    if (raw) {
+      ensureSelectOption('create_container_type', String(raw).trim());
+      sel.value = String(raw).trim();
+    } else {
+      sel.value = '';
+    }
   }
 
   function escapeHtml(s) {
@@ -53,7 +87,8 @@
   function resolveDestinationWarehouse(raw) {
     var value = String(raw || '').trim();
     if (!value) return 'FBA';
-    return value.toLowerCase().indexOf('cn') === 0 ? 'FBA' : value;
+    if (value.toLowerCase().indexOf('cn') === 0) return 'FBA';
+    return C.normalizeWarehouseName(value);
   }
 
   function findLoadingByContainerNo(containerNo) {
@@ -76,7 +111,7 @@
     if (item && item.destinationPort && (
       item.destinationPort.indexOf('SAVANNAH') >= 0 ||
       item.destinationPort.indexOf('NEW YORK') >= 0
-    )) return '美东仓';
+    )) return C.normalizeWarehouseName('美东仓');
     return '深圳A仓';
   }
 
@@ -153,13 +188,11 @@
     var warehouse = resolveAppointmentWarehouse(item);
     ensureSelectOption('create_warehouse', warehouse);
     document.getElementById('create_warehouse').value = warehouse;
-    document.getElementById('create_booker_type').value = 'shipping';
     document.getElementById('create_delivery_type').value = '整柜';
     document.getElementById('create_total_cartons').value = item.actualCartons || item.preloadedCartons || '';
     document.getElementById('create_is_palletized').value = 'no';
     document.getElementById('create_container_no').value = item.containerNo || '';
-    document.getElementById('create_container_type').value = item.containerType || '';
-    document.getElementById('create_forwarder').value = item.carrier || item.vesselVoyage || '';
+    setContainerTypeValue(item.containerType || '');
     selectedOrders = (item.tickets || []).map(function (ticket, idx) {
       return buildLoadingOrderSnapshot(item, ticket, idx + 1);
     });
@@ -197,15 +230,19 @@
     });
   }
 
+  function renderWarehouseAddressTip() {
+    C.renderWarehouseAddressTip(document.getElementById('warehouseAddressTip'), val('create_warehouse'));
+  }
+
   function syncFields() {
-    var isShipping = val('create_booker_type') === 'shipping';
     var isFcl = val('create_delivery_type') === '整柜';
     var isPalletized = val('create_is_palletized') === 'yes';
     var customerCode = document.getElementById('create_customer_code');
     if (customerCode) {
-      customerCode.disabled = isShipping;
-      if (isShipping) customerCode.value = '运德船务';
-      else if (!customerCode.value || customerCode.value === '运德船务') customerCode.value = C.getCurrentCustomerCode();
+      customerCode.disabled = false;
+      if (!customerCode.value || customerCode.value === '运德船务') {
+        customerCode.value = C.getCurrentCustomerCode();
+      }
     }
     document.getElementById('create_pallet_row').style.display = isPalletized ? '' : 'none';
     if (!isPalletized) document.getElementById('create_total_pallets').value = '';
@@ -215,10 +252,9 @@
       hint.textContent = prefillLoadingItem
         ? ('已按装柜清单集装箱号 ' + prefillLoadingItem.containerNo +
           ' 带入实装票号；目的仓 cn 开头的票号统一展示为 FBA。')
-        : (isShipping
-        ? '仅可添加：状态=运输在途、收货仓=目的仓（运德船务创建不限制运输方式）'
-        : '仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=目的仓');
+        : '仅可添加：状态=运输在途、发货方式=客户自发头程、收货仓=预约仓';
     }
+    renderWarehouseAddressTip();
   }
 
   function renderSelectedInOrders() {
@@ -270,10 +306,9 @@
 
   function canUseInOrder(item) {
     var warehouse = val('create_warehouse');
-    var isShipping = val('create_booker_type') === 'shipping';
     if (!item || item.status !== '运输在途') return false;
-    if (warehouse && item.warehouse !== warehouse) return false;
-    if (!isShipping && item.shippingMethod !== '客户自发头程') return false;
+    if (warehouse && !C.isSameWarehouse(item.warehouse, warehouse)) return false;
+    if (item.shippingMethod !== '客户自发头程') return false;
     return true;
   }
 
@@ -290,7 +325,7 @@
         (containerItem.tickets || []).forEach(function (ticket, idx) {
           var row = buildLoadingPickerRow(containerItem, ticket, idx + 1);
           if (orderNo && String(row.orderNo || '').toLowerCase().indexOf(orderNo) === -1) return;
-          if (warehouse && row.warehouse !== warehouse) return;
+          if (warehouse && !C.isSameWarehouse(row.warehouse, warehouse)) return;
           if (seen[row.key]) return;
           seen[row.key] = true;
           rows.push(row);
@@ -304,7 +339,7 @@
         if (!canUseInOrder(item)) return;
         var row = buildInOrderPickerRow(item);
         if (orderNo && String(row.orderNo || '').toLowerCase().indexOf(orderNo) === -1) return;
-        if (warehouse && row.warehouse !== warehouse) return;
+        if (warehouse && !C.isSameWarehouse(row.warehouse, warehouse)) return;
         if (seen[row.key]) return;
         seen[row.key] = true;
         rows.push(row);
@@ -372,8 +407,8 @@
       return;
     }
     var targetWarehouse = val('create_warehouse') || picked[0].warehouse;
-    for (var i = 0; i < picked.length; i++) {
-      if (picked[i].warehouse !== targetWarehouse) {
+    for (var i = 1; i < picked.length; i++) {
+      if (!C.isSameWarehouse(picked[i].warehouse, targetWarehouse)) {
         window.alert('所选入库单目的仓不一致，请按同一目的仓勾选');
         return;
       }
@@ -398,45 +433,48 @@
   }
 
   function validateForm() {
-    if (!val('create_warehouse')) return window.alert('请选择目的仓'), false;
-    if (!val('create_booker_type')) return window.alert('请选择预约方'), false;
-    if (val('create_booker_type') === 'customer' && !val('create_customer_code')) {
+    if (!val('create_warehouse')) return window.alert('请选择预约仓'), false;
+    if (!val('create_customer_code')) {
       window.alert('请填写用户编号');
       return false;
     }
     if (!isPositiveInt(val('create_total_cartons'))) return window.alert('送仓总箱数必须为正整数'), false;
+    var volume = val('create_total_volume');
+    if (volume && !isPositiveDecimal(volume)) {
+      window.alert('总体积须为大于 0 的数字');
+      return false;
+    }
+    var weight = val('create_total_weight');
+    if (weight && !isPositiveDecimal(weight)) {
+      window.alert('总重量须为大于 0 的数字');
+      return false;
+    }
     if (val('create_is_palletized') === 'yes' && !isPositiveInt(val('create_total_pallets'))) {
       window.alert('送仓总托数必须为正整数');
       return false;
     }
     if (val('create_delivery_type') === '整柜') {
       if (!val('create_container_no')) return window.alert('请填写集装箱号'), false;
-      if (!val('create_container_type')) return window.alert('请填写柜型'), false;
+      var containerType = normalizeContainerTypeValue(val('create_container_type'));
+      if (!containerType) return window.alert('请选择柜型'), false;
     }
     if (!selectedOrders.length) return window.alert('请至少添加一条入库单'), false;
     return true;
   }
 
   function buildPayload() {
-    var isShipping = val('create_booker_type') === 'shipping';
     var isPalletized = val('create_is_palletized') === 'yes';
-    var totals = C.calcTotals(selectedOrders);
-    if ((!totals.totalVolume && !totals.totalWeight) && selectedOrders.length) {
-      totals = selectedOrders.reduce(function (acc, row) {
-        acc.totalVolume += Number(row.volume) || 0;
-        acc.totalWeight += Number(row.grossWeight) || 0;
-        return acc;
-      }, { totalVolume: 0, totalWeight: 0 });
-    }
-    var email = val('create_email');
+    var containerType = normalizeContainerTypeValue(val('create_container_type'));
+    var volume = val('create_total_volume');
+    var weight = val('create_total_weight');
     return {
       id: C.genId(),
-      customerCode: isShipping ? '运德船务' : val('create_customer_code'),
-      bookChannel: isShipping ? 'shipping' : 'customer',
+      customerCode: val('create_customer_code'),
+      bookChannel: 'customer',
       appointmentNo: C.genAppointmentNo(),
       deliveryCode: C.genDeliveryCode(),
-      warehouse: val('create_warehouse'),
-      status: '仓库待确认',
+      warehouse: C.normalizeWarehouseName(val('create_warehouse')),
+      status: '仓库待审核',
       deliveryType: val('create_delivery_type') || '散货',
       expectedInboundTime: '',
       warehouseConfirmedInboundTime: '',
@@ -445,14 +483,13 @@
       isPalletized: isPalletized,
       totalPallets: isPalletized ? Number(val('create_total_pallets')) : '',
       estimatedCartons: Number(val('create_total_cartons')),
-      totalVolume: totals.totalVolume,
-      totalWeight: totals.totalWeight,
+      totalVolume: volume ? Number(volume) : '',
+      totalWeight: weight ? Number(weight) : '',
       submitTime: C.formatNow(),
       containerNo: val('create_container_no'),
-      containerType: val('create_container_type'),
-      containerSeq: val('create_container_type'),
-      forwarder: val('create_forwarder'),
-      emails: email ? [email] : [],
+      containerType: containerType,
+      containerSeq: containerType,
+      emails: [],
       sourceType: prefillLoadingItem ? 'containerLoading' : '',
       sourceContainerNo: prefillLoadingItem ? prefillLoadingItem.containerNo : '',
       sourceBillOfLadingNo: prefillLoadingItem ? prefillLoadingItem.billOfLadingNo : '',
@@ -501,7 +538,7 @@
     var item = buildPayload();
     if (!runCartonsConsistencyCheck(item)) return;
     C.addOrUpdateInMockAndPersist(item, { prepend: true }, function (err) {
-      window.alert(C.persistSuccessMessage(err, '预约单已创建，状态为仓库待确认'));
+      window.alert(C.persistSuccessMessage(err, '预约单已创建，状态为仓库待审核'));
       window.location.href = 'deliveryAppointment.html';
     });
   }
@@ -539,18 +576,11 @@
       var modal = document.getElementById('inorder_picker_modal');
       if (e.key === 'Escape' && modal && modal.className.indexOf('show') >= 0) closeInOrderPicker();
     });
-    ['create_booker_type', 'create_delivery_type', 'create_is_palletized'].forEach(function (id) {
+    ['create_delivery_type', 'create_is_palletized'].forEach(function (id) {
       document.getElementById(id).addEventListener('change', syncFields);
     });
-    document.getElementById('create_booker_type').addEventListener('change', function () {
-      if (selectedOrders.length) {
-        prefillLoadingItem = null;
-        selectedOrders = [];
-        renderSelectedInOrders();
-        syncFields();
-      }
-    });
     document.getElementById('create_warehouse').addEventListener('change', function () {
+      renderWarehouseAddressTip();
       if (selectedOrders.length) {
         prefillLoadingItem = null;
         selectedOrders = [];
@@ -567,10 +597,16 @@
   function init() {
     initWarehouseSelect();
     initPickerWarehouseSelect();
+    var bookerType = document.getElementById('create_booker_type');
+    if (bookerType) {
+      bookerType.value = 'customer';
+      bookerType.disabled = true;
+    }
     document.getElementById('create_customer_code').value = C.getCurrentCustomerCode();
     applyContainerLoadingPrefill();
     syncFields();
     renderSelectedInOrders();
+    renderWarehouseAddressTip();
     bind();
   }
 

@@ -31,28 +31,31 @@
     <nav class="official-stepper" aria-label="预约流程">
       <div class="official-step active" data-step="1">
         <span class="official-step-num">1</span>
-        <span class="official-step-label">输入预约码<br /><small>Enter Reservation Code</small></span>
+        <span class="official-step-label" data-i18n-step="1">输入预约码<br /><small>Enter Reservation Code</small></span>
       </div>
       <div class="official-step" data-step="2">
         <span class="official-step-num">2</span>
-        <span class="official-step-label">预约送仓<br /><small>Schedule Delivery</small></span>
+        <span class="official-step-label" data-i18n-step="2">预约送仓<br /><small>Schedule Delivery</small></span>
       </div>
       <div class="official-step" data-step="3">
         <span class="official-step-num">3</span>
-        <span class="official-step-label">送仓完成<br /><small>Delivery Completed</small></span>
+        <span class="official-step-label" data-i18n-step="3">送仓完成<br /><small>Delivery Completed</small></span>
       </div>
     </nav>
 
     <form class="official-search-row" id="searchForm" autocomplete="off">
-      <input type="text" id="deliveryCodeInput" placeholder="请输入预约码" maxlength="32" />
-      <button type="submit">确定</button>
+      <input type="text" id="deliveryCodeInput" data-i18n-placeholder="codePlaceholder" placeholder="请输入预约码" maxlength="32" />
+      <button type="submit" data-i18n="confirmBtn">确定</button>
     </form>
     <p class="official-error-tip" id="searchError" style="display:none;"></p>
   </main>
 
+  <script src="../mock_data/warehouses.js"></script>
   <script src="../mock_data/deliveryAppointment.js"></script>
   <script src="../customer/js/deliveryAppointment-common.js"></script>
+  <script src="js/fg-i18n.js"></script>
   <script src="js/official-reservation.js"></script>
   <script src="js/index.js"></script>
+  <script>FgI18n.initHeaderLangSwitch('.official-header');</script>
 </body>
 </html>

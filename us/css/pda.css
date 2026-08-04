@@ -237,6 +237,13 @@
   border: 1px solid var(--pda-line);
 }
 
+.pda-photo-hint {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--pda-red, #c0392b);
+  font-weight: 600;
+}
+
 .pda-photo-section-title {
   font-weight: 700;
   margin-bottom: 6px;
@@ -454,3 +461,143 @@
   font-size: 12px;
   color: #888;
 }
+
+.pda-queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pda-queue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--pda-line);
+  background: #fafafa;
+}
+
+.pda-queue-item-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.pda-queue-item-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: #666;
+}
+
+.pda-queue-del {
+  flex-shrink: 0;
+  border: 1px solid #8c8c8c;
+  background: #fff;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* ========== PDA 发货复核 ========== */
+
+/* 蓝色高亮提示条（如“该订单已复核完成，无需重复操作”） */
+.pda-sc-hint {
+  margin: 14px 6px;
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a3e5c;
+  background: #cfe3ff;
+  border: 1px solid #9cc3f0;
+}
+
+/* 输入框 + 行内重置按钮 */
+.pda-sc-cell {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.pda-sc-cell .pda-ris-input { flex: 1; min-width: 0; }
+
+.pda-sc-inline-btn {
+  flex-shrink: 0;
+  padding: 0 16px;
+  font-size: 14px;
+  background: var(--pda-btn-footer);
+  border: 1px solid var(--pda-ink);
+  cursor: pointer;
+}
+
+/* 页二顶部：订单号 + 状态 + 提交按钮 */
+.pda-sc-topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 6px;
+  background: var(--pda-bar-bg);
+  border: 1px solid var(--pda-bar-border);
+}
+
+.pda-sc-topbar-order {
+  font-size: 14px;
+  font-weight: 700;
+  word-break: break-all;
+}
+
+.pda-sc-topbar-status {
+  font-size: 12px;
+  color: #555;
+}
+
+.pda-sc-submit {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 7px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #1d8af0;
+  border: 1px solid #1d8af0;
+  cursor: pointer;
+}
+
+/* SKU 复核表格 */
+.pda-sc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  border: 1px solid var(--pda-ink);
+}
+
+.pda-sc-table th,
+.pda-sc-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--pda-line);
+  font-size: 13px;
+  text-align: left;
+}
+
+.pda-sc-table th {
+  background: var(--pda-bar-bg);
+  font-weight: 600;
+}
+
+.pda-sc-table tr:last-child td { border-bottom: none; }
+
+.pda-sc-table .pda-sc-count { text-align: right; font-weight: 600; }
+
+/* 行状态：扫描中高亮 / 达量绿 / 超扫红 */
+.pda-sc-table tr.sc-active { background: #fffbe6; }
+.pda-sc-table tr.sc-done { color: #008000; }
+.pda-sc-table tr.sc-over,
+.pda-sc-table tr.sc-over .pda-sc-count { color: var(--pda-red); }
+.pda-sc-table tr.sc-over { background: #fff1f0; }
+
+/* 弹窗正文成功态 */
+.pda-alert-modal-body.ok { color: #008000; }
+.pda-alert-modal-body.left { text-align: left; white-space: pre-line; }
+

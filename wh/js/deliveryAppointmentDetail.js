@@ -21,20 +21,22 @@
     var fields = [
       ['预约仓库', item.warehouse],
       ['预约单号', item.appointmentNo || '-'],
-      ['送仓码', item.deliveryCode || '-'],
+      ['送仓码', C.formatDeliveryCodeCell(item)],
       ['状态', item.status],
       ['送仓类型', item.deliveryType],
       ['送仓总箱数', C.formatEstimatedCartons(item)],
+      ['总体积（m³）', C.formatTotalVolume(item)],
+      ['总重量（kg）', C.formatTotalWeight(item)],
       ['是否打托', C.formatPalletized(item)],
       ['送仓总托数', C.formatTotalPallets(item)],
       ['集装箱号', item.containerNo || '-'],
       ['柜型', item.containerType || item.containerSeq || '-'],
-      ['货代公司', item.forwarder || '-'],
-      ['联系邮箱', (item.emails || []).join('、') || '-'],
-      [C.localTimeFieldLabel('期望送仓日期', wh), C.formatUsWarehouseTime(item.expectedInboundTime, wh)],
+      ['货代联系邮箱', C.formatContactEmailsDisplay(item)],
+      ['联系电话', C.formatFgContactPhone(item)],
+      [C.localTimeFieldLabel('期望送仓日期', wh), C.formatExpectedInboundDatesDisplay(item, wh)],
       ['货代备注', String(item.remark || '').trim() || '-'],
       ['提交时间', item.submitTime || '-'],
-      ['预约链接', C.buildBookingLinkHtml(item), true]
+      ['预约链接', C.isDeliveryCodePublished(item) ? C.buildBookingLinkHtml(item) : '-', true]
     ];
     document.getElementById('detailGrid').innerHTML = fields.map(function (f) {
       var isHtml = f[2] === true;
@@ -101,6 +103,8 @@
 
   function renderLogs(item) {
     document.getElementById('logList').innerHTML = C.buildOperationLogListHtml(item, {
+      portal: 'warehouse',
+      sort: 'desc',
       emptyClass: 'wh-detail-log-empty',
       timeClass: 'wh-detail-log-time'
     });

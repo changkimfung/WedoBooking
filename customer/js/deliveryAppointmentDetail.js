@@ -14,11 +14,11 @@
     return String(item && item.deliveryType || '').trim() === '\u6574\u67dc';
   }
 
-  function isPostAuditPassStatus(item) {
-    var status = item && item.status;
-    return status === '\u5ba2\u6237\u5f85\u786e\u8ba4' ||
-      status === '\u5f85\u9001\u4ed3' ||
-      status === '\u5df2\u9001\u4ed3';
+  function formatActualArrivalTime(item) {
+    var wh = item.warehouse || '';
+    return C.formatUsWarehouseTime(item.actualDeliveryTime, wh) !== '-'
+      ? C.formatUsWarehouseTime(item.actualDeliveryTime, wh)
+      : C.formatCell(item.actualDeliveryTime);
   }
 
   function renderInfoGrid(item) {
@@ -26,10 +26,12 @@
     var fields = [
       ['预约仓库', item.warehouse],
       ['预约单号', C.formatCell(item.appointmentNo)],
-      ['送仓码', C.formatCell(item.deliveryCode)],
+      ['送仓码', C.formatDeliveryCodeCell(item)],
       ['状态', item.status],
       ['送仓类型', item.deliveryType],
       ['送仓总箱数', C.formatEstimatedCartons(item)],
+      ['总体积（m³）', C.formatTotalVolume(item)],
+      ['总重量（kg）', C.formatTotalWeight(item)],
       ['是否打托', C.formatPalletized(item)],
       ['送仓总托数', C.formatTotalPallets(item)]
     ];
@@ -40,28 +42,19 @@
       );
     }
     fields.push(
-      ['货代公司', C.formatCell(item.forwarder)],
-      ['联系邮箱', (item.emails || []).join('、') || '-'],
+      ['货代联系邮箱', C.formatContactEmailsDisplay(item)],
+      ['联系电话', C.formatFgContactPhone(item)],
       [C.localTimeFieldLabel('期望送仓日期', wh),
-        C.formatUsWarehouseTime(item.expectedInboundTime, wh) !== '-' ?
-          C.formatUsWarehouseTime(item.expectedInboundTime, wh) : C.formatCell(item.expectedInboundTime)],
+        C.formatExpectedInboundDatesDisplay(item, wh)],
       ['货代备注', C.formatCell(String(item.remark || '').trim())]
     );
     if (item.status === '\u9884\u7ea6\u5931\u8d25') {
       fields.push(['驳回原因', C.formatCell(String(item.rejectRemark || '').trim()), false, true]);
-    } else if (isPostAuditPassStatus(item)) {
-      fields.push([C.localTimeFieldLabel('仓库确认时段', wh),
-        C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) !== '-' ?
-          C.formatUsWarehouseTime(item.warehouseConfirmedInboundTime, wh) :
-          C.formatCell(item.warehouseConfirmedInboundTime)]);
-      fields.push(['仓库审核备注', C.formatCell(String(item.auditRemark || '').trim())]);
     }
     fields.push(
-      [C.localTimeFieldLabel('实际送仓时间', wh),
-        C.formatUsWarehouseTime(item.actualDeliveryTime, wh) !== '-' ?
-          C.formatUsWarehouseTime(item.actualDeliveryTime, wh) : C.formatCell(item.actualDeliveryTime)],
+      [C.localTimeFieldLabel('实际到仓时间', wh), formatActualArrivalTime(item)],
       ['提交时间', C.formatCell(item.submitTime)],
-      ['预约链接', C.buildBookingLinkHtml(item), true]
+      ['预约链接', C.isDeliveryCodePublished(item) ? C.buildBookingLinkHtml(item) : '-', true]
     );
     document.getElementById('detailInfo').innerHTML = fields.map(function (f) {
       var isDeliveryCode = f[0] === '送仓码';
@@ -73,6 +66,36 @@
       var valueHtml = isHtml ? f[1] : String(f[1]);
       return '<div class="' + cls + '"><label>' + f[0] + '</label><span>' + valueHtml + '</span></div>';
     }).join('');
+  }
+
+  function bindDetailTabs() {
+    var nav = document.getElementById('detailTabNav');
+    if (!nav) return;
+    nav.querySelectorAll('a[data-tab]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var tab = link.getAttribute('data-tab');
+        nav.querySelectorAll('li').forEach(function (li) { li.classList.remove('active'); });
+        link.parentElement.classList.add('active');
+        document.querySelectorAll('.detail-tab-pane').forEach(function (pane) {
+          pane.classList.remove('active');
+        });
+        if (tab === 'logs') document.getElementById('paneLogs').classList.add('active');
+        else document.getElementById('paneInbound').classList.add('active');
+      });
+    });
+  }
+
+  function renderLogs(item) {
+    var el = document.getElementById('detailLogList');
+    if (!el) return;
+    el.innerHTML = C.buildOperationLogListHtml(item, {
+      portal: 'customer',
+      sort: 'asc',
+      emptyClass: 'detail-log-empty',
+      timeClass: 'detail-log-time',
+      roleClass: 'detail-log-role'
+    });
   }
 
   function renderInbound(item) {
@@ -91,13 +114,6 @@
     }).join('');
   }
 
-  function renderLogs(item) {
-    document.getElementById('logList').innerHTML = C.buildOperationLogListHtml(item, {
-      emptyClass: 'detail-log-empty',
-      timeClass: 'detail-log-time'
-    });
-  }
-
   function bindActions(item) {
     var actions = document.getElementById('detailActions');
     var ops = C.getOperationsByStatus(item.status).filter(function (a) { return a !== 'detail'; });
@@ -113,7 +129,7 @@
           return;
         }
         if (actionConfirm(action)) {
-          var updated = C.applyStatusAction(item, action);
+          var updated = C.applyStatusAction(item, action, { customerPortal: true });
           if (!updated) return;
           if (action === 'submit' && updated.status === '待预约') {
             C.submitAppointmentRecord(updated, function (err) {
@@ -125,27 +141,6 @@
           C.updateAppointment(updated, false);
           window.alert('操作成功（原型）');
           loadDetail();
-        }
-      });
-    });
-  }
-
-  function bindTabs() {
-    var nav = document.getElementById('detailTabs');
-    if (!nav) return;
-    nav.querySelectorAll('a[data-tab]').forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        e.preventDefault();
-        var tab = link.getAttribute('data-tab');
-        nav.querySelectorAll('li').forEach(function (li) { li.classList.remove('active'); });
-        link.parentElement.classList.add('active');
-        document.querySelectorAll('.detail-tab-pane').forEach(function (pane) {
-          pane.classList.remove('active');
-        });
-        if (tab === 'logs') {
-          document.getElementById('paneLogs').classList.add('active');
-        } else {
-          document.getElementById('paneInbound').classList.add('active');
         }
       });
     });
@@ -166,6 +161,10 @@
   }
 
   function initMenu() {
+    if (typeof ProductCommon !== 'undefined') {
+      ProductCommon.initSidebarMenus();
+      return;
+    }
     document.getElementById('docManageBtn').addEventListener('click', function () {
       document.getElementById('docManageSubmenu').classList.toggle('show');
     });
@@ -186,7 +185,7 @@
 
   function init() {
     initMenu();
-    bindTabs();
+    bindDetailTabs();
     C.bindAppointmentStorageSync(loadDetail);
     loadDetail();
   }

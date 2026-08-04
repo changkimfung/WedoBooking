@@ -1,0 +1,421 @@
+/* 品牌授权文件管理 · 页面扩展 */
+
+.brand-auth-fourvar .brand-toolbar-btn {
+  margin-left: 8px;
+}
+
+.brand-result-hint {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: #878787;
+  text-align: right;
+}
+
+.main.brand-auth-main {
+  padding: 0 10px 20px;
+}
+
+.brand-table-scroll {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.main.brand-auth-main thead tr.title td {
+  white-space: nowrap;
+}
+
+.main.brand-auth-main tbody td {
+  white-space: nowrap;
+}
+
+.brand-col-check {
+  width: 36px;
+  text-align: center;
+}
+
+.brand-link {
+  color: #0092dc;
+  cursor: pointer;
+}
+
+.brand-link:hover {
+  text-decoration: underline;
+}
+
+.brand-link-muted {
+  color: #999;
+}
+
+.brand-op-link {
+  color: #0092dc;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.brand-op-link:hover {
+  text-decoration: underline;
+}
+
+.brand-expire-warn {
+  color: #d9822b;
+  font-weight: bold;
+}
+
+.brand-expire-expired {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.brand-auth-modal-backdrop .brand-auth-modal {
+  max-width: 1080px;
+}
+
+.brand-auth-product-modal {
+  max-width: 560px;
+}
+
+.brand-auth-product-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.brand-product-add-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.brand-product-add-row input {
+  flex: 1;
+  font-size: 12px;
+}
+
+.brand-product-table-wrap {
+  overflow-x: auto;
+}
+
+.brand-product-table td {
+  padding: 6px 8px;
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.brand-product-table thead td {
+  background: #f5f5f5;
+}
+
+.brand-product-readonly-tip {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: #999;
+}
+
+.brand-auth-products-readonly {
+  min-width: 120px;
+  max-width: 160px;
+  padding: 4px 6px;
+  background: #f5f5f5;
+  border: 1px solid #e8e8e8;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #666;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.brand-auth-products-readonly-empty {
+  color: #999;
+}
+
+.brand-auth-modal-table .brand-product-cell {
+  min-width: 150px;
+}
+
+.brand-auth-modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.brand-auth-modal-table-wrap {
+  overflow-x: auto;
+}
+
+.brand-auth-modal-table td {
+  padding: 6px 4px;
+  vertical-align: top;
+  font-size: 12px;
+}
+
+.brand-auth-modal-table input[type="text"],
+.brand-auth-modal-table input[type="date"] {
+  width: 120px;
+  font-size: 12px;
+}
+
+.brand-auth-modal-table .brand-file-cell {
+  min-width: 180px;
+}
+
+.brand-file-input {
+  font-size: 11px;
+  max-width: 180px;
+}
+
+.brand-file-tags {
+  margin-top: 4px;
+}
+
+.brand-file-tag {
+  display: inline-flex;
+  align-items: center;
+  margin: 2px 4px 2px 0;
+  padding: 2px 6px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  font-size: 11px;
+  max-width: 160px;
+}
+
+.brand-file-tag-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-file-tag-remove {
+  margin-left: 4px;
+  color: #c0392b;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 12px;
+  line-height: 1;
+  padding: 0;
+}
+
+.brand-add-row-btn {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #0092dc;
+  background: none;
+  border: 1px dashed #0092dc;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+
+.brand-add-row-btn:hover {
+  background: #f0f8ff;
+}
+
+.brand-auth-modal-error {
+  margin-top: 10px;
+  color: #c0392b;
+  font-size: 12px;
+}
+
+.brand-auth-file-modal {
+  max-width: 480px;
+}
+
+.brand-file-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.brand-file-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+}
+
+.brand-file-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand-file-list-link {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand-file-list-delete {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #c0392b;
+  background: none;
+  border: 1px solid #e8b4b4;
+  border-radius: 2px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.brand-file-list-delete:hover {
+  background: #fff5f5;
+}
+
+.brand-file-list-empty {
+  color: #999;
+}
+
+.brand-file-list-tip {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.brand-file-upload-hint {
+  display: block;
+  font-size: 11px;
+  color: #999;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.brand-file-list li:last-child {
+  border-bottom: none;
+}
+
+.brand-file-list a {
+  color: #0092dc;
+}
+
+.req {
+  color: #c0392b;
+}
+
+.main.brand-auth-main td.button {
+  white-space: nowrap;
+}
+
+.brand-toolbar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.brand-row-remove-btn {
+  font-size: 11px;
+  color: #c0392b;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.brand-row-remove-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.brand-auth-log-modal {
+  max-width: 860px;
+}
+
+.brand-auth-log-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.brand-log-subtitle {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.brand-log-table-wrap {
+  overflow-x: auto;
+}
+
+.brand-log-table td {
+  padding: 8px;
+  font-size: 12px;
+  vertical-align: top;
+  border-bottom: 1px solid #eee;
+}
+
+.brand-log-table thead td {
+  white-space: nowrap;
+  background: #f5f5f5;
+}
+
+.brand-log-changes {
+  margin: 0;
+  padding-left: 16px;
+  line-height: 1.6;
+}
+
+.brand-log-changes li {
+  margin: 2px 0;
+}
+
+.brand-log-empty {
+  color: #999;
+  text-align: center;
+  padding: 16px 0;
+}
+
+.brand-remark-cell {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand-auth-import-modal,
+.brand-auth-import-fail-modal {
+  max-width: 560px;
+}
+
+.brand-import-tip {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.brand-import-status {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #007fbf;
+}
+
+.brand-import-fail-summary {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.brand-import-fail-preview-title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.brand-import-fail-preview {
+  margin: 0;
+  padding-left: 18px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.brand-import-fail-preview li {
+  margin-bottom: 4px;
+}
+
+.brand-import-error-reason {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+.brand-auth-modal-table input.brand-modal-remark {
+  width: 100px;
+}

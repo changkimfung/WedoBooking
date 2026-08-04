@@ -1,0 +1,277 @@
+/* 客户前台 · 产品管理 */
+
+.product-filter-textarea {
+  width: 170px;
+  min-height: 54px;
+  padding: 6px 10px;
+  border: 1px solid #d7e3f1;
+  border-radius: 6px;
+  font-size: 13px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.product-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 18px 14px;
+}
+
+.btn-success {
+  background: #27ae60;
+  color: #fff;
+}
+
+.btn-success:hover {
+  opacity: 0.92;
+}
+
+.product-tab-count {
+  display: inline-block;
+  min-width: 18px;
+  padding: 0 6px;
+  margin-left: 4px;
+  border-radius: 999px;
+  background: #edf3fa;
+  color: #5a7390;
+  font-size: 12px;
+  line-height: 18px;
+  text-align: center;
+}
+
+.tab.active .product-tab-count {
+  background: #eaf4ff;
+  color: #2f80ed;
+}
+
+.product-table-wrap {
+  overflow-x: auto;
+}
+
+#productTable {
+  min-width: 2200px;
+}
+
+#productTable .spec-diff {
+  color: #24a148;
+}
+
+#productTable .spec-diff-warn {
+  color: #c0392b;
+}
+
+.product-thumb {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #e9eff7;
+  vertical-align: middle;
+}
+
+.op-dropdown-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.op-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background: #2f80ed;
+  color: #fff;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.op-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 30;
+  min-width: 100px;
+  background: #fff;
+  border: 1px solid #d7e3f1;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(42, 69, 99, 0.12);
+  display: none;
+}
+
+.op-dropdown-menu.show {
+  display: block;
+}
+
+.op-dropdown-menu a {
+  display: block;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #2a4563;
+}
+
+.op-dropdown-menu a:hover {
+  background: #f6faff;
+}
+
+/* ========== 新增产品表单 ========== */
+.product-create-panel {
+  padding: 0 0 18px;
+}
+
+.product-form-section {
+  padding: 16px 18px 0;
+}
+
+.product-form-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a4563;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #edf2f8;
+}
+
+.product-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+}
+
+.product-form-grid .form-item {
+  align-items: flex-start;
+}
+
+.product-form-grid .form-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.product-form-grid label {
+  min-width: 110px;
+  padding-top: 8px;
+}
+
+.field-required::before {
+  content: "*";
+  color: #e74c3c;
+  margin-right: 2px;
+}
+
+.product-form-grid .input,
+.product-form-grid .select,
+.product-form-grid textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-form-grid textarea {
+  min-height: 72px;
+  padding: 8px 12px;
+  border: 1px solid #d7e3f1;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: #e74c3c;
+  margin-top: 4px;
+}
+
+.form-hint-muted {
+  color: #9aacbf;
+}
+
+.pack-spec-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pack-spec-row .input {
+  width: 80px;
+  min-width: 80px;
+}
+
+.product-image-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+}
+
+.product-image-tab {
+  padding: 8px 16px;
+  border: 1px solid #d7e3f1;
+  background: #f6faff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.product-image-tab:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.product-image-tab:last-child {
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+
+.product-image-tab.active {
+  background: #2f80ed;
+  color: #fff;
+  border-color: #2f80ed;
+}
+
+.product-upload-box {
+  width: 160px;
+  height: 120px;
+  border: 2px dashed #d7e3f1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aacbf;
+  font-size: 13px;
+  cursor: pointer;
+  background: #fbfdff;
+}
+
+.product-upload-box:hover {
+  border-color: #2f80ed;
+  color: #2f80ed;
+}
+
+.product-form-footer {
+  padding: 16px 18px;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #edf2f8;
+}
+
+.btn-cancel {
+  background: #f2994a;
+  color: #fff;
+}
+
+.menu-item a {
+  color: inherit;
+  display: block;
+  width: 100%;
+}
+
+.sync-hint {
+  margin: 0 18px 12px;
+  padding: 10px 14px;
+  background: #eaf4ff;
+  border: 1px solid #c8dff8;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #2a4563;
+}
+
+.sync-hint strong {
+  color: #2f80ed;
+}
