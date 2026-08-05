@@ -54,11 +54,10 @@
     <div class="control-group">
       <form class="form-inline" onsubmit="return false;">
         <div class="paddleft10">
-          出库单：<input type="text" id="q_order_no" class="span2" style="width:160px;" placeholder="模糊" autocomplete="off">
+          出库单：<input type="text" id="q_order_no" class="span2" style="width:220px;" placeholder="支持多个单号，逗号或换行分隔" title="支持输入多个出库单号，使用逗号、分号、空格或换行分隔" autocomplete="off">
           面单号：<input type="text" id="q_tracking_no" class="span2" style="width:160px;" placeholder="模糊" autocomplete="off">
           复核状态：
-          <select id="q_check_status" class="span2" style="width:130px;">
-            <option value="">全部</option>
+          <select id="q_check_status" class="span2" multiple="multiple" size="1" style="width:130px;" title="可按 Ctrl 或 Shift 选择多个复核状态；未选择表示全部">
             <option value="未复核">未复核</option>
             <option value="复核异常">复核异常</option>
             <option value="部分复核">部分复核</option>
@@ -76,7 +75,8 @@
           </select>
           <button type="button" class="btn" id="btn_oor_query">查询</button>
           <button type="button" class="btn" id="btn_oor_reset">重置</button>
-          <button type="button" class="btn btn-success" id="btn_oor_export" title="按上方发货时间段导出 Excel（订单列表 + 复核日志两个工作表）">导出</button>
+          <button type="button" class="btn btn-success" id="btn_oor_export_orders" title="按上方发货时间段导出订单列表 Excel">导出订单列表</button>
+          <button type="button" class="btn btn-success" id="btn_oor_export_logs" title="按上方发货时间段导出复核日志 Excel">导出复核日志</button>
           <a href="pda-ship-check.html" class="btn btn-info" style="margin-left:8px;">PDA发货复核</a>
         </div>
       </form>

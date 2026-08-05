@@ -81,16 +81,34 @@
 
   /* ========== 列表渲染 ========== */
 
+  function orderKeywords() {
+    var input = $.trim($('#q_order_no').val()).toUpperCase();
+    if (!input) return [];
+    return $.grep(input.split(/[，,;；\s]+/), function (keyword) {
+      return !!keyword;
+    });
+  }
+
   function getFiltered() {
-    var qOrder = $.trim($('#q_order_no').val()).toUpperCase();
+    var qOrders = orderKeywords();
     var qTrack = $.trim($('#q_tracking_no').val()).toUpperCase();
-    var qStatus = $('#q_check_status').val();
+    var qStatuses = $('#q_check_status').val() || [];
     var qFrom = $('#q_ship_from').val();   // YYYY-MM-DD
     var qTo = $('#q_ship_to').val();
     return $.grep(MOCK_OUT_ORDER_LIST || [], function (o) {
-      if (qOrder && String(o.orderNo).toUpperCase().indexOf(qOrder) === -1) return false;
+      if (qOrders.length) {
+        var orderNo = String(o.orderNo).toUpperCase();
+        var matched = false;
+        $.each(qOrders, function (i, keyword) {
+          if (orderNo.indexOf(keyword) !== -1) {
+            matched = true;
+            return false;
+          }
+        });
+        if (!matched) return false;
+      }
       if (qTrack && String(o.trackingNo).toUpperCase().indexOf(qTrack) === -1) return false;
-      if (qStatus && orderStatus(o) !== qStatus) return false;
+      if (qStatuses.length && $.inArray(orderStatus(o), qStatuses) === -1) return false;
       var shipDay = WedoTime.day(o.shipDate);   // 发货日按所选时区换算
       if (qFrom && shipDay < qFrom) return false;
       if (qTo && shipDay > qTo) return false;
@@ -222,37 +240,47 @@
     return '';
   }
 
-  /** 生成 XML Spreadsheet 文档：分表一 订单列表 / 分表二 复核日志 */
-  function buildExportXml(orders) {
-    var rows1 = [ssRow(['出库单', '复核状态', '复核次数', '发货时间', '复核完成时间', '异常分析'], true)];
-    var rows2 = [ssRow(['出库单', '复核编号', '复核状态', '操作人', '料号', '扫描时间', '异常类型'], true)];
+  /** 生成 XML Spreadsheet 文档：按类型单独导出订单列表或复核日志 */
+  function buildExportXml(orders, sheetType) {
+    var rows = [];
+    var sheetName = sheetType === 'logs' ? '复核日志' : '订单列表';
+    if (sheetType === 'logs') {
+      rows.push(ssRow(['出库单', '复核编号', '复核状态', '操作人', '料号', '扫描时间', '异常类型'], true));
+    } else {
+      rows.push(ssRow(['出库单', 'SKU种类数', 'SKU总数（PCS）', '复核状态', '复核次数', '发货时间', '复核完成时间', '异常分析'], true));
+    }
 
     $.each(orders, function (i, o) {
       var status = orderStatus(o);
       var records = ShipCheckStore.listByOrder(o.orderNo);
       var doneTime = ShipCheckStore.getCompletionTime(o.orderNo);
-      rows1.push(ssRow([
-        o.orderNo,
-        status,
-        String(ShipCheckStore.countByOrder(o.orderNo)),
-        WedoTime.fmt(o.shipDate),
-        doneTime ? WedoTime.fmt(doneTime) : '-',
-        exportExceptionAnalysis(o, status, records)
-      ]));
-      // 复核日志：该订单全部档案的逐条扫描记录（时间按所选时区）
-      $.each(records, function (j, rec) {
-        $.each(rec.scanLogs || [], function (k, log) {
-          rows2.push(ssRow([
-            o.orderNo,
-            rec.id,
-            rec.status,
-            log.operator || '-',
-            log.itemNo,
-            WedoTime.fmt(log.time),
-            log.scanType || '-'
-          ]));
+      if (sheetType === 'logs') {
+        // 复核日志：该订单全部档案的逐条扫描记录（时间按所选时区）
+        $.each(records, function (j, rec) {
+          $.each(rec.scanLogs || [], function (k, log) {
+            rows.push(ssRow([
+              o.orderNo,
+              rec.id,
+              rec.status,
+              log.operator || '-',
+              log.itemNo,
+              WedoTime.fmt(log.time),
+              log.scanType || '-'
+            ]));
+          });
         });
-      });
+      } else {
+        rows.push(ssRow([
+          o.orderNo,
+          String(OutOrderCommon.skuKinds(o)),
+          String(OutOrderCommon.totalQty(o)),
+          status,
+          String(ShipCheckStore.countByOrder(o.orderNo)),
+          WedoTime.fmt(o.shipDate),
+          doneTime ? WedoTime.fmt(doneTime) : '-',
+          exportExceptionAnalysis(o, status, records)
+        ]));
+      }
     });
 
     return '<?xml version="1.0" encoding="UTF-8"?>\n' +
@@ -260,21 +288,21 @@
       '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"' +
       ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">\n' +
       '<Styles><Style ss:ID="sHead"><Font ss:Bold="1"/></Style></Styles>\n' +
-      '<Worksheet ss:Name="订单列表"><Table>' + rows1.join('') + '</Table></Worksheet>\n' +
-      '<Worksheet ss:Name="复核日志"><Table>' + rows2.join('') + '</Table></Worksheet>\n' +
+      '<Worksheet ss:Name="' + sheetName + '"><Table>' + rows.join('') + '</Table></Worksheet>\n' +
       '</Workbook>';
   }
 
-  function handleExport() {
+  function handleExport(sheetType) {
     var orders = getExportOrders();
+    var exportName = sheetType === 'logs' ? '复核日志' : '订单列表';
     if (!orders.length) {
       alert('所选发货时间范围内无订单可导出');
       return;
     }
     var qFrom = $('#q_ship_from').val() || '不限';
     var qTo = $('#q_ship_to').val() || '不限';
-    var fileName = '发货复核导出_' + qFrom + '_' + qTo + '.xls';
-    var blob = new Blob([buildExportXml(orders)], { type: 'application/vnd.ms-excel' });
+    var fileName = '发货复核' + exportName + '_' + qFrom + '_' + qTo + '.xls';
+    var blob = new Blob([buildExportXml(orders, sheetType)], { type: 'application/vnd.ms-excel' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = fileName;
@@ -299,13 +327,14 @@
     $('#btn_oor_reset').on('click', function () {
       $('#q_order_no').val('');
       $('#q_tracking_no').val('');
-      $('#q_check_status').val('');
+      $('#q_check_status option').prop('selected', false);
       $('#q_ship_from').val('');
       $('#q_ship_to').val('');
       currentPage = 1;
       render();
     });
-    $('#btn_oor_export').on('click', handleExport);
+    $('#btn_oor_export_orders').on('click', function () { handleExport('orders'); });
+    $('#btn_oor_export_logs').on('click', function () { handleExport('logs'); });
     // 时区切换：立即重新统计与渲染（不清空其他搜索条件）
     $('#q_time_zone').on('change', function () {
       WedoTime.set($(this).val());
