@@ -78,6 +78,7 @@
 
   var PAGE_SIZE = 10;
   var currentPage = 1;
+  var selectedOrderNos = {};
 
   /* ========== 列表渲染 ========== */
 
@@ -116,6 +117,23 @@
     });
   }
 
+  function selectedOrders() {
+    return $.grep(getFiltered(), function (order) {
+      return !!selectedOrderNos[order.orderNo];
+    });
+  }
+
+  function syncSelectAll(list) {
+    var allSelected = !!list.length;
+    $.each(list, function (i, order) {
+      if (!selectedOrderNos[order.orderNo]) {
+        allSelected = false;
+        return false;
+      }
+    });
+    $('#oorCheckAll').prop('checked', allSelected);
+  }
+
   function renderPager(totalCount, totalPages) {
     var $p = $('#oorPager').empty();
     if (!totalCount) return;
@@ -143,11 +161,14 @@
     var $body = $('#oorBody');
     $body.empty();
     $('#oorEmpty').toggle(!list.length);
+    syncSelectAll(list);
 
     $.each(pageList, function (i, o) {
       var st = orderStatus(o);
       var doneTime = ShipCheckStore.getCompletionTime(o.orderNo) || '-';
       var $tr = $('<tr></tr>');
+      $tr.append('<td><input type="checkbox" class="oor-order-check" data-order="' + esc(o.orderNo) + '"' +
+        (selectedOrderNos[o.orderNo] ? ' checked' : '') + '></td>');
       $tr.append('<td>' + esc(o.orderNo) + '<br><span style="color:#8a97a5;font-size:12px;">' + esc(o.trackingNo) + '</span></td>');
       $tr.append('<td>' + OutOrderCommon.skuKinds(o) + '</td>');
       $tr.append('<td>' + OutOrderCommon.totalQty(o) + '</td>');
@@ -183,16 +204,9 @@
     return '<Row>' + cells + '</Row>';
   }
 
-  /** 按当前发货时间段条件取导出订单（不填则不限） */
+  /** 导出当前查询结果中已勾选的订单 */
   function getExportOrders() {
-    var qFrom = $('#q_ship_from').val();
-    var qTo = $('#q_ship_to').val();
-    return $.grep(MOCK_OUT_ORDER_LIST || [], function (o) {
-      var shipDay = WedoTime.day(o.shipDate);   // 发货日按所选时区换算
-      if (qFrom && shipDay < qFrom) return false;
-      if (qTo && shipDay > qTo) return false;
-      return true;
-    });
+    return selectedOrders();
   }
 
   /** 归集单条复核档案的少扫、错扫、多扫异常类型（按首次出现顺序去重） */
@@ -320,7 +334,7 @@
     var orders = getExportOrders();
     var exportName = sheetType === 'logs' ? '复核日志' : '订单列表';
     if (!orders.length) {
-      alert('所选发货时间范围内无订单可导出');
+      alert('请先在查询结果中勾选需要导出的出库单');
       return;
     }
     var qFrom = $('#q_ship_from').val() || '不限';
@@ -359,6 +373,20 @@
     });
     $('#btn_oor_export_orders').on('click', function () { handleExport('orders'); });
     $('#btn_oor_export_logs').on('click', function () { handleExport('logs'); });
+    $('#oorCheckAll').on('change', function () {
+      var checked = this.checked;
+      $.each(getFiltered(), function (i, order) {
+        if (checked) selectedOrderNos[order.orderNo] = true;
+        else delete selectedOrderNos[order.orderNo];
+      });
+      render();
+    });
+    $('#oorBody').on('change', '.oor-order-check', function () {
+      var orderNo = $(this).attr('data-order');
+      if (this.checked) selectedOrderNos[orderNo] = true;
+      else delete selectedOrderNos[orderNo];
+      syncSelectAll(getFiltered());
+    });
     // 时区切换：立即重新统计与渲染（不清空其他搜索条件）
     $('#q_time_zone').on('change', function () {
       WedoTime.set($(this).val());

@@ -75,8 +75,8 @@
           </select>
           <button type="button" class="btn" id="btn_oor_query">查询</button>
           <button type="button" class="btn" id="btn_oor_reset">重置</button>
-          <button type="button" class="btn btn-success" id="btn_oor_export_orders" title="按上方发货时间段导出订单列表 Excel">导出订单列表</button>
-          <button type="button" class="btn btn-success" id="btn_oor_export_logs" title="按上方发货时间段导出复核日志 Excel">导出复核日志</button>
+          <button type="button" class="btn btn-success" id="btn_oor_export_orders" title="导出查询结果中已勾选的订单列表">导出订单列表</button>
+          <button type="button" class="btn btn-success" id="btn_oor_export_logs" title="导出查询结果中已勾选订单的复核日志">导出复核日志</button>
           <a href="pda-ship-check.html" class="btn btn-info" style="margin-left:8px;">PDA发货复核</a>
         </div>
       </form>
@@ -87,6 +87,7 @@
     <table class="table table-bordered table-hover" id="oorTable">
       <thead>
         <tr class="info">
+          <th style="width:38px;"><input type="checkbox" id="oorCheckAll" title="全选当前查询结果"></th>
           <th>出库单</th>
           <th>SKU种类数</th>
           <th>SKU总数(PCS)</th>
