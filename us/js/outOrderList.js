@@ -213,11 +213,9 @@
     return types;
   }
 
-  /** 分表一异常分析：按订单最终状态生成可追溯的异常说明 */
+  /** 分表一异常分析：按订单最终状态和合规前档案生成可追溯的异常说明 */
   function exportExceptionAnalysis(order, status, records) {
-    var count = records.length;
     if (status === '已达标') return '';
-    if (status === '已合规') return '复核次数大于1，值为' + count;
 
     var types = [];
     function merge(rec) {
@@ -225,17 +223,43 @@
         if ($.inArray(type, types) === -1) types.push(type);
       });
     }
+    function analysisText(submitType) {
+      return submitType + '：' + (types.join('，') || '无异常记录');
+    }
+
+    if (status === '已合规') {
+      var hasManualComplete = false;
+      $.each(records, function (i, rec) {
+        if (rec.finishType === '人工完结') hasManualComplete = true;
+      });
+      if (hasManualComplete) return '人工强制完结';
+
+      var hasAbnormalSubmit = false;
+      $.each(records, function (i, rec) {
+        if (rec.status === '复核异常' && rec.finishType === '主动提交') {
+          hasAbnormalSubmit = true;
+          merge(rec);
+        }
+      });
+      if (hasAbnormalSubmit) return analysisText('主动提交');
+
+      $.each(records, function (i, rec) {
+        if (rec.status === '部分复核') merge(rec);
+      });
+      return analysisText('中断提交');
+    }
+
     if (status === '部分复核') {
       $.each(records, function (i, rec) {
         if (rec.finishType !== '主动提交') merge(rec);
       });
-      return '非主动提交：' + (types.join('，') || '无异常记录');
+      return analysisText('中断提交');
     }
     if (status === '复核异常') {
       $.each(records, function (i, rec) {
         if (rec.status === '复核异常' && rec.finishType === '主动提交') merge(rec);
       });
-      return '主动提交：' + (types.join('，') || '无异常记录');
+      return analysisText('主动提交');
     }
     return '';
   }
