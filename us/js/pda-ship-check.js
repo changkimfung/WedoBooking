@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  var OPERATOR = '郑剑锋';
+  var OPERATOR = '产品经理';
   var SITE = 'LA';
 
   var state = {
