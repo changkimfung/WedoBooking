@@ -1,6 +1,6 @@
 /**
  * 海外仓 us · 发货复核详情页（三段式：订单信息 / SKU详情 / 复核档案列表）
- * 复核档案列表点击「查看」→ 弹窗展示该档案 SKU 扫描明细与逐条扫描记录
+ * 复核档案列表点击「查看」→ 弹窗展示该档案 SKU 最终录值明细与逐次录值记录
  */
 (function ($) {
   'use strict';
@@ -24,12 +24,6 @@
   function fmtTime(s) {
     return s ? WedoTime.fmt(s) : '-';
   }
-  var openModalIdx = -1;   // 当前打开的档案明细弹窗索引，时区切换后同步刷新
-
-  /** 时间展示：按所选时区（中国/美国）换算，空值返回 '-' */
-  function fmtTime(s) {
-    return s ? WedoTime.fmt(s) : '-';
-  }
 
   function esc(s) {
     if (s == null) return '';
@@ -39,7 +33,7 @@
   var STATUS_TIP = {
     '已达标': '首次复核即完成，且复核次数为 1 次。',
     '已合规': '多次复核后完成，或由管理人员人工完结。',
-    '复核异常': '已提交复核，但存在少扫、多扫或错扫。',
+    '复核异常': '已提交复核，但存在少货、多货或错扫。',
     '部分复核': '已开始复核但未完成提交，或作业中断。',
     '未复核': '尚未产生任何复核记录。',
     '复核中': '正在进行复核，尚未提交结果。',
@@ -111,6 +105,14 @@
 
   /* ========== 第三部分：复核档案列表 ========== */
 
+  function recordValueTotal(rec) {
+    return rec.totalValueQty != null ? rec.totalValueQty : (rec.totalScanCount || 0);
+  }
+
+  function detailValueQty(detail) {
+    return detail.valueQty != null ? detail.valueQty : (detail.scanCount || 0);
+  }
+
   function renderRecords() {
     var records = ShipCheckStore.listByOrder(order.orderNo);
     var $body = $('#oodRecordBody').empty();
@@ -125,7 +127,7 @@
       $tr.append('<td>' + esc(fmtTime(rec.startTime)) + '</td>');
       $tr.append('<td>' + esc(fmtTime(rec.endTime)) + '</td>');
       $tr.append('<td>' + (rec.status === '复核中' ? '进行中' : fmtDuration(rec.duration)) + '</td>');
-      $tr.append('<td>' + (rec.totalScanCount || 0) + ' / ' + (rec.totalOrderQty || 0) + '</td>');
+      $tr.append('<td>' + recordValueTotal(rec) + ' / ' + (rec.totalOrderQty || 0) + '</td>');
       var actions = '<a href="javascript:void(0);" class="ood-record-view" data-idx="' + i + '">查看</a>';
       if (rec.status !== '复核中') {
         actions += ' <a href="javascript:void(0);" class="ood-record-edit" data-idx="' + i + '">修改</a>';
@@ -141,28 +143,41 @@
 
   function renderDetailTable(rec) {
     var rows = $.map(rec.scanDetail || [], function (d) {
-      var cls = d.scanCount > d.orderQty ? 'oor-over' : (d.scanCount < d.orderQty ? 'oor-lack' : 'oor-eq');
-      var foreign = d.orderQty === 0 ? '<span style="color:#8a97a5;">（非本单料号）</span>' : '';
-      return '<tr><td>' + esc(d.itemNo) + foreign + '</td>' +
-        '<td class="' + cls + '">' + d.scanCount + ' / ' + d.orderQty + '</td></tr>';
+      var valueQty = detailValueQty(d);
+      var cls = valueQty > d.orderQty ? 'oor-over' : (valueQty < d.orderQty ? 'oor-lack' : 'oor-eq');
+      return '<tr><td>' + esc(d.itemNo) + '</td>' +
+        '<td class="' + cls + '">' + valueQty + ' / ' + d.orderQty + '</td></tr>';
     });
-    return '<h4>SKU扫描明细（扫描次数 / 订单数量）</h4>' +
-      '<table class="oor-sub-table"><thead><tr><th>料号</th><th style="width:160px;">扫描次数/订单数量</th></tr></thead>' +
+    return '<h4>SKU录值明细（最终录入数量 / 订单数量）</h4>' +
+      '<table class="oor-sub-table"><thead><tr><th>料号</th><th style="width:160px;">最终录入数量/订单数量</th></tr></thead>' +
       '<tbody>' + (rows.join('') || '<tr><td colspan="2">无</td></tr>') + '</tbody></table>';
+  }
+
+  function logOrderQty(rec, log) {
+    if (!log || log.inputQty == null) return '-';
+    var itemNo = String(log.itemNo).toUpperCase();
+    var details = rec.scanDetail || [];
+    for (var i = 0; i < details.length; i++) {
+      if (String(details[i].itemNo).toUpperCase() === itemNo) return details[i].orderQty;
+    }
+    return '-';
   }
 
   function renderScanLogs(rec) {
     var rows = $.map(rec.scanLogs || [], function (log, idx) {
-      var typeHtml = log.scanType === '错扫' ? '<span class="oor-scan-type t-wrong">错扫</span>'
-        : log.scanType === '多扫' ? '<span class="oor-scan-type t-over">多扫</span>'
-        : log.scanType ? esc(log.scanType) : '-';   // 旧档案无字段时显示 -
+      var scanType = log.scanType === '少扫' ? '少货' : (log.scanType === '多扫' ? '多货' : log.scanType);
+      var typeHtml = scanType === '错扫' ? '<span class="oor-scan-type t-wrong">错扫</span>'
+        : scanType === '多货' ? '<span class="oor-scan-type t-over">多货</span>'
+        : scanType ? esc(scanType) : '-';
+      var inputQty = log.inputQty != null ? log.inputQty : '-';
+      var submitNo = log.inputQty != null ? (log.submitNo || '-') : '-';
       return '<tr><td>' + (idx + 1) + '</td><td>' + esc(log.itemNo) + '</td>' +
-        '<td>' + esc(fmtTime(log.time)) + '</td><td>' + esc(log.operator) + '</td>' +
-        '<td>' + typeHtml + '</td></tr>';
+        '<td>' + logOrderQty(rec, log) + '</td><td>' + inputQty + '</td><td>' + submitNo + '</td>' +
+        '<td>' + esc(fmtTime(log.time)) + '</td><td>' + esc(log.operator) + '</td><td>' + typeHtml + '</td></tr>';
     });
-    return '<h4>逐条扫描记录</h4>' +
-      '<table class="oor-sub-table"><thead><tr><th style="width:40px;">#</th><th>料号</th><th>扫描时间</th><th>操作人</th><th style="width:70px;">异常类型</th></tr></thead>' +
-      '<tbody>' + (rows.join('') || '<tr><td colspan="5">无</td></tr>') + '</tbody></table>';
+    return '<h4>录值记录</h4>' +
+      '<table class="oor-sub-table"><thead><tr><th style="width:40px;">#</th><th>料号</th><th>应复核数量（订单数量）</th><th>录入数量</th><th>提交次数</th><th>提交时间</th><th>操作人</th><th style="width:70px;">异常类型</th></tr></thead>' +
+      '<tbody>' + (rows.join('') || '<tr><td colspan="8">无</td></tr>') + '</tbody></table>';
   }
 
   function openRecordModal(idx) {
@@ -179,7 +194,7 @@
       '<span>开始：' + esc(fmtTime(rec.startTime)) + '</span>' +
       '<span>结束：' + esc(fmtTime(rec.endTime)) + '</span>' +
       '<span>复核时长：' + (rec.status === '复核中' ? '进行中' : fmtDuration(rec.duration)) + '</span>' +
-      '<span>扫描 ' + (rec.totalScanCount || 0) + ' / ' + (rec.totalOrderQty || 0) + '</span>' +
+      '<span>录入 ' + recordValueTotal(rec) + ' / ' + (rec.totalOrderQty || 0) + '</span>' +
       '</div>');
     $body.append(renderDetailTable(rec));
     $body.append(renderScanLogs(rec));
@@ -240,14 +255,6 @@
     });
     $('#oodRecordBody').on('click', '.ood-record-edit', function () {
       openEditModal(parseInt($(this).attr('data-idx'), 10));
-    });
-    // 时区切换：重新渲染订单信息与档案列表，弹窗打开中则同步刷新
-    $('#oodTimeZone').val(WedoTime.get());
-    $('#oodTimeZone').on('change', function () {
-      WedoTime.set($(this).val());
-      renderOrderInfo();
-      renderRecords();
-      if (openModalIdx > -1) openRecordModal(openModalIdx);
     });
     // 时区切换：重新渲染订单信息与档案列表，弹窗打开中则同步刷新
     $('#oodTimeZone').val(WedoTime.get());

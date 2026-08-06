@@ -1,6 +1,6 @@
 /**
  * 海外仓 us · PDA 发货复核
- * 流程：扫订单面单号匹配出库单 → 逐一扫SKU料号 → 提交判定（复核完成/复核异常）
+ * 流程：扫订单面单号匹配出库单 → 扫 SKU 识别料号 → 录入数量 → 提交判定（复核完成/复核异常）
  * 复核中途中断（重置本轮/切换订单/关闭页面）→ 档案自动落「部分复核」
  */
 (function () {
@@ -10,9 +10,9 @@
   var SITE = 'LA';
 
   var state = {
-    order: null,       // 当前出库单
-    recordId: null,    // 当前复核中档案 id（首扫建档）
-    lastScanned: ''    // 最近扫描命中的料号（行高亮）
+    order: null,
+    recordId: null,
+    currentItem: null
   };
 
   /* ========== DOM ========== */
@@ -20,12 +20,13 @@
   function $(id) { return document.getElementById(id); }
 
   var pageOrder, pageScan, orderInput, orderStatus, orderDoneHint,
-    skuInput, skuStatus, skuTbody, scOrderNo, scOrderStatus,
+    skuInput, skuQtyInput, skuStatus, skuTbody, scOrderNo, scOrderStatus,
     alertModal, alertText, alertOk;
 
   /* ========== 弹窗 ========== */
 
   var alertCallback = null;
+  var alertCancelCallback = null;
   var alertTimer = null;
 
   function showAlert(text, opts) {
@@ -34,8 +35,10 @@
     alertText.className = 'pda-alert-modal-body' +
       (opts.ok ? ' ok' : '') + (opts.left ? ' left' : '');
     alertCallback = opts.onOk || null;
+    alertCancelCallback = opts.onCancel || null;
     alertModal.classList.remove('pda-hidden');
     alertModal.setAttribute('aria-hidden', 'false');
+    alertOk.focus();
     // 倒计时自动关闭（确定按钮同步显示剩余秒数）
     if (alertTimer) { clearInterval(alertTimer); alertTimer = null; }
     if (opts.countdown) {
@@ -59,11 +62,21 @@
     alertOk.textContent = '确定';
     alertModal.classList.add('pda-hidden');
     alertModal.setAttribute('aria-hidden', 'true');
-    if (typeof alertCallback === 'function') {
-      var cb = alertCallback;
-      alertCallback = null;
-      cb();
-    }
+    var cb = alertCallback;
+    alertCallback = null;
+    alertCancelCallback = null;
+    if (typeof cb === 'function') cb();
+  }
+
+  function cancelAlert() {
+    if (alertTimer) { clearInterval(alertTimer); alertTimer = null; }
+    alertOk.textContent = '确定';
+    alertModal.classList.add('pda-hidden');
+    alertModal.setAttribute('aria-hidden', 'true');
+    var cb = alertCancelCallback;
+    alertCallback = null;
+    alertCancelCallback = null;
+    if (typeof cb === 'function') cb();
   }
 
   /* ========== 状态提示 ========== */
@@ -98,12 +111,14 @@
       var recNew = ShipCheckStore.createRecord(order, OPERATOR, SITE);
       state.recordId = recNew.id;
     }
-    state.lastScanned = '';
+    state.currentItem = null;
     scOrderNo.textContent = order.orderNo;
     scOrderStatus.textContent = '状态：复核中';
     skuInput.value = '';
+    skuQtyInput.value = '';
+    skuQtyInput.disabled = true;
     setSkuStatus('');
-    renderSkuTable(countsFromStore());
+    renderSkuTable(valuesFromStore());
     pageOrder.classList.add('pda-hidden');
     pageScan.classList.remove('pda-hidden');
     skuInput.focus();
@@ -111,48 +126,36 @@
 
   /* ========== 计数与表格渲染 ========== */
 
-  function countsFromStore() {
-    var counts = {};
+  function valuesFromStore() {
+    var values = {};
     if (state.recordId) {
       var rec = ShipCheckStore.getRecord(state.recordId);
       if (rec) {
         rec.scanDetail.forEach(function (d) {
-          counts[String(d.itemNo).toUpperCase()] = d.scanCount;
+          values[String(d.itemNo).toUpperCase()] = d.valueQty != null ? d.valueQty : (d.scanCount || 0);
         });
       }
     }
-    return counts;
+    return values;
   }
 
-  /** 表格行定义：订单清单 + 非当前订单但已扫描的料号（订单数量0） */
+  /** 表格行定义：当前订单的 SKU 明细。 */
   function buildRowDefs() {
-    var defs = state.order.items.map(function (it) {
+    return state.order.items.map(function (it) {
       return { itemNo: it.itemNo, orderQty: it.qty };
     });
-    if (state.recordId) {
-      var rec = ShipCheckStore.getRecord(state.recordId);
-      if (rec) {
-        rec.scanDetail.forEach(function (d) {
-          var exists = defs.some(function (x) {
-            return String(x.itemNo).toUpperCase() === String(d.itemNo).toUpperCase();
-          });
-          if (!exists) defs.push({ itemNo: d.itemNo, orderQty: 0 });
-        });
-      }
-    }
-    return defs;
   }
 
-  function renderSkuTable(counts) {
+  function renderSkuTable(values) {
     var rows = buildRowDefs().map(function (def) {
-      var c = counts[String(def.itemNo).toUpperCase()] || 0;
+      var valueQty = values[String(def.itemNo).toUpperCase()] || 0;
       var cls = '';
-      if (c > def.orderQty) cls = 'sc-over';
-      else if (c === def.orderQty && c > 0) cls = 'sc-done';
-      else if (c > 0) cls = 'sc-active';
+      if (valueQty > def.orderQty) cls = 'sc-over';
+      else if (valueQty === def.orderQty && valueQty > 0) cls = 'sc-done';
+      else if (valueQty > 0) cls = 'sc-active';
       return '<tr class="' + cls + '">' +
         '<td>' + def.itemNo + '</td>' +
-        '<td class="pda-sc-count">' + c + ' / ' + def.orderQty + '</td>' +
+        '<td class="pda-sc-count">' + valueQty + ' / ' + def.orderQty + '</td>' +
         '</tr>';
     });
     skuTbody.innerHTML = rows.join('');
@@ -209,40 +212,86 @@
 
   function handleSkuScan() {
     var code = skuInput.value.trim();
-    skuInput.value = '';
+    skuQtyInput.value = '';
+    skuQtyInput.disabled = true;
+    state.currentItem = null;
     setSkuStatus('');
     if (!code) return;
 
     var item = findItem(code);
-
-    // 档案在 enterPage2 时已创建，此处直接追加扫描记录
-    var rec = ShipCheckStore.appendScan(state.recordId, code, OPERATOR);
-    if (!rec) {
-      setSkuStatus('复核档案状态异常，请重新开始', 'err');
+    if (!item) {
+      skuInput.value = '';
+      if (!ShipCheckStore.appendWrongScan(state.recordId, code, OPERATOR)) {
+        setSkuStatus('复核档案状态异常，请重新开始', 'err');
+        return;
+      }
+      setSkuStatus('该料号不属于当前订单，请检查！', 'err');
+      showAlert('该料号不属于当前订单，请检查！', {
+        onOk: function () { skuInput.focus(); },
+        onCancel: function () { skuInput.focus(); }
+      });
       return;
     }
-    state.lastScanned = code;
 
-    var normalized = code.toUpperCase();
-    var count = 0;
-    rec.scanDetail.forEach(function (d) {
-      if (String(d.itemNo).toUpperCase() === normalized) count = d.scanCount;
-    });
-    renderSkuTable(countsFromStore());
+    state.currentItem = item;
+    skuQtyInput.disabled = false;
+    setSkuStatus('料号 ' + item.itemNo + ' 识别成功，请录入本次数量', 'ok');
+    skuQtyInput.focus();
+  }
 
-    if (!item) {
-      // 非当前订单料号：同样记录扫描次数，订单数量显示为 0，弹窗提示
-      setSkuStatus('该料号不属于当前订单，请检查！', 'err');
-      showAlert('该料号不属于当前订单，请检查！');
-    } else if (count > item.qty) {
-      // 超扫：同样记录扫描次数，弹窗提示
-      setSkuStatus('该料号扫描次数已超过订单发货数量，请检查！', 'err');
-      showAlert('该料号扫描次数已超过订单发货数量，请检查！\n' + item.itemNo +
-        ' 已扫 ' + count + ' / 应扫 ' + item.qty);
-    } else {
-      setSkuStatus('匹配成功，' + item.itemNo + ' 扫描次数 +1', 'ok');
+  function submitSkuValue() {
+    var qty = Number(skuQtyInput.value);
+    if (!state.currentItem) {
+      setSkuStatus('请先扫描或输入 SKU 料号', 'err');
+      skuInput.focus();
+      return;
     }
-    skuInput.focus();
+    if (!isFinite(qty) || qty <= 0 || Math.floor(qty) !== qty) {
+      setSkuStatus('请输入大于 0 的整数数量', 'err');
+      skuQtyInput.focus();
+      return;
+    }
+
+    var itemNo = state.currentItem.itemNo;
+    var orderQty = state.currentItem.qty;
+    var previousQty = valuesFromStore()[String(itemNo).toUpperCase()] || 0;
+    function saveValue() {
+      var result = ShipCheckStore.submitSkuValue(state.recordId, itemNo, qty, OPERATOR);
+      if (!result) {
+        setSkuStatus('复核档案状态异常，请重新开始', 'err');
+        return;
+      }
+      renderSkuTable(valuesFromStore());
+      var typeText = result.scanType === '正常' ? '数量匹配' : result.scanType;
+      var isQtyMismatch = result.scanType === '少货' || result.scanType === '多货';
+      setSkuStatus(itemNo + ' 已录入 ' + qty + '，' + typeText, result.scanType === '正常' ? 'ok' : 'err');
+      state.currentItem = null;
+      skuInput.value = '';
+      skuQtyInput.value = '';
+      skuQtyInput.disabled = true;
+      if (isQtyMismatch) {
+        var mismatchText = result.scanType === '多货'
+          ? '该料号复核数量已超过订单发货数量，请检查！'
+          : '该料号复核数量少于订单发货数量，请检查！';
+        showAlert(mismatchText + '\n料号 ' + itemNo + ' 已 ' + qty + ' / 应 ' + orderQty, {
+          left: true,
+          onOk: function () { skuInput.focus(); },
+          onCancel: function () { skuInput.focus(); }
+        });
+      } else {
+        skuInput.focus();
+      }
+    }
+
+    if (previousQty > 0) {
+      showAlert('料号 ' + itemNo + ' 已录入 ' + previousQty + '，是否覆盖为 ' + qty + '？\n按 Enter 确认覆盖，按 Esc 取消。', {
+        left: true,
+        onOk: saveValue,
+        onCancel: function () { skuQtyInput.focus(); }
+      });
+      return;
+    }
+    saveValue();
   }
 
   /* ========== 页二：提交 ========== */
@@ -267,21 +316,20 @@
     } else {
       var lines = ['不满足复核完成条件，本次复核已记录为复核异常。'];
       if (result.missing.length) {
-        lines.push('少扫料号：');
+        lines.push('少货料号：');
         result.missing.forEach(function (m) {
-          lines.push('  ' + m.itemNo + '（已扫 ' + m.scanCount + ' / 应扫 ' + m.orderQty + '）');
+          lines.push('  ' + m.itemNo + '（已录 ' + m.valueQty + ' / 应录 ' + m.orderQty + '）');
         });
       }
       if (result.over.length) {
-        lines.push('超扫料号：');
+        lines.push('多货料号：');
         result.over.forEach(function (o) {
-          lines.push('  ' + o.itemNo + '（已扫 ' + o.scanCount + ' / 应扫 ' + o.orderQty + '）');
+          lines.push('  ' + o.itemNo + '（已录 ' + o.valueQty + ' / 应录 ' + o.orderQty + '）');
         });
       }
-      lines.push('5 秒后自动返回扫描订单页面');
+      if (result.hasWrong) lines.push('存在错扫料号，请检查扫描记录。');
       showAlert(lines.join('\n'), {
         left: true,
-        countdown: 5,
         onOk: function () { state.order = null; showPage1(); }
       });
     }
@@ -305,6 +353,7 @@
     orderStatus = $('orderStatus');
     orderDoneHint = $('orderDoneHint');
     skuInput = $('skuInput');
+    skuQtyInput = $('skuQtyInput');
     skuStatus = $('skuStatus');
     skuTbody = $('skuTbody');
     scOrderNo = $('scOrderNo');
@@ -316,13 +365,31 @@
     orderInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
+        e.stopPropagation();
         handleOrderScan();
       }
     });
     skuInput.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.keyCode === 13) {
         e.preventDefault();
+        e.stopPropagation();
         handleSkuScan();
+      }
+    });
+    skuQtyInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+        e.stopPropagation();
+        submitSkuValue();
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!alertModal.classList.contains('pda-hidden') && (e.key === 'Enter' || e.keyCode === 13)) {
+        e.preventDefault();
+        hideAlert();
+      } else if (!alertModal.classList.contains('pda-hidden') && (e.key === 'Escape' || e.keyCode === 27)) {
+        e.preventDefault();
+        cancelAlert();
       }
     });
 

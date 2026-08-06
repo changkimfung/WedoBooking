@@ -25,7 +25,7 @@
   var STATUS_TIP = {
     '已达标': '首次复核即完成，且复核次数为 1 次。',
     '已合规': '多次复核后完成，或由管理人员人工完结。',
-    '复核异常': '已提交复核，但存在少扫、多扫或错扫。',
+    '复核异常': '已提交复核，但存在少货、多货或错扫。',
     '部分复核': '已开始复核但未完成提交，或作业中断。',
     '未复核': '尚未产生任何复核记录。',
     '复核中': '正在进行复核，尚未提交结果。',
@@ -209,20 +209,21 @@
     return selectedOrders();
   }
 
-  /** 归集单条复核档案的少扫、错扫、多扫异常类型（按首次出现顺序去重） */
+  /** 归集单条复核档案的少货、错扫、多货异常类型（按首次出现顺序去重）。 */
   function recordExceptionTypes(rec) {
     var types = [];
     function add(type) {
       if ($.inArray(type, types) === -1) types.push(type);
     }
     $.each(rec.scanDetail || [], function (i, detail) {
-      // 非本单料号（订单数量为 0）由扫描日志中的错扫体现，避免同时误判为多扫
-      if (detail.orderQty > 0 && detail.scanCount < detail.orderQty) add('少扫');
-      if (detail.orderQty > 0 && detail.scanCount > detail.orderQty) add('多扫');
+      var valueQty = detail.valueQty != null ? detail.valueQty : (detail.scanCount || 0);
+      if (detail.orderQty > 0 && valueQty < detail.orderQty) add('少货');
+      if (detail.orderQty > 0 && valueQty > detail.orderQty) add('多货');
     });
     $.each(rec.scanLogs || [], function (i, log) {
       if (log.scanType === '错扫') add('错扫');
-      else if (log.scanType === '多扫') add('多扫');
+      else if (log.scanType === '多货' || log.scanType === '多扫') add('多货');
+      else if (log.scanType === '少货' || log.scanType === '少扫') add('少货');
     });
     return types;
   }
@@ -278,12 +279,23 @@
     return '';
   }
 
+  /** 返回单条录值日志对应的订单数量；错扫及无法匹配的旧数据返回 '-'。 */
+  function logOrderQty(rec, log) {
+    if (!log || log.inputQty == null) return '-';
+    var itemNo = String(log.itemNo).toUpperCase();
+    var details = rec.scanDetail || [];
+    for (var i = 0; i < details.length; i++) {
+      if (String(details[i].itemNo).toUpperCase() === itemNo) return details[i].orderQty;
+    }
+    return '-';
+  }
+
   /** 生成 XML Spreadsheet 文档：按类型单独导出订单列表或复核日志 */
   function buildExportXml(orders, sheetType) {
     var rows = [];
     var sheetName = sheetType === 'logs' ? '复核日志' : '订单列表';
     if (sheetType === 'logs') {
-      rows.push(ssRow(['出库单', '复核编号', '复核状态', '操作人', '料号', '扫描时间', '异常类型'], true));
+      rows.push(ssRow(['出库单', '复核编号', '复核状态', '操作人', '料号', '应复核数量（订单数量）', '录入数量', '提交次数', '提交时间', '异常类型'], true));
     } else {
       rows.push(ssRow(['出库单', 'SKU种类数', 'SKU总数（PCS）', '复核状态', '复核次数', '发货时间', '复核完成时间', '异常分析'], true));
     }
@@ -302,8 +314,11 @@
               rec.status,
               log.operator || '-',
               log.itemNo,
+              String(logOrderQty(rec, log)),
+              log.inputQty != null ? String(log.inputQty) : '-',
+              log.inputQty != null ? String(log.submitNo || '-') : '-',
               WedoTime.fmt(log.time),
-              log.scanType || '-'
+              log.scanType === '少扫' ? '少货' : (log.scanType === '多扫' ? '多货' : (log.scanType || '-'))
             ]));
           });
         });

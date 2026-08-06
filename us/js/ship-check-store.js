@@ -2,8 +2,8 @@
  * 海外仓 us · 发货复核档案存储层（localStorage）
  * 一个出库单可创建多个复核档案（多轮复核历史）；
  * 档案状态：复核中 | 复核完成 | 复核异常 | 部分复核
- *  - 复核完成：主动提交，且所有料号扫描次数与PCS数对等、扫描总数与总PCS对等
- *  - 复核异常：主动提交，且扫描次数与料号总PCS数不对等（少扫/超扫/种类不对等）
+ *  - 复核完成：主动提交，且所有料号最终录入数量与订单 PCS 数对等、录入总数与总 PCS 对等
+ *  - 复核异常：主动提交，且最终录入数量与订单 PCS 数不对等（少货/多货/错扫）
  *  - 部分复核：非主动提交而中断结束（重置本轮/切换订单/关闭页面）
  */
 var ShipCheckStore = (function () {
@@ -155,13 +155,33 @@ var ShipCheckStore = (function () {
     return '';
   }
 
-  /** 首次扫描成功时建档（记录开始时间、操作人、SKU清单快照） */
+  function detailValueQty(detail) {
+    return detail && detail.valueQty != null ? detail.valueQty : ((detail && detail.scanCount) || 0);
+  }
+
+  function recValueTotal(rec) {
+    var total = 0;
+    for (var i = 0; i < (rec.scanDetail || []).length; i++) {
+      total += detailValueQty(rec.scanDetail[i]);
+    }
+    return total;
+  }
+
+  function findRecord(id) {
+    var list = loadAll();
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === id) return { list: list, rec: list[i] };
+    }
+    return null;
+  }
+
+  /** 首次进入录值页建档，SKU 明细保存本轮最终录入数量 */
   function createRecord(order, operator, site) {
     var list = loadAll();
     var totalQty = 0;
     var scanDetail = (order.items || []).map(function (it) {
       totalQty += it.qty || 0;
-      return { itemNo: it.itemNo, scanCount: 0, orderQty: it.qty || 0 };
+      return { itemNo: it.itemNo, valueQty: 0, orderQty: it.qty || 0 };
     });
     var rec = {
       id: genId(list),
@@ -174,9 +194,9 @@ var ShipCheckStore = (function () {
       duration: 0,
       scanLogs: [],
       scanDetail: scanDetail,
-      totalScanCount: 0,
+      totalValueQty: 0,
       totalOrderQty: totalQty,
-      finishType: '',                       // 完结类型：主动提交 | 中断完结（复核中为空）
+      finishType: '',
       status: '复核中'
     };
     list.push(rec);
@@ -184,70 +204,82 @@ var ShipCheckStore = (function () {
     return rec;
   }
 
-  /**
-   * 追加一条 SKU 扫描记录（时间+操作人+异常类型），对应料号计数+1
-   * 非当前订单清单内的料号也会记录：自动新增一行，订单数量为 0
-   * 异常类型 scanType：错扫（料号不属于本单）| 多扫（超出该料号订单数量）| 正常
-   */
-  function appendScan(id, itemNo, operator) {
-    var list = loadAll();
-    var rec = null;
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id === id) { rec = list[i]; break; }
-    }
-    if (!rec || rec.status !== '复核中') return null;
-    var trimmed = String(itemNo).trim();
-    var normalized = trimmed.toUpperCase();
-    var detail = null;
-    for (var j = 0; j < rec.scanDetail.length; j++) {
-      if (String(rec.scanDetail[j].itemNo).toUpperCase() === normalized) {
-        detail = rec.scanDetail[j];
-        break;
-      }
-    }
-    var scanType = '正常';
-    if (!detail) {
-      // 非当前订单料号：错扫，同样计入复核记录，订单数量为 0（提交时判为复核异常）
-      detail = { itemNo: trimmed, scanCount: 0, orderQty: 0 };
-      rec.scanDetail.push(detail);
-      scanType = '错扫';
-    } else if (detail.scanCount >= detail.orderQty) {
-      // 本次扫描将超出该料号订单数量：多扫
-      scanType = '多扫';
-    }
-    detail.scanCount++;
-    rec.totalScanCount++;
-    rec.scanLogs.push({ itemNo: detail.itemNo, time: nowStr(), operator: operator || '-', scanType: scanType });
-    saveAll(list);
-    return rec;
+  /** 记录不属于当前订单的 SKU 扫描，保留错扫审计信息但不写入数量明细。 */
+  function appendWrongScan(id, itemNo, operator) {
+    var found = findRecord(id);
+    if (!found || found.rec.status !== '复核中') return null;
+    found.rec.scanLogs.push({
+      itemNo: String(itemNo).trim(),
+      time: nowStr(),
+      operator: operator || '-',
+      inputQty: null,
+      submitNo: 0,
+      scanType: '错扫'
+    });
+    saveAll(found.list);
+    return found.rec;
   }
 
   /**
-   * 主动提交：内部判定复核完成/复核异常，写入结束时间与时长
-   * @returns {{status:string, missing:Array, over:Array}}
+   * 为订单内 SKU 写入本轮最终录入数量；重复录入会覆盖明细，并追加独立录值日志。
+   * @returns {{record:Object, previousQty:number, submitNo:number, scanType:string}|null}
    */
-  function submitRecord(id) {
-    var list = loadAll();
-    var rec = null;
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id === id) { rec = list[i]; break; }
+  function submitSkuValue(id, itemNo, inputQty, operator) {
+    var found = findRecord(id);
+    if (!found || found.rec.status !== '复核中') return null;
+    var qty = Number(inputQty);
+    if (!isFinite(qty) || qty <= 0 || Math.floor(qty) !== qty) return null;
+    var detail = null;
+    var normalized = String(itemNo).trim().toUpperCase();
+    for (var i = 0; i < found.rec.scanDetail.length; i++) {
+      if (String(found.rec.scanDetail[i].itemNo).toUpperCase() === normalized) {
+        detail = found.rec.scanDetail[i];
+        break;
+      }
     }
-    if (!rec || rec.status !== '复核中') return null;
+    if (!detail || detail.orderQty <= 0) return null;
+    var previousQty = detailValueQty(detail);
+    var submitNo = 0;
+    for (var j = 0; j < found.rec.scanLogs.length; j++) {
+      if (String(found.rec.scanLogs[j].itemNo).toUpperCase() === normalized && found.rec.scanLogs[j].inputQty != null) submitNo++;
+    }
+    detail.valueQty = qty;
+    found.rec.totalValueQty = recValueTotal(found.rec);
+    var scanType = qty < detail.orderQty ? '少货' : (qty > detail.orderQty ? '多货' : '正常');
+    found.rec.scanLogs.push({
+      itemNo: detail.itemNo,
+      time: nowStr(),
+      operator: operator || '-',
+      inputQty: qty,
+      submitNo: submitNo + 1,
+      scanType: scanType
+    });
+    saveAll(found.list);
+    return { record: found.rec, previousQty: previousQty, submitNo: submitNo + 1, scanType: scanType };
+  }
 
+  /** 主动提交：按每个 SKU 的最终录入数量及错扫日志判定结果。 */
+  function submitRecord(id) {
+    var found = findRecord(id);
+    if (!found || found.rec.status !== '复核中') return null;
+    var rec = found.rec;
     var missing = [], over = [];
     for (var j = 0; j < rec.scanDetail.length; j++) {
       var d = rec.scanDetail[j];
-      if (d.scanCount < d.orderQty) {
-        missing.push({ itemNo: d.itemNo, scanCount: d.scanCount, orderQty: d.orderQty });
-      } else if (d.scanCount > d.orderQty) {
-        over.push({ itemNo: d.itemNo, scanCount: d.scanCount, orderQty: d.orderQty });
-      }
+      var valueQty = detailValueQty(d);
+      if (valueQty < d.orderQty) missing.push({ itemNo: d.itemNo, valueQty: valueQty, orderQty: d.orderQty });
+      else if (valueQty > d.orderQty) over.push({ itemNo: d.itemNo, valueQty: valueQty, orderQty: d.orderQty });
     }
-    var ok = !missing.length && !over.length && rec.totalScanCount === rec.totalOrderQty;
+    var hasWrong = false;
+    for (var k = 0; k < rec.scanLogs.length; k++) {
+      if (rec.scanLogs[k].scanType === '错扫') { hasWrong = true; break; }
+    }
+    rec.totalValueQty = recValueTotal(rec);
+    var ok = !missing.length && !over.length && !hasWrong && rec.totalValueQty === rec.totalOrderQty;
     finish(rec, ok ? '复核完成' : '复核异常');
     rec.finishType = '主动提交';
-    saveAll(list);
-    return { status: rec.status, missing: missing, over: over };
+    saveAll(found.list);
+    return { status: rec.status, missing: missing, over: over, hasWrong: hasWrong };
   }
 
   /** 非主动提交中断：档案落「部分复核」（记录结束时间与时长） */
@@ -265,15 +297,15 @@ var ShipCheckStore = (function () {
   }
 
   /**
-   * PC 端人工完结：为订单生成一条「复核完成 / 人工完结」档案，订单级状态即变为已达标
-   * 扫描明细按订单清单补齐（已扫=订单数量），保证档案明细展示自洽
+   * PC 端人工完结：为订单生成一条「复核完成 / 人工完结」档案，订单级状态即变为已合规
+   * SKU 最终录值按订单清单补齐，保证档案明细展示自洽
    */
   function completeOrder(order, operator) {
     var list = loadAll();
     var totalQty = 0;
     var scanDetail = (order.items || []).map(function (it) {
       totalQty += it.qty || 0;
-      return { itemNo: it.itemNo, scanCount: it.qty || 0, orderQty: it.qty || 0 };
+      return { itemNo: it.itemNo, valueQty: it.qty || 0, orderQty: it.qty || 0 };
     });
     var now = nowStr();
     var rec = {
@@ -287,7 +319,7 @@ var ShipCheckStore = (function () {
       duration: 0,
       scanLogs: [],
       scanDetail: scanDetail,
-      totalScanCount: totalQty,
+      totalValueQty: totalQty,
       totalOrderQty: totalQty,
       finishType: '人工完结',
       status: '复核完成'
@@ -331,7 +363,8 @@ var ShipCheckStore = (function () {
     countByOrder: countByOrder,
     getCompletionTime: getCompletionTime,
     createRecord: createRecord,
-    appendScan: appendScan,
+    appendWrongScan: appendWrongScan,
+    submitSkuValue: submitSkuValue,
     submitRecord: submitRecord,
     closeAsPartial: closeAsPartial,
     completeOrder: completeOrder,

@@ -52,7 +52,7 @@
             <div class="pda-sc-topbar-order" id="scOrderNo">-</div>
             <div class="pda-sc-topbar-status" id="scOrderStatus">-</div>
           </div>
-          <button type="button" class="pda-sc-submit" id="btnSubmit">提交审核</button>
+          <button type="button" class="pda-sc-submit" id="btnSubmit">完成审核</button>
         </div>
 
         <table class="pda-ris-table">
@@ -63,6 +63,13 @@
                 enterkeyhint="search" placeholder="扫描货品料号">
             </td>
           </tr>
+          <tr>
+            <td class="pda-ris-label"><span class="pda-ris-req">*</span>数量:</td>
+            <td>
+              <input type="number" id="skuQtyInput" class="pda-ris-input" autocomplete="off"
+                inputmode="numeric" min="1" step="1" enterkeyhint="done" placeholder="识别料号后录入本次数量" disabled>
+            </td>
+          </tr>
         </table>
 
         <div class="pda-ris-mstatus" id="skuStatus"></div>
@@ -71,7 +78,7 @@
           <thead>
             <tr>
               <th>料号</th>
-              <th style="text-align:right;">扫描次数/订单数量</th>
+              <th style="text-align:right;">录入数量/订单数量</th>
             </tr>
           </thead>
           <tbody id="skuTbody"></tbody>
