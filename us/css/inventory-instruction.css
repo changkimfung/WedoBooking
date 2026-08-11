@@ -1,0 +1,15 @@
+.ii-status { font-weight: bold; }
+.ii-priority { display: inline-block; min-width: 26px; padding: 2px 7px; color: #fff; font-size: 12px; font-weight: bold; text-align: center; border-radius: 2px; }
+.ii-priority-新 { background: #d9363e; }
+.ii-priority-旧 { background: #8c8c8c; }
+.ii-status-待盘点,
+.ii-status-待认领 { color: #d9822b; }
+.ii-status-盘点中 { color: #0066cc; }
+.ii-status-已完成,
+.ii-status-已完结 { color: #1a7f37; }
+.ii-status-已废弃 { color: #878787; text-decoration: line-through; }
+.ii-record-table { min-width: 1350px; }
+.ii-record-table th { white-space: nowrap; }
+.ii-record-table td { vertical-align: middle; }
+.ii-record-balance { color: #1a7f37; font-weight: bold; }
+.ii-record-difference { color: #d9363e; font-weight: bold; }

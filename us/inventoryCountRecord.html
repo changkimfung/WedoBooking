@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盘点管理记录 - 海外仓</title>
+  <link href="css/vendor/overseawh-legacy/bootstrap.css" rel="stylesheet">
+  <link href="css/vendor/overseawh-legacy/main.css" rel="stylesheet">
+  <link href="css/inventory-instruction.css" rel="stylesheet">
+</head>
+<body>
+<div id="wedo-overseas-chrome-header"></div>
+<div class="container-fluid conter_menu">
+  <div class="subnav mywell padding8">
+    指令单号：<input id="qInstructionNo" type="text" placeholder="支持模糊查询">
+    SKU：<input id="qSku" type="text" placeholder="支持模糊查询">
+    仓位：<input id="qLocation" type="text" placeholder="支持模糊查询">
+    状态：<select id="qStatus"><option value="">全部</option><option>通过</option><option>待审核</option><option>不通过</option></select>
+    <button id="btnQuery" class="btn">查询</button>
+  </div>
+  <div class="container-fluid well">
+    <p id="resultHint" class="muted"></p>
+    <div style="overflow-x:auto;">
+      <table class="table table-bordered table-hover ii-record-table">
+        <thead><tr class="info"><th>SKU</th><th>盘点前数量</th><th>盘点数量</th><th>盘点调整</th><th>仓位</th><th>操作人</th><th>盘点原因</th><th>盘点日期</th><th>审核日期</th><th>审核人</th><th>状态</th><th>备注</th></tr></thead>
+        <tbody id="recordBody"></tbody>
+      </table>
+    </div>
+    <p id="empty" class="muted" style="display:none;text-align:center">暂无盘点管理记录</p>
+  </div>
+</div>
+<footer class="footer"><div class="container">Copyright &copy; 运德供应链 · 盘点管理</div></footer>
+<script src="js/vendor/overseawh-legacy/jquery-1.8.3.min.js"></script>
+<script src="js/vendor/overseawh-legacy/bootstrap.min.js"></script>
+<script src="js/overseawh-chrome.js"></script>
+<script>WedoOverseasChrome.mountHeader('#wedo-overseas-chrome-header',{activeSecondMenu:'inventoryCountRecord',assetsRoot:'css/vendor/',userName:'演示用户'});</script>
+<script src="js/inventoryCountRecord.js"></script>
+</body>
+</html>

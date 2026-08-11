@@ -1,0 +1,67 @@
+.inventory-main { overflow-x: auto; }
+.inventory-main .title td { white-space: nowrap; }
+.inventory-hint { color: #878787; font-size: 12px; margin: 8px 0; }
+.inventory-status { font-weight: bold; }
+.inventory-status-待提交 { color: #878787; }
+.inventory-status-待盘点 { color: #d9822b; }
+.inventory-status-待执行 { color: #d9822b; }
+.inventory-status-盘点中 { color: #0066cc; }
+.inventory-status-已完成 { color: #1a7f37; }
+.inventory-status-已废弃 { color: #878787; text-decoration: line-through; }
+.inventory-modal { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 3000; display: flex; justify-content: center; align-items: flex-start; overflow-x: hidden; overflow-y: auto; box-sizing: border-box; padding: 72px 20px 40px; background: rgba(12, 28, 43, .5); }
+.inventory-modal.is-hidden { display: none; }
+.inventory-dialog { position: relative; z-index: 1; width: min(920px, 100%); box-sizing: border-box; margin: 0 auto; padding: 22px 24px 24px; border: 1px solid #b8c8d6; border-top: 3px solid #1976c5; background: #fff; box-shadow: 0 14px 38px rgba(0, 0, 0, .34); }
+.inventory-dialog h3 { margin: 0 32px 18px 0; padding-bottom: 12px; border-bottom: 1px solid #d9e1e7; color: #244763; font-size: 18px; line-height: 1.3; }
+.inventory-close { position: absolute; top: 12px; right: 14px; width: 28px; height: 28px; padding: 0; border: 1px solid transparent; border-radius: 2px; color: #597286; background: transparent; font-size: 25px; line-height: 24px; cursor: pointer; }
+.inventory-close:hover { border-color: #c7d5e0; color: #1b619c; background: #f3f8fc; }
+.inventory-form-table { width: 100%; border-collapse: collapse; }
+.inventory-form-table td { padding: 7px; border: 1px solid #ddd; }
+.inventory-form-label { width: 110px; text-align: right; background: #f7f7f7; }
+.inventory-item-table { width: 100%; margin-top: 12px; border-collapse: collapse; }
+.inventory-item-table th,.inventory-item-table td { padding: 6px; border: 1px solid #ddd; text-align: center; }
+.inventory-item-table th { background: #f1f5f9; }
+.inventory-item-table input { width: 100%; box-sizing: border-box; }
+.inventory-toolbar { display: flex; align-items: center; gap: 8px; margin: 12px 0; }
+.inventory-toolbar .inventory-hint { margin: 0; }
+.inventory-toolbar .push-right { margin-left: auto; }
+.inventory-detail-log { max-height: 150px; overflow-y: auto; padding-left: 20px; color: #666; }
+.inventory-diff { color: #c00; font-weight: bold; }
+.inventory-wh-check { display: inline-block; margin-right: 18px; padding: 4px 0; cursor: pointer; }
+.inventory-wh-check input { margin-right: 4px; vertical-align: middle; }
+.inventory-wh-section { margin: 16px 0; padding: 10px; border: 1px solid #e0e8f0; background: #fafcfe; }
+.inventory-wh-title { margin: 0 0 6px; font-size: 14px; color: #333; }
+.inventory-wh-title .inventory-wh-status { margin-left: 8px; }
+.inventory-wh-title .inventory-wh-progress { font-size: 12px; color: #666; font-weight: normal; }
+.inventory-create-main { margin-top: 10px; }
+.inventory-create-back { margin: 0 0 10px; }
+.inventory-create-panel { border: 1px solid #d5dce2; background: #fff; }
+.inventory-create-titlebar { padding: 14px 16px; border-bottom: 1px solid #d5dce2; background: #f5f8fb; }
+.inventory-create-titlebar h3 { margin: 0 0 6px; color: #244763; font-size: 16px; }
+.inventory-create-titlebar p { margin: 0; color: #777; font-size: 12px; }
+.inventory-create-form { width: 100%; border-collapse: collapse; }
+.inventory-create-form td { padding: 9px 12px; border: 1px solid #ddd; }
+.inventory-create-form td:nth-child(odd) { width: 120px; text-align: right; background: #f7f7f7; }
+.inventory-create-form .inventory-create-section { text-align: left; color: #244763; font-weight: bold; background: #edf4fa; }
+.inventory-create-form .inventory-create-section td { text-align: left; background: #edf4fa; }
+.inventory-create-list-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 12px 4px; }
+.inventory-create-list-head strong { color: #333; }
+.inventory-create-list-head .inventory-hint { margin: 5px 0 0; }
+.inventory-batch-sku { margin: 6px 12px; padding: 10px; border: 1px solid #bdd4e5; background: #f3f9fd; }
+.inventory-batch-sku input { width: 420px; }
+.inventory-batch-sku span { margin-left: 8px; color: #777; font-size: 12px; }
+.inventory-create-actions { padding: 16px 12px; text-align: center; }
+.inventory-create-actions button { margin: 0 4px; }
+.inventory-detail-section { margin: 16px 12px; }
+.inventory-detail-section h4 { margin: 0; padding: 8px 10px; border: 1px solid #d5dce2; border-bottom: 0; color: #244763; background: #edf4fa; font-size: 14px; }
+.inventory-error { color: #c00; }
+.inventory-warehouse-sku { margin: 10px 12px; padding: 12px; border: 1px solid #d5dce2; background: #fafcfe; }
+.inventory-warehouse-sku-title { display: flex; align-items: center; justify-content: space-between; color: #244763; }
+.inventory-warehouse-sku .inventory-item-table { margin-bottom: 0; }
+.inventory-warehouse-tabs { display: flex; gap: 6px; margin: 10px 12px 0; border-bottom: 1px solid #cdd9e3; }
+.inventory-warehouse-tab { padding: 7px 12px; border: 1px solid #cdd9e3; border-bottom: 0; color: #3d5d77; background: #f5f8fb; cursor: pointer; }
+.inventory-warehouse-tab.is-active { position: relative; bottom: -1px; border-top: 2px solid #1976c5; color: #1c5f92; background: #fff; font-weight: bold; }
+.inventory-import-dialog { width: min(680px, 100%); }
+.inventory-batch-textarea { width: 100%; min-height: 128px; box-sizing: border-box; resize: vertical; }
+.inventory-modal-actions { margin-top: 18px; text-align: center; }
+.inventory-modal-actions button { margin: 0 4px; }
+#batchWarehouseChecks .inventory-wh-check { min-width: 150px; }

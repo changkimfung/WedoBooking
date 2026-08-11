@@ -19,6 +19,7 @@
     { id: 'inboundMgmt', slug: 'inboundMgmt', label: '入库单管理', href: '../wh/inOrder.html' },
     { id: 'containerLoading', slug: 'containerLoading', label: '装柜清单管理', href: '../erp/containerLoading.html' },
     { id: 'deliveryAppointment', slug: 'deliveryAppointment', label: '预约送仓管理', href: '../wh/deliveryAppointment.html' },
+    { id: 'inventoryInstruction', slug: 'inventoryInstruction', label: '指令盘点管理', href: '../wh/inventoryInstruction.html' },
     { id: 'outboundMgmt', slug: 'outboundMgmt', label: '出库单管理', href: '#' },
     { id: 'logisticsPlan', slug: 'logisticsPlan', label: '物流计划管理', href: '#' },
     { id: 'valueAddedService', slug: 'valueAddedService', label: '增值服务单管理', href: '#' },

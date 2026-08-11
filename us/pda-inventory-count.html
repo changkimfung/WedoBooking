@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>PDA 指令盘点 - 海外仓</title>
+  <link rel="stylesheet" href="css/pda.css">
+</head>
+<body class="pda-body pda-theme-scan">
+  <div class="pda-view">
+    <header class="pda-bar">
+      <div class="pda-bar-inner">
+        <span class="pda-bar-user">操作人:PDA操作员<strong class="pda-bar-site">LA</strong></span>
+        <div class="pda-bar-menu">
+          <button type="button" class="pda-bar-menu-btn" id="pda-menu-btn">菜单</button>
+          <ul class="pda-bar-dd" id="pda-menu-list" hidden>
+            <li><a href="inventoryInstruction.html">指令盘点列表</a></li>
+            <li><a href="pda-receiving-scan.html">PDA收货确认</a></li>
+            <li><a href="pda-ship-check.html">PDA发货复核</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <main class="pda-main">
+      <section class="pda-page">
+        <h1 class="pda-page-title">指令盘点</h1>
+        <p class="pda-muted">请选择需要执行盘点的指令单</p>
+        <div class="pda-ris-mstatus" id="taskStatus"></div>
+        <div id="taskList"></div>
+      </section>
+    </main>
+  </div>
+  <div id="resumeModal" class="pda-alert-modal-backdrop pda-hidden" aria-hidden="true"><div class="pda-alert-modal" role="dialog" aria-modal="true" aria-labelledby="resumeModalText"><p id="resumeModalText" class="pda-alert-modal-body left"></p><button type="button" id="btnResumeInventory" class="pda-ris-btn-footer pda-ris-btn-primary">继续指令盘点</button></div></div>
+  <script src="../mock_data/inventoryStock.js"></script>
+  <script src="../mock_data/inventoryInstruction.js"></script>
+  <script src="../mock_data/inventoryInstruction-common.js"></script>
+  <script src="js/pda-core.js"></script>
+  <script src="js/pda-inventory-count.js"></script>
+</body>
+</html>

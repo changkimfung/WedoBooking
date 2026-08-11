@@ -22,6 +22,8 @@ var wecomSmartsheet = require('./lib/wecomSmartsheet');
 var productPhotoApi = require('./lib/productPhotoApi');
 var notifyMail = require('./lib/appointmentNotifyMail');
 var publicBaseUrl = require('./lib/publicBaseUrl');
+var inventoryInstructionMockFile = require('./lib/inventoryInstructionMockFile');
+var inventoryCountRecordMockFile = require('./lib/inventoryCountRecordMockFile');
 
 var ROOT = path.join(__dirname, '..');
 var DEMO_ROOT = path.join(ROOT, '..', 'Demo');
@@ -36,6 +38,111 @@ var PRODUCT_PHOTO_SUBMIT_PATH = '/api/mock/product-photo/submit';
 var WECOM_SYNC_PRODUCT_PHOTO_PATH = '/api/wecom/sync-product-photo';
 var NOTIFY_MAIL_PATH = '/api/mock/appointment-notify-email';
 var SITE_CONFIG_PATH = '/api/mock/site-config';
+var INVENTORY_INSTRUCTION_API_PATH = '/api/mock/inventory-instruction';
+var INVENTORY_INSTRUCTION_ACTION_PATH = INVENTORY_INSTRUCTION_API_PATH + '/action';
+var INVENTORY_COUNT_RECORD_API_PATH = '/api/mock/inventory-count-record';
+
+function createInventoryCountRecord(instruction, task, line, operator, now) {
+  var differenceQty = Number(line.countedQty) - Number(line.expectedQty);
+  var autoApproved = differenceQty === 0;
+  var records = inventoryCountRecordMockFile.loadInventoryCountRecordList();
+  records.unshift({
+    id: 'icr-' + Date.now() + '-' + line.lineId,
+    instructionId: instruction.id,
+    instructionNo: instruction.instructionNo,
+    warehouseCode: task.warehouseCode,
+    warehouseName: task.warehouseName,
+    skuCode: line.skuCode,
+    beforeQty: Number(line.expectedQty),
+    countedQty: Number(line.countedQty),
+    differenceQty: differenceQty,
+    locationCode: line.locationCode,
+    operator: operator,
+    inventoryReason: '指令盘点',
+    countedAt: now,
+    auditedAt: autoApproved ? now : '',
+    auditor: autoApproved ? '系统自动审核' : '',
+    status: autoApproved ? '通过' : '待审核',
+    remark: instruction.instructionNo + (autoApproved ? ' 盈亏平衡系统自动审核' : '')
+  });
+  inventoryCountRecordMockFile.writeInventoryCountRecordList(records);
+}
+
+function findAutoCompletedSku(task, skuCode) {
+  return (task.autoCompletedSkus || []).filter(function (item) {
+    return item.skuCode === skuCode;
+  })[0] || null;
+}
+
+function ensureAutoCompletedNoStockSkus(instruction, task, now) {
+  var requestedSkus = Array.isArray(task.requestedSkus) ? task.requestedSkus : (instruction.requestedSkus || []);
+  var noStockSkus = task.noStockSkus || [];
+  var changed = false;
+  task.autoCompletedSkus = Array.isArray(task.autoCompletedSkus) ? task.autoCompletedSkus : [];
+  noStockSkus.forEach(function (skuCode) {
+    if (!findAutoCompletedSku(task, skuCode)) {
+      task.autoCompletedSkus.push({ skuCode: skuCode, completedAt: now, remark: '无库存自动完结' });
+      changed = true;
+    }
+  });
+  return changed;
+}
+
+function isSkuCompleted(task, skuCode) {
+  if (findAutoCompletedSku(task, skuCode)) return true;
+  var items = (task.items || []).filter(function (item) { return item.skuCode === skuCode; });
+  return items.length && items.every(function (item) { return item.lineStatus === '已盘'; });
+}
+
+function updateInstructionStatus(instruction, now) {
+  if (instruction.status === '待提交' || instruction.status === '已废弃') return;
+  var tasks = instruction.warehouseTasks || [];
+  tasks.forEach(function (task) {
+    var requestedSkus = Array.isArray(task.requestedSkus) ? task.requestedSkus : (instruction.requestedSkus || []);
+    var allDone = requestedSkus.length && requestedSkus.every(function (sku) {
+      return isSkuCompleted(task, sku.skuCode);
+    });
+    var hasCompletedSku = requestedSkus.some(function (sku) {
+      return isSkuCompleted(task, sku.skuCode);
+    });
+    task.status = allDone ? '已完成' : (hasCompletedSku ? '盘点中' : '待盘点');
+  });
+  var validTasks = tasks.filter(function (task) {
+    return (task.requestedSkus || instruction.requestedSkus || []).length;
+  });
+  if (validTasks.length && validTasks.every(function (task) { return task.status === '已完成'; })) {
+    if (instruction.status !== '已完成') (instruction.operationLogs || (instruction.operationLogs = [])).push({ time: now, operator: '系统', action: '全部有效库位盘点完成，子单自动完成' });
+    instruction.status = '已完成';
+    instruction.completedAt = now;
+  } else {
+    instruction.status = tasks.some(function (task) {
+      return task.status === '盘点中' || task.status === '已完成';
+    }) ? '盘点中' : '待盘点';
+    instruction.completedAt = '';
+  }
+}
+
+function updateGroupStatus(list, groupId, now) {
+  if (!groupId) return;
+  var group = list.filter(function (item) { return item.id === groupId && item.recordType === 'group'; })[0];
+  if (!group) return;
+  var children = list.filter(function (item) { return item.groupId === groupId && item.recordType !== 'group'; });
+  var activeChildren = children.filter(function (item) { return item.status !== '已废弃'; });
+  if (activeChildren.length && activeChildren.every(function (item) { return item.status === '已完成'; })) {
+    if (group.status !== '已完成') (group.operationLogs || (group.operationLogs = [])).push({ time: now, operator: '系统', action: '全部有效仓库子单已完成，组单自动完成' });
+    group.status = '已完成';
+    group.groupStatus = '已完成';
+    group.completedAt = now;
+  } else if (activeChildren.some(function (item) { return item.status === '盘点中' || item.status === '已完成'; })) {
+    group.status = '盘点中';
+    group.groupStatus = '盘点中';
+    group.completedAt = '';
+  } else {
+    group.status = activeChildren.some(function (item) { return item.status === '待盘点'; }) ? '待盘点' : '待提交';
+    group.groupStatus = group.status;
+    group.completedAt = '';
+  }
+}
 
 var MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -126,6 +233,133 @@ var server = http.createServer(function (req, res) {
     } catch (e) {
       sendJson(res, 500, { error: e.message || String(e) });
     }
+    return;
+  }
+
+  if (req.method === 'POST' && req.url === INVENTORY_INSTRUCTION_ACTION_PATH) {
+    readBody(req)
+      .then(function (body) {
+        var list = inventoryInstructionMockFile.loadInventoryInstructionList();
+        var instruction = list.filter(function (item) { return item.id === body.instructionId; })[0];
+        var task = instruction && (instruction.warehouseTasks || []).filter(function (item) { return item.warehouseCode === body.warehouseCode; })[0];
+        var line = task && (task.items || []).filter(function (item) { return item.lineId === body.lineId; })[0];
+        var skuItems = task && (task.items || []).filter(function (item) { return item.skuCode === body.skuCode; });
+        if (instruction && instruction.status === '已废弃') throw new Error('该仓库子单已废弃，不能继续盘点');
+        if (!task) throw new Error('未找到对应仓库盘点任务');
+        if (!body.operator) throw new Error('操作人不能为空');
+        var now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        if (body.action === 'claimSku') {
+          if (!body.skuCode || !skuItems.length) throw new Error('未找到对应料号盘点任务');
+          var lockedItem = skuItems.filter(function (item) {
+            return item.lineStatus === '盘点中' && item.claimedBy !== body.operator;
+          })[0];
+          if (lockedItem) throw new Error('料号 ' + body.skuCode + ' 已被 ' + lockedItem.claimedBy + ' 认领处理中');
+          if (!skuItems.some(function (item) { return item.lineStatus !== '已盘'; })) throw new Error('该料号已完成盘点');
+          skuItems.forEach(function (item) {
+            if (item.lineStatus === '待认领') {
+              item.lineStatus = '盘点中'; item.claimedBy = body.operator; item.claimedAt = now;
+            }
+          });
+          (instruction.operationLogs || (instruction.operationLogs = [])).push({ time: now, operator: body.operator, action: '认领' + task.warehouseName + '料号 ' + body.skuCode + ' 的全部待盘库位' });
+        } else if (body.action === 'releaseSku') {
+          if (!body.skuCode || !skuItems.length) throw new Error('未找到对应料号盘点任务');
+          if (skuItems.some(function (item) { return item.lineStatus === '盘点中' && item.claimedBy !== body.operator; })) throw new Error('仅认领人可放弃该料号任务');
+          skuItems.forEach(function (item) {
+            if (item.lineStatus === '盘点中' && item.claimedBy === body.operator) {
+              item.lineStatus = '待认领'; item.claimedBy = ''; item.claimedAt = '';
+            }
+          });
+          (instruction.operationLogs || (instruction.operationLogs = [])).push({ time: now, operator: body.operator, action: '放弃认领' + task.warehouseName + '料号 ' + body.skuCode });
+        } else if (body.action === 'forceResetSku') {
+          if (!body.skuCode || !skuItems.length) throw new Error('未找到对应料号盘点任务');
+          var resetItems = skuItems.filter(function (item) { return item.lineStatus === '盘点中'; });
+          if (!resetItems.length) throw new Error('该料号当前没有可重置的认领任务');
+          resetItems.forEach(function (item) {
+            item.lineStatus = '待认领'; item.claimedBy = ''; item.claimedAt = '';
+          });
+          (instruction.operationLogs || (instruction.operationLogs = [])).push({ time: now, operator: body.operator, action: '海外仓 PC 强行重置料号 ' + body.skuCode + ' 的认领状态' });
+        } else if (body.action === 'complete') {
+          if (!line) throw new Error('未找到对应库位盘点任务');
+          if (line.lineStatus !== '盘点中' || line.claimedBy !== body.operator) throw new Error('仅认领人可提交盘点结果');
+          if (!/^\d+$/.test(String(body.countedQty))) throw new Error('实盘数必须为非负整数');
+          line.countedQty = Number(body.countedQty); line.differenceQty = line.countedQty - Number(line.expectedQty); line.lineStatus = '已盘'; line.countedBy = body.operator; line.countedAt = now;
+          createInventoryCountRecord(instruction, task, line, body.operator, now);
+          (instruction.operationLogs || (instruction.operationLogs = [])).push({ time: now, operator: body.operator, action: '完成' + task.warehouseName + '库位 ' + line.locationCode + '盘点，实盘 ' + line.countedQty });
+        } else { throw new Error('不支持的盘点动作'); }
+        updateInstructionStatus(instruction, now);
+        updateGroupStatus(list, instruction.groupId, now);
+        inventoryInstructionMockFile.writeInventoryInstructionList(list);
+        sendJson(res, 200, { ok: true, list: list, instruction: instruction });
+      })
+      .catch(function (e) { sendJson(res, 400, { error: e.message || String(e) }); });
+    return;
+  }
+
+  if (req.method === 'GET' && req.url === INVENTORY_COUNT_RECORD_API_PATH) {
+    try {
+      sendJson(res, 200, { list: inventoryCountRecordMockFile.loadInventoryCountRecordList() });
+    } catch (e) {
+      sendJson(res, 500, { error: e.message || String(e) });
+    }
+    return;
+  }
+
+  if (req.method === 'GET' && req.url === INVENTORY_INSTRUCTION_API_PATH) {
+    try {
+      var instructionList = inventoryInstructionMockFile.loadInventoryInstructionList();
+      var changed = false;
+      instructionList.forEach(function (instruction) {
+        if (instruction.recordType === 'group' || instruction.status === '已废弃') return;
+        (instruction.warehouseTasks || []).forEach(function (task) {
+          changed = ensureAutoCompletedNoStockSkus(instruction, task, instruction.initiatedAt || instruction.createdAt || new Date().toISOString().slice(0, 19).replace('T', ' ')) || changed;
+        });
+        updateInstructionStatus(instruction, instruction.initiatedAt || instruction.createdAt || new Date().toISOString().slice(0, 19).replace('T', ' '));
+      });
+      instructionList.filter(function (instruction) { return instruction.recordType === 'group'; }).forEach(function (group) {
+        updateGroupStatus(instructionList, group.id, group.initiatedAt || group.createdAt || new Date().toISOString().slice(0, 19).replace('T', ' '));
+      });
+      if (changed) inventoryInstructionMockFile.writeInventoryInstructionList(instructionList);
+      sendJson(res, 200, { list: instructionList });
+    } catch (e) {
+      sendJson(res, 500, { error: e.message || String(e) });
+    }
+    return;
+  }
+
+  if (req.method === 'POST' && req.url === INVENTORY_INSTRUCTION_API_PATH) {
+    readBody(req)
+      .then(function (body) {
+        if (!body || !Array.isArray(body.list)) {
+          sendJson(res, 400, { error: '请求体需包含 list 数组' });
+          return;
+        }
+        var stock = inventoryInstructionMockFile.loadInventoryStockSnapshot();
+        body.list.forEach(function (instruction) {
+          if (instruction.recordType === 'group' || instruction.status === '已废弃') return;
+          (instruction.warehouseTasks || []).forEach(function (task) {
+            var taskSkus = Array.isArray(task.requestedSkus) ? task.requestedSkus : instruction.requestedSkus;
+            if ((task.items || []).length || !Array.isArray(taskSkus)) return;
+            task.noStockSkus = [];
+            taskSkus.forEach(function (sku) {
+              var records = stock.filter(function (record) { return record.warehouseCode === task.warehouseCode && record.skuCode === sku.skuCode; });
+              if (!records.length) task.noStockSkus.push(sku.skuCode);
+              records.forEach(function (record, index) {
+                task.items.push({ lineId: task.taskId + '-' + sku.skuCode + '-' + index, skuCode: record.skuCode, productName: record.productName || sku.productName, locationCode: record.locationCode, expectedQty: record.expectedQty, countedQty: '', differenceQty: '', lineStatus: '待认领', claimedBy: '', claimedAt: '', countedBy: '', countedAt: '' });
+              });
+            });
+            ensureAutoCompletedNoStockSkus(instruction, task, new Date().toISOString().slice(0, 19).replace('T', ' '));
+          });
+          updateInstructionStatus(instruction, new Date().toISOString().slice(0, 19).replace('T', ' '));
+        });
+        body.list.forEach(function (instruction) {
+          if (instruction.recordType === 'group') updateGroupStatus(body.list, instruction.id, new Date().toISOString().slice(0, 19).replace('T', ' '));
+        });
+        inventoryInstructionMockFile.writeInventoryInstructionList(body.list);
+        sendJson(res, 200, { ok: true, count: body.list.length, list: body.list });
+      })
+      .catch(function (e) {
+        sendJson(res, 500, { error: e.message || String(e) });
+      });
     return;
   }
 
@@ -353,6 +587,8 @@ server.listen(PORT, '0.0.0.0', function () {
     });
   }
   console.log('  写入 mock: POST ' + API_PATH);
+  console.log('  指令盘点原型: GET/POST ' + INVENTORY_INSTRUCTION_API_PATH);
+  console.log('  指令盘点原子操作: POST ' + INVENTORY_INSTRUCTION_ACTION_PATH);
   console.log('  产品信息同步: GET/POST ' + PRODUCT_API_PATH);
   console.log('  品牌授权文件: GET/POST ' + BRAND_AUTH_API_PATH);
   console.log('  品牌授权管理: http://localhost:' + PORT + '/wh/brandAuthorization.html');

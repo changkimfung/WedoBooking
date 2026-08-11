@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>指令盘点管理 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet">
+  <link href="css/inventory-instruction.css" rel="stylesheet">
+</head>
+<body>
+<div id="wedo-wh-mid-chrome-header"></div>
+<div class="fourvar order-fourvar" style="height:auto;"><table class="table-h25"><tr>
+  <td style="padding-left:17px;">指令单号：</td><td><input id="qNo" class="text-input w150" placeholder="支持模糊"></td>
+  <td style="padding-left:17px;">状态：</td><td><select id="qStatus"><option value="">全部</option><option>待提交</option><option>待盘点</option><option>盘点中</option><option>已完成</option><option>已废弃</option></select></td>
+  <td><button type="button" id="btnQuery" class="order-fourvar-submit">查询</button><button type="button" id="btnNew">新建指令盘点</button></td>
+</tr></table></div>
+<div class="main inventory-main">
+  <p id="resultHint" class="inventory-hint"></p>
+  <div class="inventory-toolbar"><button type="button" id="btnBatchDiscard">批量废弃</button><button type="button" id="btnExportReport">报告导出</button><span id="selectionHint" class="inventory-hint"></span></div>
+  <table cellspacing="0" width="100%"><thead><tr class="title"><td><input type="checkbox" id="checkAll" title="全选当前查询结果"></td><td>仓库指令单号</td><td>客户编号</td><td>明细进度</td><td>发起时间</td><td>状态</td><td>操作</td></tr></thead><tbody id="taskBody"></tbody></table>
+</div>
+<div class="inventory-modal is-hidden" id="taskModal"><div class="inventory-dialog"><button class="inventory-close" id="closeModal">×</button><h3 id="modalTitle">指令盘点详情</h3><div id="modalContent"></div></div></div>
+<footer class="wh-mid-footer">Copyright © 运德仓储中台原型 <a href="#" onclick="return false;">演示页</a></footer>
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js"></script><script>WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header',{activeTopModule:'documents',activeSecondMenu:'inventoryInstruction',userName:'演示用户'});</script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="../mock_data/inventoryStock.js"></script><script src="../mock_data/inventoryInstruction.js"></script><script src="../mock_data/inventoryInstruction-common.js"></script><script src="js/inventoryTaskReportExport.js"></script><script src="js/inventoryInstruction.js"></script>
+</body></html>

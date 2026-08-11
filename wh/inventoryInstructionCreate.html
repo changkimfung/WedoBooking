@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新建指令盘点 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet">
+  <link href="css/inventory-instruction.css" rel="stylesheet">
+</head>
+<body>
+<div id="wedo-wh-mid-chrome-header"></div>
+<div class="main inventory-create-main">
+  <p class="inventory-create-back"><a href="inventoryInstruction.html">&lt; 返回指令盘点管理</a></p>
+  <div class="inventory-create-panel">
+    <div class="inventory-create-titlebar">
+      <h3>新建指令盘点</h3>
+      <p>通过统一入口批量添加运德编号，并按仓库维护本次指令的货物清单。</p>
+    </div>
+    <table class="table-h25 inventory-create-form">
+      <tr class="inventory-create-section"><td colspan="4">指令基础信息</td></tr>
+      <tr>
+        <td>客户编码：</td>
+        <td><select id="formCustomer"><option value="">请选择客户编码</option></select></td>
+        <td>盘点原因：</td>
+        <td><select id="formReason"><option value="">请选择</option><option>循环盘点</option><option>库存异常</option><option>客户要求</option><option>其他</option></select></td>
+      </tr>
+      <tr><td>发起时间：</td><td colspan="3" id="formInitiatedAt">-</td></tr>
+      <tr><td>下发仓库：</td><td colspan="3" id="warehouseChecks"></td></tr>
+      <tr><td>备注：</td><td colspan="3"><input id="formRemark" class="text-input" style="width:80%"></td></tr>
+    </table>
+
+    <div class="inventory-create-list-head">
+      <div>
+        <strong>仓库运德编号货物清单</strong>
+        <p class="inventory-hint">批量添加时选择目标仓库；添加后可按仓库查看并移除对应编号。</p>
+      </div>
+      <button type="button" id="btnBatchAddSku" class="order-fourvar-submit">批量添加运德编号</button>
+    </div>
+    <p id="skuMessage" class="inventory-hint" aria-live="polite"></p>
+    <div id="warehouseSkuSections"></div>
+    <div class="inventory-create-actions">
+      <button type="button" id="btnCancel">取消</button>
+      <button type="button" id="btnSubmit" class="order-fourvar-submit">提交并下发</button>
+    </div>
+  </div>
+</div>
+
+<div id="batchSkuModal" class="inventory-modal is-hidden" aria-hidden="true">
+  <div class="inventory-dialog inventory-import-dialog" role="dialog" aria-modal="true" aria-labelledby="batchSkuModalTitle">
+    <button type="button" class="inventory-close" id="closeBatchSkuModal" aria-label="关闭">×</button>
+    <h3 id="batchSkuModalTitle">批量添加运德编号</h3>
+    <table class="inventory-form-table">
+      <tr><td class="inventory-form-label">批量运德编号</td><td><textarea id="batchSkuInput" class="inventory-batch-textarea" placeholder="多个运德编号使用英文逗号、换行或空格分隔"></textarea></td></tr>
+      <tr><td class="inventory-form-label">盘点仓库</td><td id="batchWarehouseChecks"></td></tr>
+    </table>
+    <p id="batchSkuMessage" class="inventory-hint" aria-live="polite"></p>
+    <div class="inventory-modal-actions"><button type="button" id="btnBatchCancel">取消</button><button type="button" id="btnBatchConfirm" class="order-fourvar-submit">校验并加入货物清单</button></div>
+  </div>
+</div>
+
+<footer class="wh-mid-footer">Copyright © 运德仓储中台原型 <a href="#" onclick="return false;">演示页</a></footer>
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js"></script>
+<script>WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header',{activeTopModule:'documents',activeSecondMenu:'inventoryInstruction',userName:'演示用户'});</script>
+<script src="../mock_data/productInfo.js"></script>
+<script src="../mock_data/inventoryStock.js"></script>
+<script src="../mock_data/inventoryInstruction.js"></script>
+<script src="../mock_data/inventoryInstruction-common.js"></script>
+<script src="js/inventoryInstructionCreate.js"></script>
+</body>
+</html>

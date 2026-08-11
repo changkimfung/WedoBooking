@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>指令盘点子单详情 - 仓储中台</title>
+  <link href="css/vendor/wh-mid-legacy/wh-return-order-prototype.css" rel="stylesheet">
+  <link href="css/vendor/wh-mid-legacy/wh-mid-chrome-addon.css" rel="stylesheet">
+  <link href="css/inventory-instruction.css" rel="stylesheet">
+</head>
+<body>
+<div id="wedo-wh-mid-chrome-header"></div>
+<div class="main inventory-create-main">
+  <p class="inventory-create-back"><a href="inventoryInstruction.html">&lt; 返回指令盘点管理</a></p>
+  <div id="detailMain" class="inventory-detail-main"></div>
+</div>
+<footer class="wh-mid-footer">Copyright © 运德仓储中台原型 <a href="#" onclick="return false;">演示页</a></footer>
+<script src="js/vendor/wh-mid-legacy/wh-mid-chrome.js"></script>
+<script>WedoWhMidChrome.mountHeader('#wedo-wh-mid-chrome-header',{activeTopModule:'documents',activeSecondMenu:'inventoryInstruction',userName:'演示用户'});</script>
+<script src="../mock_data/inventoryStock.js"></script>
+<script src="../mock_data/inventoryInstruction.js"></script>
+<script src="../mock_data/inventoryInstruction-common.js"></script>
+<script src="js/inventoryInstructionDetail.js"></script>
+</body>
+</html>
