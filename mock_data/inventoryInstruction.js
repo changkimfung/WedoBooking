@@ -38,7 +38,7 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
     customerCode: 'CN0000438',
     inventoryReason: '循环盘点',
     initiatedAt: '2026-08-11 14:13:55',
-    status: '盘点中',
+    status: '待盘点',
     creator: '中台操作员',
     createdAt: '2026-08-11 14:13:55',
     completedAt: '',
@@ -76,7 +76,7 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             productName: 'XXXXXX1112222'
           }
         ],
-        status: '盘点中',
+        status: '待盘点',
         noStockSkus: [],
         items: [
           {
@@ -115,9 +115,9 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             expectedQty: 4,
             countedQty: '',
             differenceQty: '',
-            lineStatus: '待认领',
-            claimedBy: '',
-            claimedAt: '',
+            lineStatus: '盘点中',
+            claimedBy: 'PDA操作员',
+            claimedAt: '2026-08-11 16:03:14',
             countedBy: '',
             countedAt: ''
           },
@@ -149,7 +149,8 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             countedBy: '',
             countedAt: ''
           }
-        ]
+        ],
+        autoCompletedSkus: []
       }
     ],
     operationLogs: [
@@ -227,6 +228,11 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
         time: '2026-08-11 10:02:34',
         operator: 'PDA操作员',
         action: '放弃认领美西仓（LA）料号 YD20260625704'
+      },
+      {
+        time: '2026-08-11 16:03:14',
+        operator: 'PDA操作员',
+        action: '认领美西仓（LA）料号 YD20260626286 的全部待盘库位'
       }
     ]
   },
@@ -239,10 +245,10 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
     customerCode: 'CN0000438',
     inventoryReason: '循环盘点',
     initiatedAt: '2026-08-11 14:13:55',
-    status: '已建单',
+    status: '已完成',
     creator: '中台操作员',
     createdAt: '2026-08-11 14:13:55',
-    completedAt: '',
+    completedAt: '2026-08-11 14:13:55',
     remark: '',
     requestedSkus: [
       {
@@ -269,12 +275,24 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             productName: 'XXXXX2'
           }
         ],
-        status: '已建单',
+        status: '已完成',
         noStockSkus: [
           'YD20260626167',
           'YD20260626286'
         ],
-        items: []
+        items: [],
+        autoCompletedSkus: [
+          {
+            skuCode: 'YD20260626167',
+            completedAt: '2026-08-11 14:13:55',
+            remark: '无库存自动完结'
+          },
+          {
+            skuCode: 'YD20260626286',
+            completedAt: '2026-08-11 14:13:55',
+            remark: '无库存自动完结'
+          }
+        ]
       }
     ],
     operationLogs: [
@@ -282,6 +300,11 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
         time: '2026-08-11 14:14:38',
         operator: '中台操作员',
         action: '由组单 IP20260811003 拆分生成，向 美东仓（NY） 下发指令盘点'
+      },
+      {
+        time: '2026-08-11 14:13:55',
+        operator: '系统',
+        action: '全部有效库位盘点完成，子单自动完成'
       }
     ]
   },
@@ -294,10 +317,10 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
     customerCode: 'CN0000438',
     inventoryReason: '循环盘点',
     initiatedAt: '2026-08-11 14:13:55',
-    status: '已建单',
+    status: '已完成',
     creator: '中台操作员',
     createdAt: '2026-08-11 14:13:55',
-    completedAt: '',
+    completedAt: '2026-08-11 14:13:55',
     remark: '',
     requestedSkus: [
       {
@@ -324,12 +347,24 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             productName: 'XXXXX2'
           }
         ],
-        status: '已建单',
+        status: '已完成',
         noStockSkus: [
           'YD20260626167',
           'YD20260626286'
         ],
-        items: []
+        items: [],
+        autoCompletedSkus: [
+          {
+            skuCode: 'YD20260626167',
+            completedAt: '2026-08-11 14:13:55',
+            remark: '无库存自动完结'
+          },
+          {
+            skuCode: 'YD20260626286',
+            completedAt: '2026-08-11 14:13:55',
+            remark: '无库存自动完结'
+          }
+        ]
       }
     ],
     operationLogs: [
@@ -337,6 +372,11 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
         time: '2026-08-11 14:14:38',
         operator: '中台操作员',
         action: '由组单 IP20260811003 拆分生成，向 欧洲仓（DE） 下发指令盘点'
+      },
+      {
+        time: '2026-08-11 14:13:55',
+        operator: '系统',
+        action: '全部有效库位盘点完成，子单自动完成'
       }
     ]
   },
@@ -346,12 +386,12 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
     customerCode: 'CN0000438',
     inventoryReason: '库存异常',
     initiatedAt: '2026-08-11 11:23:56',
-    status: '已建单',
+    status: '已完成',
     priority: '紧急',
     deadlineAt: '2026-08-11 11:23:56',
     creator: '中台操作员',
     createdAt: '2026-08-11 11:23:56',
-    completedAt: '',
+    completedAt: '2026-08-11 11:23:56',
     remark: '我是你爸爸',
     requestedSkus: [
       {
@@ -368,34 +408,70 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
         taskId: 'ii-1786418744114-w0',
         warehouseCode: 'US-LA',
         warehouseName: '美西仓（LA）',
-        status: '已建单',
+        status: '已完成',
         noStockSkus: [
           'YD20260625315',
           'YD20260624472'
         ],
-        items: []
+        items: [],
+        autoCompletedSkus: [
+          {
+            skuCode: 'YD20260625315',
+            completedAt: '2026-08-11 11:23:56',
+            remark: '无库存自动完结'
+          },
+          {
+            skuCode: 'YD20260624472',
+            completedAt: '2026-08-11 11:23:56',
+            remark: '无库存自动完结'
+          }
+        ]
       },
       {
         taskId: 'ii-1786418744114-w1',
         warehouseCode: 'US-NY',
         warehouseName: '美东仓（NY）',
-        status: '已建单',
+        status: '已完成',
         noStockSkus: [
           'YD20260625315',
           'YD20260624472'
         ],
-        items: []
+        items: [],
+        autoCompletedSkus: [
+          {
+            skuCode: 'YD20260625315',
+            completedAt: '2026-08-11 11:23:56',
+            remark: '无库存自动完结'
+          },
+          {
+            skuCode: 'YD20260624472',
+            completedAt: '2026-08-11 11:23:56',
+            remark: '无库存自动完结'
+          }
+        ]
       },
       {
         taskId: 'ii-1786418744114-w2',
         warehouseCode: 'EU-DE',
         warehouseName: '欧洲仓（DE）',
-        status: '已建单',
+        status: '已完成',
         noStockSkus: [
           'YD20260625315',
           'YD20260624472'
         ],
-        items: []
+        items: [],
+        autoCompletedSkus: [
+          {
+            skuCode: 'YD20260625315',
+            completedAt: '2026-08-11 11:23:56',
+            remark: '无库存自动完结'
+          },
+          {
+            skuCode: 'YD20260624472',
+            completedAt: '2026-08-11 11:23:56',
+            remark: '无库存自动完结'
+          }
+        ]
       }
     ],
     operationLogs: [
@@ -403,6 +479,11 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
         time: '2026-08-11 11:25:44',
         operator: '中台操作员',
         action: '创建指令盘点单，客户：CN0000438，原因：库存异常，下发 美西仓（LA）、美东仓（NY）、欧洲仓（DE）'
+      },
+      {
+        time: '2026-08-11 11:23:56',
+        operator: '系统',
+        action: '全部有效库位盘点完成，子单自动完成'
       }
     ]
   },
@@ -479,7 +560,8 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             countedBy: '',
             countedAt: ''
           }
-        ]
+        ],
+        autoCompletedSkus: []
       },
       {
         taskId: 'ii-001-w2',
@@ -516,7 +598,8 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             countedBy: '',
             countedAt: ''
           }
-        ]
+        ],
+        autoCompletedSkus: []
       }
     ],
     operationLogs: [

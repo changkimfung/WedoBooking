@@ -25,10 +25,17 @@
     var lineId = $('locationInput').value;
     return pendingItems().filter(function (item) { return item.lineId === lineId; })[0];
   }
+  function isAutoWarehouseLocation(item) { return item && /^A/i.test(String(item.locationCode || '')); }
   function updateExpectedQty() {
     var item = selectedItem();
     $('expectedQty').textContent = item ? item.expectedQty : '-';
+    $('btnCallAutoWarehouse').disabled = !isAutoWarehouseLocation(item);
     $('countInput').value = '';
+  }
+  function callAutoWarehouse() {
+    var item = selectedItem();
+    if (!isAutoWarehouseLocation(item)) return;
+    set('已呼叫自动仓出库：' + item.locationCode, 'ok');
   }
   function releaseAndBack() {
     C.action({ action: 'releaseSku', instructionId: instruction.id, warehouseCode: MY_WH, skuCode: SKU, operator: OP }, function (err) {
@@ -58,6 +65,7 @@
   function init() {
     $('btnConfirmLine').onclick = submit;
     $('btnExit').onclick = releaseAndBack;
+    $('btnCallAutoWarehouse').onclick = callAutoWarehouse;
     C.load(function (err) {
       if (err) return set(err.message, 'err');
       instruction = C.find(C.getList(), ID);

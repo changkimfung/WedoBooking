@@ -608,6 +608,16 @@
 .pda-claim-table td { padding: 6px 5px; font-size: 12px; text-align: center; border: 1px solid #d5e0ea; vertical-align: middle; }
 .pda-claim-table td small { color: #888; font-size: 11px; }
 .pda-claim-table .pda-claim-btn { padding: 3px 10px; font-size: 12px; cursor: pointer; }
+.pda-claim-search { display: flex; gap: 6px; margin: 0 0 8px; }
+.pda-claim-search .pda-ris-input { flex: 1; min-width: 0; }
+.pda-claim-search-btn,
+.pda-location-call { border: 1px solid #0066cc; background: #1d8af0; color: #fff; font-weight: bold; cursor: pointer; }
+.pda-claim-search-btn { padding: 0 12px; font-size: 12px; }
+.pda-claim-auto-sku { color: #0066cc; font-weight: bold; }
+.pda-location-select-wrap { display: flex; gap: 6px; }
+.pda-location-select-wrap .pda-ris-input { flex: 1; min-width: 0; }
+.pda-location-call { min-width: 54px; padding: 0 7px; font-size: 12px; }
+.pda-location-call:disabled { border-color: #c5c5c5; background: #e6e6e6; color: #999; cursor: not-allowed; }
 
 .pda-claim-badge {
   display: inline-block;
