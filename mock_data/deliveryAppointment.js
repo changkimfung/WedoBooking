@@ -661,7 +661,20 @@ var MOCK_DELIVERY_APPOINTMENT_LIST = [
     totalPallets: '',
     estimatedCartons: '',
     remark: '',
-    operationLogs: []
+    operationLogs: [
+      {
+        time: '2026-08-04 17:26:37',
+        operator: '海外仓审核',
+        action: '第1轮审核 · 更新送仓时段 2026-06-02 11:00--13:00，仓库：美东仓，已重发客户确认邮件',
+        audience: 'all',
+        logKind: 'audit_update',
+        customerSummary: '仓库已更新送仓时段：2026-06-02 11:00--13:00（第1次确认）。',
+        customerRole: '仓库'
+      }
+    ],
+    confirmedWarehouse: '美东仓',
+    warehouseConfirmedAddress: '200 Distribution Way, Edison, NJ 08817, USA',
+    auditRemark: ''
   },
   {
     id: 'appt-005',

@@ -41,12 +41,19 @@
     $('resumeModal').setAttribute('aria-hidden', 'false');
   }
   function render() {
+    var keyword = ($('instructionScanInput').value || '').trim().toLowerCase();
     var rows = C.executableInstructions(C.getList()).map(function (instruction) {
       return { instruction: instruction, task: C.findWarehouseTask(instruction, MY_WH) };
     }).filter(function (row) { return row.task; });
     rows.sort(function (a, b) { return issuedAt(b.instruction).localeCompare(issuedAt(a.instruction)); });
+    if (keyword) {
+      rows = rows.filter(function (row) {
+        return String(row.instruction.instructionNo).toLowerCase().indexOf(keyword) >= 0;
+      });
+    }
 
-    $('taskStatus').textContent = rows.length ? '' : '暂无本仓指令盘点任务';
+    $('taskStatus').textContent = rows.length ? '' :
+      (keyword ? '未查询到对应的指令单号' : '暂无本仓指令盘点任务');
     $('taskList').innerHTML = rows.map(function (row, index) {
       var status = C.normalizedStatus(row.task.status);
       var unavailable = status === '已完成' || status === '已废弃';
@@ -66,6 +73,14 @@
     });
   }
   function init() {
+    var scanInput = $('instructionScanInput');
+    scanInput.onkeydown = function (event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        render();
+      }
+    };
+    scanInput.onsearch = render;
     C.load(function (err) {
       if (err) {
         $('taskStatus').textContent = err.message;

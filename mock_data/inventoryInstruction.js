@@ -38,7 +38,7 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
     customerCode: 'CN0000438',
     inventoryReason: '循环盘点',
     initiatedAt: '2026-08-11 14:13:55',
-    status: '待盘点',
+    status: '盘点中',
     creator: '中台操作员',
     createdAt: '2026-08-11 14:13:55',
     completedAt: '',
@@ -76,7 +76,7 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             productName: 'XXXXXX1112222'
           }
         ],
-        status: '待盘点',
+        status: '盘点中',
         noStockSkus: [],
         items: [
           {
@@ -115,9 +115,9 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             expectedQty: 4,
             countedQty: '',
             differenceQty: '',
-            lineStatus: '盘点中',
-            claimedBy: 'PDA操作员',
-            claimedAt: '2026-08-11 16:03:14',
+            lineStatus: '待认领',
+            claimedBy: '',
+            claimedAt: '',
             countedBy: '',
             countedAt: ''
           },
@@ -141,13 +141,13 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
             productName: 'XXXXXX1112222',
             locationCode: 'B01-01-0102',
             expectedQty: 3,
-            countedQty: '',
-            differenceQty: '',
-            lineStatus: '待认领',
-            claimedBy: '',
-            claimedAt: '',
-            countedBy: '',
-            countedAt: ''
+            countedQty: 2,
+            differenceQty: -1,
+            lineStatus: '已盘',
+            claimedBy: 'PDA操作员',
+            claimedAt: '2026-08-12 06:18:12',
+            countedBy: 'PDA操作员',
+            countedAt: '2026-08-12 06:26:40'
           }
         ],
         autoCompletedSkus: []
@@ -233,6 +233,21 @@ var MOCK_INVENTORY_INSTRUCTION_LIST = [
         time: '2026-08-11 16:03:14',
         operator: 'PDA操作员',
         action: '认领美西仓（LA）料号 YD20260626286 的全部待盘库位'
+      },
+      {
+        time: '2026-08-12 05:58:24',
+        operator: 'PDA操作员',
+        action: '放弃认领美西仓（LA）料号 YD20260626286'
+      },
+      {
+        time: '2026-08-12 06:18:12',
+        operator: 'PDA操作员',
+        action: '认领美西仓（LA）料号 YD20260625704 的全部待盘库位'
+      },
+      {
+        time: '2026-08-12 06:26:40',
+        operator: 'PDA操作员',
+        action: '完成美西仓（LA）库位 B01-01-0102盘点，实盘 2'
       }
     ]
   },

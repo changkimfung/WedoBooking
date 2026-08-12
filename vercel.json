@@ -3,5 +3,10 @@
   "installCommand": "npm install",
   "rewrites": [
     { "source": "/", "destination": "/customer/deliveryAppointment.html" }
-  ]
+  ],
+  "functions": {
+    "api/mock/inventory-instruction.js": { "includeFiles": "mock_data/**" },
+    "api/mock/inventory-instruction/action.js": { "includeFiles": "mock_data/**" },
+    "api/mock/inventory-count-record.js": { "includeFiles": "mock_data/**" }
+  }
 }

@@ -160,7 +160,7 @@ sequenceDiagram
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
 | warehouse | string | 默认取仓库主数据首个国内仓，如「深圳A仓」 |
-| operator | string | 操作员，如「郑剑锋b」 |
+| operator | string | 操作员，如「产品经理」 |
 | inboundOrderNo | string | 入库单输入框当前值，可为空 |
 | items[] | array | `{ skuCode, imageUrl }`；每条图片一条 item |
 

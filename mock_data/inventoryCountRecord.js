@@ -3,6 +3,25 @@
  */
 var MOCK_INVENTORY_COUNT_RECORD_LIST = [
   {
+    id: 'icr-1786516000389-ii-1786428878462-w0-task-YD20260625704-1',
+    instructionId: 'ii-1786428878462-w0',
+    instructionNo: 'IP20260811003-LA',
+    warehouseCode: 'US-LA',
+    warehouseName: '美西仓（LA）',
+    skuCode: 'YD20260625704',
+    beforeQty: 3,
+    countedQty: 2,
+    differenceQty: -1,
+    locationCode: 'B01-01-0102',
+    operator: 'PDA操作员',
+    inventoryReason: '指令盘点',
+    countedAt: '2026-08-12 06:26:40',
+    auditedAt: '',
+    auditor: '',
+    status: '待审核',
+    remark: 'IP20260811003-LA'
+  },
+  {
     id: 'icr-1786441397637-ii-1786428878462-w0-task-YD20260625704-0',
     instructionId: 'ii-1786428878462-w0',
     instructionNo: 'IP20260811003-LA',
