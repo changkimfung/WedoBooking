@@ -13,3 +13,19 @@
 .ii-record-table td { vertical-align: middle; }
 .ii-record-balance { color: #1a7f37; font-weight: bold; }
 .ii-record-difference { color: #d9363e; font-weight: bold; }
+.ii-select-col { width: 32px; text-align: center; }
+.ii-select-col input { margin: 0; }
+.ii-checklist-page { max-width: 1240px; margin: 0 auto; }
+.ii-checklist-toolbar { margin-bottom: 12px; }
+.ii-checklist-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px 38px; padding: 12px 6px 30px; }
+.ii-checklist-card { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+.ii-checklist-card th, .ii-checklist-card td { height: 72px; border: 1px solid #888; text-align: center; vertical-align: middle; font-weight: normal; }
+.ii-checklist-card th { width: 78px; line-height: 17px; }
+.ii-checklist-barcode { width: 250px; height: 54px; max-width: 100%; }
+.ii-checklist-auto { font-size: 20px; }
+@media print {
+  .ii-checklist-page { max-width: none; }
+  .ii-checklist-page > .ii-checklist-toolbar, .ii-checklist-page > #checklistHint, #wedo-overseas-chrome-header { display: none !important; }
+  .ii-checklist-grid { gap: 26px 28px; padding: 0; }
+  @page { size: A4 landscape; margin: 12mm; }
+}
